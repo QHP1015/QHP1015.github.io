@@ -31,7 +31,7 @@ jobs:
         hexo g
     - name: Deploy to Github Pages
       env:
-        GIT_NAME: WillCAI2020
+        GIT_NAME: QHP1015
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         REPO: github.com/QHP1015/QHP1015.github.io
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
