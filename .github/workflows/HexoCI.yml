@@ -30,6 +30,6 @@ jobs:
           npm install
       - name: Hexo deploy
         run: |
-          hexo clean
+          hexo c
           hexo g
           hexo d
