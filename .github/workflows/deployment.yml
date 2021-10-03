@@ -33,7 +33,7 @@ jobs:
       env:
         GIT_NAME: QHP1015
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-        REPO: github.com/QHP1015/QHP1015.github.io
+        REPO: git@github.com:QHP1015/QHP1015.github.io.git
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         cd ./public && git init && git add .
