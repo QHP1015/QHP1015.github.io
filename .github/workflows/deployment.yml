@@ -39,4 +39,4 @@ jobs:
         git config --global user.name QHP1015
         git config --global user.email 2439462872@qq.com
         git commit -m "Site deployed by GitHub Actions"
-        git push --force --quiet "https://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@git@github.com:QHP1015/QHP1015.github.io" main:main
+        git push --force --quiet "https://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@git@github.com:QHP1015/QHP1015.github.io" master:main
