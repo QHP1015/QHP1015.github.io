@@ -50,8 +50,8 @@ darkmode: false
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
+  small: /images/notes16.png
+  medium: /images/notes32.png
   apple_touch_icon: /images/apple-touch-icon-next.png
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /manifest.json
@@ -82,11 +82,11 @@ creative_commons:
 # Value before `||` delimiter is the target link, value after `||` delimiter is the name of Font Awesome icon.
 # External url should start with http:// or https://
 menu:
-  home: /|| fa fa-home
+  home: /|| fab fa-themeisle
   #about: /about/ || fa fa-user
   tags: /tags/|| fa fa-tags
   categories: /categories/|| fa fa-th
-  archives: /archives/|| fa fa-archive
+  archives: /archives/|| fas fa-pallet
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
@@ -141,8 +141,8 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  GitHub: https://github.com/QHP1015
-  E-Mail: 2439462872@qq.com
+  GitHub: https://github.com/QHP1015 || fab fa-github
+  E-Mail: 2439462872@qq.com || fas fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -197,17 +197,17 @@ footer:
   # Icon between year and copyright info.
   icon:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-heart
+    name: fab fa-optin-monster
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.
-    color: "#ff0000"
+    color: "#87CEFA"
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
   copyright:
 
   # Powered by Hexo & NexT
-  powered: true
+  powered: false
 
   # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, http://www.beian.gov.cn
   beian:
