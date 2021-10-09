@@ -37,9 +37,9 @@ JavaScript 支持两种注释
 字面量示例
 
 ```js
-12				// 数值 12
-1.2				// 数值 1.2
-“hello world”   // 字符串
+12			// 数值 12
+1.2			// 数值 1.2
+“hello world”   	// 字符串
 true			// 布尔值
 null			// 无对象
 ```
@@ -132,7 +132,7 @@ JavaScript 使用 IEEE 754 标准定义的 64 位浮点格式表示数值
 
   ```js
   let billion = 1_000_000_000;	// 以下划线作为千分位分隔符
-  let bytes = 0x89_AB_CD_EF;		// 作为字节分隔符
+  let bytes = 0x89_AB_CD_EF;	// 作为字节分隔符
   let bits = 0b0001_1101_0111;	// 作为半字节分隔符
   let fraction = 0.123_456_789;	// 用于小数分隔
   ```
@@ -153,16 +153,16 @@ Math.floor(.6)				// => 0.0：向下舍入到一个整数
 Math.abs(-5)				// => 5：绝对值
 Math.max(x,y,z)				// 返回最大的参数
 Math.min(x,y,z)				// 返回最小的参数
-Math.random					// 伪随机数下，其中 0 ≤ x < 1.0
-Math.PI						// Π：圆周率吧
-Math.E						// e：自然对数的底数
+Math.random				// 伪随机数下，其中 0 ≤ x < 1.0
+Math.PI					// Π：圆周率
+Math.E					// e：自然对数的底数
 Math.sqrt(3)				// => 3 的平方根
 Math.pow(3,1/3)				// => 3 的立方根
-Math.sin(0)					// 三角函数：还有 Math.cos、Math.aten 等
+Math.sin(0)				// 三角函数：还有 Math.cos、Math.aten 等
 Math.log(10)				// 10 的自然对数
-Math.log(100)/Math.LN10		// 以 10 为底 100 的对数
-Math.log(512)/Math.LN2		// 以 2 为底 512 的对数 
-Math.exp(3)					// Math.E 的立方
+Math.log(100)/Math.LN10			// 以 10 为底 100 的对数
+Math.log(512)/Math.LN2			// 以 2 为底 512 的对数 
+Math.exp(3)				// Math.E 的立方
 ```
 
 ES6 新定义函数
@@ -192,29 +192,29 @@ JavaScript 算术中上溢出结果返回 `Infinity`，某个负数的绝对值�
 JavaScript预定义了全局常量 `Infinity` 和 `NaN`，这些值也可以通过 `Number` 对象属性获取
 
 ```js
-Infinity						// 因为太大而无法表示的整数
-1/0								// => Infinity
--Infinity						// 因为太小而无法表示的负数
--Number.MAX_VALUE * 2 			// => -Infinity
+Infinity			// 因为太大而无法表示的整数
+1/0				// => Infinity
+-Infinity			// 因为太小而无法表示的负数
+-Number.MAX_VALUE * 2		// => -Infinity
 
-NaN								// 非数值
-Number.NaN						// 同上
-Infinity/Infinity				// => NaN
+NaN				// 非数值
+Number.NaN			// 同上
+Infinity/Infinity		// => NaN
 
-Number.MIN_VALUE/2				// => 0：下溢出
--Number.MIN_VALUE/2				// => -0：负零
--1/Infinity						// => -0：负零
+Number.MIN_VALUE/2		// => 0：下溢出
+-Number.MIN_VALUE/2		// => -0：负零
+-1/Infinity			// => -0：负零
 
 //ES6定义属性
-Number.parseInt()				// 同全局parseInt()函数
-Number.parseFloat()				// 同全局parseFloat()函数
-Number.isNaN()					// 判断 x 是不是 NaN
-Number.isFinite()				// 判断 x 是数值还是无穷
-Number.isInteger()				// 判断 x 是不是整数
-Number.isSafeInteger()			// 
-Number.MIN_SAFE_INTEGER			// => -(2**53-1)
-Number.MAX_SAFE_INTEGER			// => 2**53-1
-Number.EPSILON					// => 2**52：数值与数值之间最小的差
+Number.parseInt()		// 同全局parseInt()函数
+Number.parseFloat()		// 同全局parseFloat()函数
+Number.isNaN()			// 判断 x 是不是 NaN
+Number.isFinite()		// 判断 x 是数值还是无穷
+Number.isInteger()		// 判断 x 是不是整数
+Number.isSafeInteger()		// 
+Number.MIN_SAFE_INTEGER		// => -(2**53-1)
+Number.MAX_SAFE_INTEGER         // => 2**53-1
+Number.EPSILON			// => 2**52：数值与数值之间最小的差
 ```
 
 非数值与任何值比较都不相等，也不等于自身，即不能通过 `x === NaN` 确定是不是非数值，只能通过 `x != x` 或 `Number.isNaN(x)`
@@ -232,9 +232,9 @@ JavaScript使用的 IEEE-754 浮点表示法是一种二进制表示法，可以
 ```js
 let x = .3 - .2;			// 30美分减20美分
 let y = .2 - .1;			// 20美分减10美分
-x === y;					// => false：这两个值不一样
-x === .1;					// => false：.3-.2 不等于 .1
-y === .1;					// => true：.2 -.1 等于 .1
+x === y;				// => false：这两个值不一样
+x === .1;				// => false：.3-.2 不等于 .1
+y === .1;				// => true：.2 -.1 等于 .1
 ```
 
 若需要使用浮点近似值，可以考虑使用等量整数
@@ -255,7 +255,7 @@ BigInt 字面量写作一串数字后跟小写字母 n
 1234n							// 基数为 10 的 BigInt
 0b111111n						// 二进制 BigInt
 0o7777n							// 八进制 BigInt
-0x8000000000000000n				// => 2n**63n：一个 64 位整数
+0x8000000000000000n					// => 2n**63n：一个 64 位整数
 ```
 
 可以用 BigInt() 函数把常规数值或字符串转换为 BigInt 值
@@ -263,7 +263,7 @@ BigInt 字面量写作一串数字后跟小写字母 n
 ```js
 BigInt(Number.MAX_SAFE_INTEGER)				// => 9007199254740991n				
 let string = "1" + "0".repeat(100);			// 1 后跟 100 个零
-BigInt(string)								// => 10n**100n
+BigInt(string)						// => 10n**100n
 ```
 
 BigInt 值的算术运算与常规 JavaScript 数值类似，只不过**除法会丢弃余数并会向下（向零）舍入**
@@ -288,10 +288,10 @@ BigInt 值的算术运算与常规 JavaScript 数值类似，只不过**除法�
 JavaScript 为表示和操作与日期及时间相关的数据定义了 Date 类。Date 是对象，也可以用数值表示形式（自 1970.1.1 起的毫秒数，也叫时间戳）
 
 ```js
-let timestamp = Date.now();					// 当前时间的时间戳（数值）
-let now = new Date();						// 当前时间的日期对象
-let ms = now.getTime();						// 转换位毫秒时间戳
-let iso = now.toISOString();				// 转换位标准格式的字符串
+let timestamp = Date.now();			// 当前时间的时间戳（数值）
+let now = new Date();				// 当前时间的日期对象
+let ms = now.getTime();				// 转换位毫秒时间戳
+let iso = now.toISOString();		        // 转换位标准格式的字符串
 ```
 
 
@@ -358,52 +358,52 @@ JavaScript 可以使用 + 操作符拼接字符串，可以使用 `===` 和 `!==
 
 ```js
 let s = "Hello, world";
-s.length								// => 12：返回字符串长度
+s.length					// => 12：返回字符串长度
 
 // 取得字符串的一部分
-s.substring(1,4)						// => "ell"：第 2~4 个字符
-s.slice(1,4)							// => "ell"：同上
-s.slice(-3)								// => "rld"：最后 3 个字符
-s.split(", ")							// => ["Hello","world"]：从定界处拆分
+s.substring(1,4)				// => "ell"：第 2~4 个字符
+s.slice(1,4)					// => "ell"：同上
+s.slice(-3)					// => "rld"：最后 3 个字符
+s.split(", ")					// => ["Hello","world"]：从定界处拆分
 
 // 搜索字符串
-s.indexOf("l")							// => 2：第一个字母 l 的位置
-s.indexOf("l",3)						// => 3：位置 3 后面第一个 l 的位置
-s.indexOf("zz")							// => -1：s 并不包含子串 zz
-s.lastIndexOf("l")						// => 10：最后一个字母 l 的位置
+s.indexOf("l")					// => 2：第一个字母 l 的位置
+s.indexOf("l",3)				// => 3：位置 3 后面第一个 l 的位置
+s.indexOf("zz")					// => -1：s 并不包含子串 zz
+s.lastIndexOf("l")				// => 10：最后一个字母 l 的位置
 
 // ES6 及之后版本中的布尔值搜索函数
-s.startsWith("hell") 					// => true：字符串是以这些字符开头的
-s.endWith("!")							// => false：s 不是以它结尾的
-s.includes("or")						// => true：s包含子串 or
+s.startsWith("hell") 				// => true：字符串是以这些字符开头的
+s.endWith("!")					// => false：s 不是以它结尾的
+s.includes("or")				// => true：s包含子串 or
 
 // 创建字符串的修改版本
-s.replace("llo","ya")					// => "Heya,world"
-s.toLowerCase()							// => "hello, world"
-s.toUpperCase()							// => "HELLO, WORLD"
-s.normalize()							// Unicode NFC 归一化：ES6 新增
-s.normalize("NFD")						// NFD 归一化。还有 NFKC 和 NFKD
+s.replace("llo","ya")				// => "Heya,world"
+s.toLowerCase()					// => "hello, world"
+s.toUpperCase()					// => "HELLO, WORLD"
+s.normalize()					// Unicode NFC 归一化：ES6 新增
+s.normalize("NFD")				// NFD 归一化。还有 NFKC 和 NFKD
 
 // 访问字符串的个别（16位值）字符
-s.charAt(0)								// => "H"：第一个字符
-s.charAt(s.length-1)					// => "d"：最后一个字符
-s.charCodeAt(0)							// => 72：指定位置的16位数值
-s.codePointAt(0)						// => 72：ES6，适用于码点大于 16 位的情形
+s.charAt(0)					// => "H"：第一个字符
+s.charAt(s.length-1)				// => "d"：最后一个字符
+s.charCodeAt(0)					// => 72：指定位置的16位数值
+s.codePointAt(0)				// => 72：ES6，适用于码点大于 16 位的情形
 
 // ES2017 新增字符串填充函数
-"x".padStart(3)							// => "  x"：在左侧添加空格，让字符串长度变成3
-"x".padEnd(3)							// => "x  "：在右侧添加空格，让字符串长度变成3
-"x".padStart(3,"*")						// => "**x"：在左侧添加星号，让字符串长度变成3
-"x".padEnd(3,"-")						// => "x--"：在右侧添加破折号，让字符串长度变成3
+"x".padStart(3)					// => "  x"：在左侧添加空格，让字符串长度变成3
+"x".padEnd(3)					// => "x  "：在右侧添加空格，让字符串长度变成3
+"x".padStart(3,"*")				// => "**x"：在左侧添加星号，让字符串长度变成3
+"x".padEnd(3,"-")				// => "x--"：在右侧添加破折号，让字符串长度变成3
 
 // 删除空格函数
-" test ".trim()							// => "test"：删除开头和末尾的空格
-" test ".trimStart()					// => "test "：删除左侧的空格。也叫 trimLeft
-" test ".trimEnd()						// => " test"：删除右侧的空格。也叫 trimRight
+" test ".trim()					// => "test"：删除开头和末尾的空格
+" test ".trimStart()				// => "test "：删除左侧的空格。也叫 trimLeft
+" test ".trimEnd()				// => " test"：删除右侧的空格。也叫 trimRight
 
 // 未分类字符串方法
-s.concat("!")							// => "Hello, world!"：可以用 + 操作符代替
-"<>".repeat(5)							// => "<><><><><>"：拼接 n 次。ES6 新增
+s.concat("!")					// => "Hello, world!"：可以用 + 操作符代替
+"<>".repeat(5)				        // => "<><><><><>"：拼接 n 次。ES6 新增
 ```
 
 JavaScript中的字符串是不可修改的。像 `replace()` 和 `toUpperCase()` 这些都返回新字符串
@@ -428,7 +428,7 @@ let greeting = 'Hello ${ name }.';		 // => greeting == "Hello Bill."
 ES6 提供内置的标签函数：`String.raw()` ，用于返回反引号中未经处理的文本
 
 ```js
-'\n'.length							// => 1：字符串中只包含一个换行符
+'\n'.length					// => 1：字符串中只包含一个换行符
 String.raw'\n'.length				// => 2：一个反斜杠字符和一个字母n
 ```
 
@@ -498,15 +498,15 @@ null === undefined			// => false
 ES6 新增的一种原始类型，用作非字符串的属性名
 
 ```js
-let strname = "string name";				// 可以用作属性名的字符串
-let symname = Symbol("propname");			// 可以用作属性名的符号
-typeof strname								// => "string"：strname 是字符串
-typeof symname								// => "symbol"：symname 是符号
-let o = {};									// 创建一个新对象
-o[strname] = 1;								// 使用字符串名定义一个属性
-o[symname] = 2;								// 使用符号名定义一个属性
-o[strname]									// => 1：访问字符串名字的属性
-o[symname]									// => 2：访问符号名字的属性
+let strname = "string name";			// 可以用作属性名的字符串
+let symname = Symbol("propname");		// 可以用作属性名的符号
+typeof strname					// => "string"：strname 是字符串
+typeof symname					// => "symbol"：symname 是符号
+let o = {};					// 创建一个新对象
+o[strname] = 1;					// 使用字符串名定义一个属性
+o[symname] = 2;					// 使用符号名定义一个属性
+o[strname]					// => 1：访问字符串名字的属性
+o[symname]					// => 2：访问符号名字的属性
 ```
 
 `Symbol` 类型的 "真实值" 无法获取，即**Symbol类型没有对应的字面量**
@@ -527,7 +527,7 @@ s.toString						// => "Symbol(sym_x)"
 ```js
 let s = Symbol.for("shared");
 let t = Symbol.for("shared");
-s === t							// => true
+s === t						// => true
 s.toString()					// => "Symbol(shared);"
 Symbol.keyFor(t)				// => "shared"
 ```
@@ -550,9 +550,9 @@ JavaScript 中的对象和数组是可修改的，即其值是可变的。两个
 
 ```javascript
 let o = {x: 1}, p = {x: 1};				// 两个对象，有相同的属性
-o === p									// => false：不同的对象永远也不会相等
-let a = [], b = [];						// 两个不同数组
-a === b									// => false：不同的数组永远也不会相等
+o === p							// => false：不同的对象永远也不会相等
+let a = [], b = [];					// 两个不同数组
+a === b							// => false：不同的数组永远也不会相等
 ```
 
 当且仅当两个对象引用同一个底层对象时，才相等
@@ -571,9 +571,9 @@ a === b				// => true：a 和 b 引用同一个对象，相等
 let a = ["a","b","c"];						
 let b = [];
 for(let i = 0; i < a.length; i++){
-	b[i] = a[i];							// 把 a 的元素复制到 b 中
+	b[i] = a[i];			// 把 a 的元素复制到 b 中
 }
-let c = Array.from(b);						// ES6 可以使用 Array.from() 复制数组
+let c = Array.from(b);			// ES6 可以使用 Array.from() 复制数组
 ```
 
 
@@ -616,10 +616,10 @@ JavaScript 的类型转换
 某些 JavaScript 操作符会执行隐式类型转换
 
 ```js
-x + ""						// => String(x)
-+x							// => Number(x)
-x-0							// => Number(x)
-!!x							// => Boolean(x)：注意这里两次取反
+x + ""				// => String(x)
++x				// => Number(x)
+x-0				// => Number(x)
+!!x				// => Boolean(x)：注意这里两次取反
 ```
 
 
@@ -704,7 +704,7 @@ ES6 实现了一种复合声明与赋值语法，叫做解构赋值（destructur
 let [x,y] = [1,2];			// 相当于 let x=1, y=2
 [x,y] = [x+1,y+1];			// 相当于 x = x + 1, y =y + 1
 [x,y] = [y,x];				// 交换两个变量的值
-[x,y]						// => [3,2]
+[x,y]					// => [3,2]
 ```
 
 解构赋值左侧变量的个数不一定与右侧变量相同，左侧多余的会被设为 `undefined` ，右侧多余的会被忽略。左侧的变量列表可以包含额外的逗号，以跳过右侧的某些值
@@ -712,13 +712,13 @@ let [x,y] = [1,2];			// 相当于 let x=1, y=2
 ```js
 let [x,y] = [1];			// x == 1; y == undefined
 [x,y] = [1,2,3];			// x == 1; y == 2
-[,x,,y] = [1,2,3,4];		// x == 2; y == 4
+[,x,,y] = [1,2,3,4];			// x == 2; y == 4
 ```
 
 在解构赋值时，若想把所有未使用或剩余的值收集到一个变量中，可在左侧最后一个变量名前加 3 个点（ ... ）
 
 ```js
-let [x, ...y] = [1,2,3,4];			// y == [2,3,4]
+let [x, ...y] = [1,2,3,4];		// y == [2,3,4]
 ```
 
 若变量名与对象属性名相同，可以直接赋值，若左侧包含一个不是右侧属性的变量名，该变量被赋值为 `undefined`
