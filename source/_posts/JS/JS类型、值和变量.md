@@ -4,6 +4,7 @@ author: 从此在回忆里
 date: 2021-10-09 20:03:53
 tags: 前端学习
 categories: JavaScript
+mathjax: true
 ---
 
 > 前言：编程语法的词法结构是一套基本规则，规定如何使用这门语言编写程序。同时本篇讲解JavaScript的类型、值和变量

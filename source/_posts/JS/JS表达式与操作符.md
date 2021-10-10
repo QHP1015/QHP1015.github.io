@@ -4,6 +4,7 @@ author: 从此在回忆里
 date: 2021-10-10 08:37:28
 tags: 前端学习
 categories: JavaScript
+mathjax: true
 ---
 
 ## 属性访问
