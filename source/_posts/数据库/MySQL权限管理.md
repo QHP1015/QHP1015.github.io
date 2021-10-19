@@ -25,6 +25,12 @@ MySQL可以使用3种不同类型的安全检查
 
 在执行数据库操作时，需要通过root用户账号登录，对整个MySQL服务器具有完全控制
 
+
+
+
+
+
+
 ### 权限表
 
 #### user表
@@ -88,6 +94,8 @@ SHOW VARIABLES LIKE 'hava_openssl';
 
 默认值都为0，表示无限制
 
+
+
 #### db表和host表
 
 db表存储用户对某个数据库的操作权限，决定用户能从哪个主机存取哪个数据库
@@ -132,6 +140,8 @@ tables_priv表字段：
 - table_priv：对表进行操作的权限，包括：select、insert、update、delete、create、drop、grant、reference、index、alter
 - column_priv：对表中的列进行操作的权限，包括：select、insert、update、reference
 
+
+
 #### columns_priv表
 
 columns_priv表可以对表中的某一列进行权限设置
@@ -145,6 +155,8 @@ columns_priv表字段：
 - column_name：指定对哪些数据列具有操作权限
 - timestamp：修改该记录的时间
 - column_priv：对表中的列进行操作的权限，包括：`select`、`insert`、`update`、`reference`
+
+
 
 #### procs_priv表
 
@@ -219,11 +231,15 @@ FLUSH PRIVILEGES
 
 ##### 使用`GRANT`语句新建普通用户
 
+
+
 #### 查看用户
 
 ```sql
 SELECT *FROM mysql.user WHERE host='host_name' AND user='user_name'			--*表示所有列，也可以指定特定列
 ```
+
+
 
 #### 修改用户账号
 
@@ -233,6 +249,8 @@ SELECT *FROM mysql.user WHERE host='host_name' AND user='user_name'			--*表示�
 RENAME USER old_user TO new_user [,old_user TO new_user] ……     --old_user：系统中已存在的用户账号
 																--new_user：新的MySQL用户账号
 ```
+
+
 
 #### 修改用户口令
 
@@ -259,6 +277,8 @@ UPDATE mysql.user SET password=password('123456') WHERE user='xiaohong' AND host
 ```
 
 每次修改后，需要使用`FLUSH PRIVILEGES`命令重新加载权限
+
+
 
 #### 删除用户
 
@@ -319,6 +339,8 @@ GRANT中priv_type值：
 
 授予列权限时，只能使用`select`、`insert`、`update`，权限还要加上列名列表`colimn_list`
 
+
+
 #### 权限的转移和限制
 
 通过`GRANT`语句中使用`WITH`子句实现
@@ -340,6 +362,8 @@ GRANT中priv_type值：
 --授予系统中的用户huang在数据库studentinfo的表student上每小时只能处理一条delete语句的权限
 GRANT delete ON studentinfo.student TO 'huang'@'localhost' WITH max_queries_per_hour 1;
 ```
+
+
 
 #### 权限的撤销
 

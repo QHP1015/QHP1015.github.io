@@ -26,6 +26,12 @@ categories: 数据库
   >
   > 使用视图可以向数据库表屏蔽应用程序
 
+
+
+
+
+
+
 ### 视图定义和管理
 
 #### 创建与使用：
@@ -47,6 +53,8 @@ SELECT *FROM 表1_view WHERE 字段1='给定值';
 
 当向与视图关联的表中添加新字段，查询时该视图不包括新字段；若与视图关联的表或视图被删除，该视图不能使用
 
+
+
 #### 删除
 
 删除视图时，只能删除视图的定义，不会删除数据
@@ -58,6 +66,8 @@ view_name[,view_name2]……
 ```
 
 一次可以删除多个视图
+
+
 
 #### 查看
 
@@ -73,12 +83,16 @@ SHOW CREATE VIEW '视图名'
 SELECT *FROM db_name.views WHERE table_name ='视图名'
 ```
 
+
+
 #### 修改
 
 ```sql
 CREATE OR REPLACE VIEW 视图名[{属性清单}] AS SELECT 语句 
 ALTER VIEW 视图名[{属性清单}] AS SELECT 语句
 ```
+
+
 
 #### 更新
 
