@@ -24,7 +24,7 @@ categories: JavaScript
   let truearray = Array.from(arraylike)
   ```
 
-
+<!--more-->
 
 
 
