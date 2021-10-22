@@ -446,3 +446,325 @@ o.setName(0);              // !TypeError：尝试设置一个错误类型的值
 ```
 
 
+
+## 函数属性和方法
+
+函数使用 `typeof` 操作符返回字符串 `function`，但函数实际上是一种特殊的对象，因此也有属性和方法，甚至构造函数
+
+**`length` 属性**
+
+- 函数有一个只读的 `length` 属性，表示函数的元数，即函数在参数列表中声明的形参个数
+- 剩余形参不包含在 `length` 属性内
+
+
+
+**`name` 属性**
+
+- 函数有一个只读的 `name` 属性，表示定义函数时使用的名字
+- 若函数是未命名的，表示在第一次创建此函数时赋给该函数的变量名或属性名
+- 主要用于记录调试或排错消息
+
+
+
+**`prototype` 属性**
+
+- 除了箭头函数，所有函数都有一个 `prototype` 属性，这个属性引用原型对象的对象
+- 每个函数都有原型对象
+- 当函数被作为构造函数使用时，新创建的对象从这个原型对象继承属性
+
+
+
+**`call()` 和 `apply()` 方法**
+
+- `call()` 和 `apply()` 允许间接调用一个函数
+
+- `call()` 和 `apply()` 的第一个参数为要在其上调用这个函数的对象，即函数的调用上下文，在函数体内会成为 `this` 关键字的值，箭头函数调用这两个方法会忽略第一个参数
+
+  ```js
+  // 函数 f() 对象 o
+  f.call(o);
+  f.apply(o);
+  ```
+
+- `call()` 的后续参数会传给被调用的函数，`apply()` 传给函数的参数需要以数组的形式提供
+
+  ```js
+  f.call(o, 1, 2);
+  f.apply(o, [1,2]);
+  ```
+
+  
+
+**`bind()` 方法**
+
+- `bind()` 方法的主要目的是将函数绑定到对象
+
+  ```js
+  function f(y){ return this.x + y;}  // 需要绑定的函数
+  let o = { x: 1};                    // 要绑定的对象
+  let g = f.bind(o);                  // 调用g(x)会在o上调用f()
+  g(2)                                // => 3
+  let p = { x: 10, g};                // 作为这个对象的方法调用g()
+  p.g(2)                              // => 3：g仍然绑定到o，而非p
+  ```
+
+- 调用 `bind()` 最常见的目的是让非箭头函数变得像箭头函数，箭头函数从定义的环境中继承 `this` 值，且不能被 `bind()` 覆盖
+
+- `bind()` 方法也可以执行“部分应用”（柯里化），即在第一个参数之后传给 `bind()` 的参数也会随着 `this` 值一起被绑定
+
+  ```js
+  let sum = (x,y) => x + y;     
+  let succ = sum.bind(null,1);
+  succ(2)      // => 3：x绑定到1，2会传给参数y
+  
+  function f(y,z){ return this.x + y + z}
+  let g = f.bind({x: 1}, 2);      // 绑定this和y
+  g(3)         // => 6：this.x绑定到1，y绑定到2，z是3
+  ```
+
+  
+
+**`Function()` 构造函数**
+
+- `Function()` 构造函数可以接收任意多个字符串参数，其中最后一个参数是函数体的文本
+
+- 与函数字面量一样，`Function()` 构造函数创建的也是匿名函数
+
+- `Function()` 构造函数允许在运行时动态创建和编译 JavaScript 函数
+
+- `Function()` 构造函数创建的函数不使用词法作用域，而是始终编译为如同顶级函数一样
+
+  ```js
+  let scope = "global";
+  function constructFunction(){
+      let scope = "local";
+      return new Function("return scope");    // 不会捕获局部作用域
+  }
+  // 这行代码返回“global”，因为Function()构造函数返回的函数不使用局部作用域
+  constructFunction()()          // => "global"
+  ```
+
+
+
+
+
+
+
+## 函数式编程
+
+JavaScript 可以把函数作为对象来操作意味着可以在 JavaScript 中使用函数实编程技巧
+
+### 使用函数处理数组
+
+假设有一个数值数组，要求计算平均值和标准差，
+
+- 使用非函数式编程风格
+
+  ```js
+  let data = [1,1,3,5,5];
+  
+  // 计算平均值
+  let total = 0;
+  for(let i = 0; i < data.length; i++) total += data[i];
+  let mean = total/data.length;
+  
+  // 计算标准差，计算每个元素相对于平均值偏差的平方
+  total = 0;
+  for(let i = 0; i < data.length; i++){
+      let deviation = data[i] - mean;
+      total += deviation * deviation;
+  }
+  let stddev = Math.sqrt(total/(data.length-1));
+  ```
+
+- 使用函数式编程风格
+
+  ```js
+  // 先定义两个简单的函数
+  const sum = (x,y) => x+y;
+  const square = x => x*x;
+  
+  // 使用数组方法计算平均值和标准差
+  let data = [1,1,3,5,5];
+  let mean = data.reduce(sum)/data.length;    // mean == 3
+  let deviations = data.map(x => x-mean);
+  let stddev = Math.sqrt(deviations.map(square).reduce(sum)/(data.length-1));
+  stddec          // => 2
+  ```
+
+- 定义方法的函数版
+
+  ```js
+  // 定义 map() 和 reduce() 函数
+  const map = function(a,...args) { return a.map(...args);};
+  const reduce = function(a,...args) { return a.reduce(...args);};
+  
+  // 先定义两个简单的函数
+  const sum = (x,y) => x+y;
+  const square = x => x*x;
+  
+  // 使用数组方法计算平均值和标准差
+  let data = [1,1,3,5,5];
+  let mean = reduce(data,sum)/data.length;    
+  let deviations = map(data, x => x-mean);
+  let stddev = Math.sqrt(reduce(map(deviation,square),sum)/(data.length-1));
+  stddec        
+  ```
+
+
+
+### 高阶函数
+
+高阶函数即操作函数的函数，它接收一个或多个函数作为参数并返回一个新函数
+
+以下的 `mapper()` 函数接收一个函数参数并返回一个新函数
+
+```js
+// 返回一个函数，这个函数接收一个数组并对每个元素应用f
+// 返回每个返回值的数组
+// 比较这个函数与之前的map() 函数
+function mapper(f){
+    return a => map(a, f);
+}
+const increment = x => x+1;
+const incrementAll = mapper(increment);
+incrementAll([1,2,3])    // => [2,3,4]
+```
+
+以下这个高阶函数接收两个函数，返回一个新函数
+
+```js
+// 返回一个计算f(g(...))的新函数
+// 返回的函数h会把它接收的所有参数传给g，
+// 再把g的返回值传给f，然后返回f的返回值
+// f和g被调用时都使用与h被调用时相同的this值
+function compose(f, g){
+    return function(...args){
+        // 这里对f使用call是因为只给它传一个值
+        // 对g使用apply是因为正在传一个值的数组
+        return f.call(this, g.apply(this, args));
+    };
+}
+
+const sum = (x,y) => x+y;
+const square = x => x*x;
+compose(square, sum)(2,3)    // => 25,平方和
+```
+
+
+
+### 函数柯里化
+
+函数f的 `bind()` 方法返回一个新函数，这个新函数在指定的上下文中以指定的参数调用f，此时 `bind()` 方法在左侧部分应用函数，即传给 `bind()` 的参数会放在原始函数的参数列表的开头
+
+```js
+// 传给这个函数的参数会传到左侧
+function partialLeft(f, ...outerArgs){
+    return function(...innerArgs){                  // 返回这个函数
+        let args = [...outerArgs, ...innerArgs];    // 构建参数列表
+        return f.apply(this, args);                 // 通过它调用f
+    };
+}
+
+// 传给这个函数的参数会传到右侧
+function partialRight(f, ...outerArgs){
+    return function(...innerArgs){                  // 返回这个函数
+        let args = [...innerArgs, ...outerArgs];    // 构建参数列表
+        return f.apply(this, args);                 // 通过它调用f
+    };
+}
+
+// 这个函数的参数列表作为一个模板，这个参数列表中的 undefined值
+// 会被来自内部参数的值填充
+function partial(f, ...outerArgs){
+    return function(...innerArgs){   
+        let args = [...outerArgs];    	// 外部参数模板的局部副本
+        let innerIndex = 0;             // 下一个是哪个内部函数
+        // 循环遍历 args，用内部参数填充 undefined 值
+        for(let i = 0; i < args.length; i++){
+            if(args[i] === undefined) args[i] = innerArgs[innerIndex++];
+        }
+        // 现在把剩余的内部参数加进去
+        args.push(...innerArgs.slice(innerIndex));
+        return f.apply(this, args);   
+    };
+}
+
+// 下面是有3个参数的函数
+const f = function(x,y,z) { return x * (y -z);};
+// 以下3个部分应用的区别
+partialLeft(f, 2)(3, 4)            // => -2：绑定第一个参数：2 * (3 - 4)
+partialRight(f, 2)(3, 4)           // =>  6：绑定最后一个参数：3 * (4 - 2)
+partial(f, undefined, 2)(3, 4)     // => -6：绑定中间的参数：3 * (2 - 4)
+```
+
+以上的部分应用函数允许在已经定义的函数基础上轻松定义其他函数，如
+
+```js
+const increment = partialLeft(sum, 1);
+const cuberoot = partialRight(Math.pow, 1/3);
+cuberoot(increment(26))            // => 3
+```
+
+也可以将部分应用的函数与其他高阶函数组合，如通过组合与部分应用定义 `not()` 函数
+
+```js
+const not = partialLeft(compose, x => !x);
+const even = x => x % 2 === 0;
+const odd = not(even);
+const isNumber = not(isNaN);
+odd(3) && isNumber(2)    // => true
+```
+
+
+
+### 函数记忆
+
+在函数式编程中，缓存称为函数记忆
+
+以下代码展示了高阶函数 `memoize()` 可以接收一个函数参数，然后返回这个函数的记忆版
+
+```js
+// 返回f的记忆版
+// 只适用于f的参数都有完全不同的字符串表示的情况
+function memoize(){
+    const cache =new Map();    // cache保存在这个闭包中
+    
+    return function(...args){
+        // 创建参数的字符串版，以用作缓存键
+        let key = args.length + args.join("+");
+        if(cache.has(key)){
+            return cache.get(key);
+        }else{
+            let result = f.apply(this, args);
+            cache.set(key, result);
+            return result;
+        }
+    };
+}
+```
+
+这个 `memoize()` 函数创建一个新对象作为缓存使用，并将这个对象赋值给一个局部变量，从而让其（在闭包中）成为被返回的函数的私有变量。返回的函数将其参数数组转换为字符串，并使用该字符串作为缓存对象的属性。若缓存存在某个值，直接返回该值；否则，调用指定函数计算这些参数值，然后缓存这个值，最后返回这个值，以为为使用上述函数实例
+
+```js
+// 使用欧几里得算法返回两个整数的最大公约数
+function gcd(a,b){        // 省略了对a和b的类型检查
+    if(a < b){            // 开始时保证a ≥ b
+        [a, b] = [b, a];  
+    }
+    while(b !== 0){       // 欧几里得算法
+        [a, b] = [b, a%b];
+    }
+    return a;
+}
+
+const gcdmemo = memoize(gcd);
+gcdmemo(85, 187)          // => 17
+
+// 在编写记忆的递归函数时，通常希望递归记忆版，而非原始版
+const factorial = memoize(function(n){
+    return (n <= 1) ? 1 : n * factorial(n-1);
+});
+factorial(5)              // => 120：也为4、3、2和1缓存了值
+```
+
