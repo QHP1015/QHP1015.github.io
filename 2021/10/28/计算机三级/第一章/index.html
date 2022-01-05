@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="计算机网络的分类 局域网（LAN） 特点  覆盖有限的地理范围 提供高数据传输效率（10Mbps~10Gbps） 易于建立、维护与扩展  分类：  介质访问方法可分为介质式局域网与交换式局域网 传输介质类型可分为有线局域网与无线局域网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中小型网络系统总体规划与设计">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="计算机网络的分类 局域网（LAN） 特点  覆盖有限的地理范围 提供高数据传输效率（10Mbps~10Gbps） 易于建立、维护与扩展  分类：  介质访问方法可分为介质式局域网与交换式局域网 传输介质类型可分为有线局域网与无线局域网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/image-20210307191201810-16354230269251.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/image-20210322085836224-16354230269262.png">
+<meta property="article:published_time" content="2021-10-28T12:08:38.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/image-20210307191201810-16354230269251.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/","path":"2021/10/28/计算机三级/第一章/","title":"中小型网络系统总体规划与设计"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>中小型网络系统总体规划与设计 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">计算机网络的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">计算机网络结构的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%BF%E5%9F%9F%E7%BD%91%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="nav-text">广域网技术的发展（了解）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="nav-text">局域网技术的发展（了解）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%8E%E5%9F%9F%E7%BD%91%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-text">城域网技术的发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%B8%A6%E5%9F%8E%E5%9F%9F%E7%BD%91%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">宽带城域网的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="nav-text">逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-text">网络平台的层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BA%A4%E6%8D%A2%E5%B1%82%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-text">核心交换层的基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%87%E8%81%9A%E5%B1%82%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-text">汇聚层的基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E5%B1%82%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-text">接入层的基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="nav-text">三层结构思想：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%B8%A6%E5%9F%8E%E5%9F%9F%E7%BD%91%E7%BB%84%E5%BB%BA%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="nav-text">宽带城域网组建的基本原则（了解）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E5%92%8C%E8%BF%90%E8%90%A5%E5%AE%BD%E5%B8%A6%E5%9F%8E%E5%9F%9F%E7%BD%91%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">管理和运营宽带城域网的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">关键技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86"><span class="nav-text">网络管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8FQoS"><span class="nav-text">服务质量QoS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-text">用户管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E4%B8%8E%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="nav-text">IP 地址分配与地址转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%AE%BD%E5%B8%A6%E5%9F%8E%E5%9F%9F%E7%BD%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%96%B9%E6%A1%88"><span class="nav-text">构建宽带城域网的基本技术与方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ESDH%E7%9A%84%E5%9F%8E%E5%9F%9F%E7%BD%91%E6%96%B9%E6%A1%88"><span class="nav-text">基于SDH的城域网方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E10GE%E7%9A%84%E5%9F%8E%E5%9F%9F%E7%BD%91%E6%96%B9%E6%A1%88"><span class="nav-text">基于10GE的城域网方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%BC%B9%E6%80%A7%E5%88%86%E7%BB%84%E7%8E%AFRPR%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%8E%E5%9F%9F%E7%BD%91%EF%BC%88%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="nav-text">基于弹性分组环RPR技术的城域网（掌握）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="nav-text">网络接入技术与方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">各种接入技术的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%94%A8%E6%88%B7%E7%BA%BF-xDSL-%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="nav-text">数字用户线 xDSL 接入技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%BA%A4%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86%E5%90%88%E7%BD%91%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="nav-text">光纤同轴电缆合网接入技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%BA%A4%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="nav-text">光纤接入技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%BD%E5%B8%A6%E6%97%A0%E7%BA%BF%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="nav-text">宽带无线接入技术</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          中小型网络系统总体规划与设计
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:08:38" itemprop="dateCreated datePublished" datetime="2021-10-28T20:08:38+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="计算机网络的分类"><a href="#计算机网络的分类" class="headerlink" title="计算机网络的分类"></a>计算机网络的分类</h2><ul>
+<li><p>局域网（LAN）</p>
+<p>特点</p>
+<ul>
+<li>覆盖有限的地理范围</li>
+<li>提供高数据传输效率（10Mbps~10Gbps）</li>
+<li>易于建立、维护与扩展</li>
+</ul>
+<p>分类：</p>
+<ul>
+<li>介质访问方法可分为介质式局域网与交换式局域网</li>
+<li>传输介质类型可分为有线局域网与无线局域网</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<ul>
+<li><p>城域网（MAN）</p>
+<p>介于广域网与局域网之间的一种高速网络，覆盖范围为几十公里</p>
+</li>
+<li><p>广域网</p>
+<p>也称远程网，覆盖范围从几十公里到几千公里</p>
+<p>因特网是广域网中最大的一个，广域网包含因特网</p>
+</li>
+</ul>
+<h2 id="计算机网络结构的特点"><a href="#计算机网络结构的特点" class="headerlink" title="计算机网络结构的特点"></a>计算机网络结构的特点</h2><p>早期的广域网</p>
+<p>逻辑功能上分为两部分：资源子网和通信子网</p>
+<p>用户计算机接入</p>
+<p>用户计算机可以通过局域网方式连入，也可以通过电话交换网（<strong>PSTN</strong>）、有线电视网（<strong>CATV</strong>）、无线城域网（<strong>WMAN</strong>）、或无线局域网（<strong>WLAN</strong>）接入地区级主干网的城域网</p>
+<h2 id="广域网技术的发展（了解）"><a href="#广域网技术的发展（了解）" class="headerlink" title="广域网技术的发展（了解）"></a>广域网技术的发展（了解）</h2><ol>
+<li><p>广域网是一种公共数据网络</p>
+</li>
+<li><p>构建广域网的核心交换技术</p>
+<ul>
+<li>公共电话交换网PSTN</li>
+<li>综合业务数字网ISDN</li>
+<li>数字数据网DDN</li>
+<li>X.25 分组交换网</li>
+<li>帧中继（Frame Replay，FR）网</li>
+<li>异步传输模式（Asynchronous Transfer Mode，ATM）网</li>
+<li>GE（Gigabit Ethernet，千兆以太网）与10GE的光以太网（Optical Ethernet）</li>
+</ul>
+</li>
+</ol>
+<h2 id="局域网技术的发展（了解）"><a href="#局域网技术的发展（了解）" class="headerlink" title="局域网技术的发展（了解）"></a>局域网技术的发展（了解）</h2><p>三个方向：</p>
+<p>1.提高以太网的数据传输速率</p>
+<p>2.将一个大型局域网划分成多个用网桥或路由器互联的网络</p>
+<p>3.将共享介质方式改为交换方式。</p>
+<p>​    在交换式局域网的基础上，出现了虚拟局域网（Virtual LAN，VLAN）</p>
+<h2 id="城域网技术的发展"><a href="#城域网技术的发展" class="headerlink" title="城域网技术的发展"></a>城域网技术的发展</h2><p>宽带城域网的出现，使得传统的通信网络在概念、技术与应用上都发生了很多的变化。这些变化主要表现在</p>
+<ul>
+<li>局域网、城域网与广域网在技术上的界限变得越来越模糊了</li>
+<li>电信传输网技术与计算机网络技术的界限变得越来越模糊了</li>
+<li>电信服务业务与Internet应用的界限变得越来越模糊了</li>
+<li>电信传输网、计算机网络与广播电视网的界限变得越来越模糊了</li>
+</ul>
+<h2 id="宽带城域网的结构"><a href="#宽带城域网的结构" class="headerlink" title="宽带城域网的结构"></a>宽带城域网的结构</h2><h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>设计一个宽带城域网将涉及“三个平台和一个出口”，即<strong>网络平台</strong>、<strong>业务平台</strong>、<strong>管理平台</strong>与<strong>城市宽带出口</strong>等问题</p>
+<img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/image-20210307191201810-16354230269251.png" alt="image-20210307191201810" style="zoom:67%;">
+
+
+
+<h3 id="网络平台的层次结构"><a href="#网络平台的层次结构" class="headerlink" title="网络平台的层次结构"></a>网络平台的层次结构</h3><h4 id="核心交换层的基本功能"><a href="#核心交换层的基本功能" class="headerlink" title="核心交换层的基本功能"></a>核心交换层的基本功能</h4><ul>
+<li>核心交换层将多个汇聚层连接起来，<strong>为汇聚层的网络提供高速转发</strong>，为整个城域网提供一个高速、安全与<strong>具有 QoS 保障能力</strong>的数据传输环境</li>
+<li>核心交换层实现与主干网络的互联，<strong>提供城市的带宽 IP 数据出口</strong></li>
+<li>核心交换层提供带宽城域网的用户<strong>访问 Internet 所需要的路由服务</strong></li>
+</ul>
+<h4 id="汇聚层的基本功能"><a href="#汇聚层的基本功能" class="headerlink" title="汇聚层的基本功能"></a>汇聚层的基本功能</h4><ul>
+<li><strong>汇聚接入层的用户流量</strong>，进行数据分组传输的汇聚、转发、与交换</li>
+<li>根据汇聚接入层的用户流量，进行<strong>本地</strong>路由、过滤、流量均衡、Qos 优先级管理，以及安全控制、IP 地址转换、流量整形等处理</li>
+<li>根据处理结果把<strong>用户流量转发到核心交换层</strong>或<strong>本地进行路由处理</strong></li>
+</ul>
+<h4 id="接入层的基本功能"><a href="#接入层的基本功能" class="headerlink" title="接入层的基本功能"></a>接入层的基本功能</h4><ul>
+<li>接入层解决的是“最后一公里”的问题。通过各种接入技术，<strong>连接最终用户</strong>，为它所覆盖范围内的用户提供访问 Internet 以及其他的信息服务</li>
+</ul>
+<h4 id="三层结构思想："><a href="#三层结构思想：" class="headerlink" title="三层结构思想："></a>三层结构思想：</h4><ul>
+<li>上层负责下层的数据汇聚</li>
+<li>核心层提供出口与 QoS、汇聚本地路由，接入服务用户 </li>
+<li>核心层：主要承担高速数据交换的功能</li>
+<li>汇聚层：主要承担路由与流量汇聚的功能</li>
+<li>接入层：主要承担用户接入与本地流量控制的功能</li>
+<li>核心交换层 =&gt; 汇聚层 =&gt; 接入层</li>
+</ul>
+<h2 id="宽带城域网组建的基本原则（了解）"><a href="#宽带城域网组建的基本原则（了解）" class="headerlink" title="宽带城域网组建的基本原则（了解）"></a>宽带城域网组建的基本原则（了解）</h2><p>可运营性、<strong>可管理性</strong>、可盈利性、可扩展性</p>
+<p>宽带的城域网设备必须支持对用户的<strong>身份认证</strong>、<strong>使用权限认证</strong>和<strong>计费功能</strong>。业务管理要支持多ISP、基于IP的虚拟专网VPN等多种增值业务</p>
+<p>宽带城域网必须具备<strong>IP地址分配</strong>能力，能够支持动态和静态地址分配，支持网络地址转换<strong>NAT</strong>功能</p>
+<p>宽带城域网必须能够为用户提供<strong>带宽保证</strong>，实现<strong>流量工程</strong>，提供个性化用户策略的<strong>Qos保证</strong>。</p>
+<h2 id="管理和运营宽带城域网的关键技术"><a href="#管理和运营宽带城域网的关键技术" class="headerlink" title="管理和运营宽带城域网的关键技术"></a>管理和运营宽带城域网的关键技术</h2><h3 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h3><ol>
+<li>宽带管理</li>
+<li><strong>网络管理</strong></li>
+<li><strong>服务质量QoS</strong></li>
+<li><strong>用户管理</strong></li>
+<li><strong>IP 地址的分配与地址转换</strong></li>
+<li>多业务接入</li>
+<li>统计与计费</li>
+<li>网络安全</li>
+</ol>
+<h3 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h3><ol>
+<li><strong>带内网络管理是指利用传统的电信网络，通过数据通信网（ DCN ）或公共交换电话网（ PSTN ）拨号，对网络设备进行数据配置；</strong></li>
+<li><strong>带外网络管理是指利用 IP 网络及协议进行网络管理，是利用简单网络管理协议（ SNMP ）建立网络管理系统；</strong></li>
+<li><strong>对汇聚层一下采用带内管理，而对汇聚层及其以上设备采取带外管理；</strong></li>
+</ol>
+<h3 id="服务质量QoS"><a href="#服务质量QoS" class="headerlink" title="服务质量QoS"></a><strong>服务质量QoS</strong></h3><ul>
+<li><strong>在带宽城域网业务中有多媒体业务、数据业务与普通话的语音服务；网络服务质量表现在延时、抖动、吞吐量和丢包率等几个方面；</strong></li>
+<li>目前宽带城域网保证 QoS 要求的技术主要有：**资源预留(RSVP)<strong>、</strong>区分服务(DiffServ)<strong>、与</strong>多协议标记交换(MPLS)**。</li>
+</ul>
+<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><p>宽带城域网的用户管理应该包括用户认证与接入管理、计费管理等，<strong>能够为用户提供宽带保证，实现流量工程</strong>。</p>
+<h3 id="IP-地址分配与地址转换"><a href="#IP-地址分配与地址转换" class="headerlink" title="IP 地址分配与地址转换"></a>IP 地址分配与地址转换</h3><p>为了解决 IP 地址不足的问题，目前的<strong>基本方案是使用内部专用 IP 地址与网络地址转换（ NAT ）技术，只为宽带城域网的关键设备与特殊用户分配固定的公用 IP 地址</strong>。</p>
+<h2 id="构建宽带城域网的基本技术与方案"><a href="#构建宽带城域网的基本技术与方案" class="headerlink" title="构建宽带城域网的基本技术与方案"></a>构建宽带城域网的基本技术与方案</h2><h3 id="基于SDH的城域网方案"><a href="#基于SDH的城域网方案" class="headerlink" title="基于SDH的城域网方案"></a>基于SDH的城域网方案</h3><p>早期的SONET/SDH是为传统电信业务服务的，它并不适合于传输IP分组</p>
+<h3 id="基于10GE的城域网方案"><a href="#基于10GE的城域网方案" class="headerlink" title="基于10GE的城域网方案"></a>基于10GE的城域网方案</h3><p>光以太网是以太网与 DWDM 技术相结合的产物，其<strong>造价是SONET的1/5，是ATM的1/10</strong>。可运营光以太网的设备和线路必须符合典型网络 99.999% 的高运行可靠性，并具备以下特征</p>
+<ol>
+<li>能供<strong>根据终端用户的实际应用需求分配带宽</strong>，保证带宽资源充分、合理的应用</li>
+<li><strong>具有认证与授权功能</strong>，用户范文网络资源必须经过认证和授权，确保用户和网络资源的安全及合法使用</li>
+<li><strong>支持 MPLS（ 多协议标签交换 ）</strong>，具有一定的质量保证，<strong>提供分等级的 Qos 网络服务</strong></li>
+<li><strong>提供计费功能</strong>，能及时获得用户的上网时间记录和流量记录，支持按上网时间、用户流量计费，或提供包月计费方式，支持实时计费</li>
+<li><strong>支持 VPN 和防火墙</strong>，可以有效的保护网络安全</li>
+<li>能够方便、快速、灵活的适应用户和业务的扩展</li>
+</ol>
+<h3 id="基于弹性分组环RPR技术的城域网（掌握）"><a href="#基于弹性分组环RPR技术的城域网（掌握）" class="headerlink" title="基于弹性分组环RPR技术的城域网（掌握）"></a>基于弹性分组环RPR技术的城域网（掌握）</h3><p>弹性分组环是一种直接<strong>在光纤上高校传输IP分组</strong>的传输技术，它的工作基础是<strong>Cisco公司</strong>提出的<strong>动态分组传送</strong>（Dynamic Packet Transport, DPT）技术</p>
+<p>RPR 采用<strong>双环结构</strong>，有<strong>内环</strong>和<strong>外环</strong>。<strong>顺时针传输</strong>的光纤为<strong>外环</strong>，<strong>逆时针传输</strong>的光纤为<strong>内环</strong>。两环均可以用<strong>统计复用</strong>的方法传输 IP 分组，且可以实现“自愈环”的功能，<strong>均可以传输数据分组与控制分组</strong></p>
+<p>每一个结点都可以使用两个方向的光纤与相邻结点通信。这样做的目的除了<strong>高效地利用光纤带宽</strong>之外，还有一个目的是<strong>加速控制分组传输</strong>，<strong>提高环的可靠性</strong>，<strong>实行“环自愈”功能</strong>，保证城域网的系统可靠性与服务质量</p>
+<p>两个 RPR 节点之间的裸光纤的最大长度可达到 <strong>100km</strong></p>
+<ol>
+<li><strong>公平性好：</strong>RPR 环中<strong>每个节点都执行</strong> <strong>SRP 公平算法</strong>，是的节点之间能供获得平等的带宽，防止个节点因流量过大而照成环拥塞。同时，RPR 环还支持加权公平法则和入口、出口峰值速率限制，用于保证能够根据用户购买的宽带提供相应的服务</li>
+<li><strong>带宽的利用率高：RPR 采用双环结构传输数据分组和控制分组</strong>，<strong>并限制数据帧只在源结点与目的结点之间的光纤段上传输，当源节点成功发送一个数据帧之后，这个数据帧要由目的节点从环中收回</strong>。如此，该数据帧将不再占用下游段的环带宽，从而提高环带宽的利用率</li>
+<li><strong>保证服务质量：</strong>RPR 环对不同的业务数据分配不同的优先级，以保证高优先级信息的可靠传输，从而保证了网络服务质量</li>
+<li><strong>快速保护和恢复能力：</strong>RPR 有<strong>自愈环</strong>的功能，能够在<strong>50ms</strong>时间内，<strong>隔离出故障节点和光纤段</strong>，并可在没有专用带宽的前提下即能够提供 SDH 及的快速保护和恢复</li>
+</ol>
+<h2 id="网络接入技术与方法"><a href="#网络接入技术与方法" class="headerlink" title="网络接入技术与方法"></a>网络接入技术与方法</h2><p>目前，可以用作用户接入网的主要有三类：计算机网络、电信通信网与广播电视网</p>
+<p>“三网融合”——计算机网络、电信通信网与电视通信网</p>
+<ul>
+<li>从用户接入角度：用户接入可以分为接入技术与接入方式两种类型，其中接入方式与用户工作环境与需求相关</li>
+<li>从技术实现的角度，目前宽带接入技术主要有：<strong>数字用户线（ xDSL ）技术</strong>、<strong>光纤同轴电缆混合网（ HFC ）技术</strong>、<strong>光纤接入技术</strong>、<strong>局域网接入技术</strong>以及<strong>无线接入技术</strong>。其中，无线接入又可以分为无线局域网接入、无线城域网接入与无线 AD hoc 接入</li>
+</ul>
+<h2 id="各种接入技术的特点"><a href="#各种接入技术的特点" class="headerlink" title="各种接入技术的特点"></a>各种接入技术的特点</h2><h3 id="数字用户线-xDSL-接入技术"><a href="#数字用户线-xDSL-接入技术" class="headerlink" title="数字用户线 xDSL 接入技术"></a>数字用户线 xDSL 接入技术</h3><p>xDSL 中 x 的意思是表示它的不同类型,例如，可以理解 x 是 A、H 或 RA 等，他们对应于不同的数字用户线技术。xDSL 技术根据上行（ 用户到交换局 ）和下行（ 交换局到用户 ）的速率是否相同可分为<strong>速率对称型</strong>和<strong>速率非对称型</strong>两种</p>
+<ul>
+<li>非对称数字用户线（ Asymmetric Digital Subscriber Line , <strong>ADSL</strong> ）</li>
+<li>过比特率数字用户线（ High bitrate DSL, <strong>HDSL</strong> ）</li>
+<li>速率自适应数字用户线（ Rate adaptive DSL, <strong>RADSL</strong> ）</li>
+<li>甚高比特率数字用户线（ Very high bit rate DSL, <strong>VDSL</strong> ）</li>
+</ul>
+<p>ADSL 的技术特点主要表现在如下几个方面</p>
+<ul>
+<li>能够利用现有的用户电话铜双绞线，以重叠和不干扰传统模拟电话业务的方式，即普通电话业务（POTS）的方式，提供高速数字业务。<strong>ADSL 允许用户在保留已有的模拟电话业务</strong>的同时，进行 Internet 在线访问、视频点播（VOD）的新型矿带业务</li>
+<li>该技术与本地环路由的实际参数以及用户电话铜双绞线的特性关系都不大，所以用户<strong>不需要进行电缆的重新铺设</strong></li>
+<li><strong>上行速率在 64 ~ 640Kbit/s，下行速率在 5000kbit/s ~ 7Mbit/s。用户根据需要自行选择</strong></li>
+</ul>
+<p>数据用户线 xDSL 接入技术的上行与下行速率：</p>
+<table>
+<thead>
+<tr>
+<th>xDSL</th>
+<th>上/下行速率（距离 5.5km）</th>
+<th>上/下行速率（ 距离 3.6km ）</th>
+<th>是否对称</th>
+<th>线对称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADSL</td>
+<td>64kbps/1.5Mbps</td>
+<td>640kbps/6Mbps</td>
+<td>否</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>HDSL</strong></td>
+<td><strong>1.554Mbps</strong></td>
+<td><strong>1.5554Mbps</strong></td>
+<td><strong>是</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>VDL</td>
+<td>2.3Mbps/51Mbps</td>
+<td>2.3Mbps/51Mbps</td>
+<td>否</td>
+<td>2</td>
+</tr>
+<tr>
+<td>RADSL</td>
+<td>64kbps/1.5Mbps</td>
+<td>640kbps/6Mbps</td>
+<td>否</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h3 id="光纤同轴电缆合网接入技术"><a href="#光纤同轴电缆合网接入技术" class="headerlink" title="光纤同轴电缆合网接入技术"></a>光纤同轴电缆合网接入技术</h3><p>光纤同轴混合网HFC是<strong>新一代有线电视网络</strong>。光纤同轴电缆混合网HFC是一个<strong>双向传输系统</strong>。光纤结点将光纤干线和同轴分配线相互连接</p>
+<ul>
+<li><p>光纤同轴电缆合网的基本结构</p>
+<ul>
+<li>是由电视头端、放大器、馈线与下引线组成。</li>
+<li>新一代的有限电视网络，是一个 <strong>双向传输系统</strong> ，光纤节点通过电缆下引线可以为 <strong>500 ~ 2000 个用户服务</strong></li>
+<li>改善了信号质量，提高了可靠性**，线路可以使用的宽带甚至可以达到 <strong>1GHz</strong></li>
+<li>从用户接入的角度来看，管线到 HFC 是经过双向改造的有限电视网络，是用户通过有线电视宽带接入 Internet 的一种重要的方式</li>
+<li>是使用 Cable Modem，通过有限电视宽带接入 Interent 的，数据传输速率可达 10 ~ 36Mbit/s</li>
+</ul>
+</li>
+<li><p>电缆调制解调器（Cable ModeM)</p>
+<p><strong>Cable Modem 把用户计算机与有线电视同轴电缆连接起来</strong>，不仅有调制解调功能，也带有加密解密和协议适配，以及网桥、路由器与集线器的部分功能。Cable Modem 利用 <strong>频分复用</strong> 的方法，<strong>将双向信道分为：从计算机终端到网络方向称为上行信道，从网络到计算机终端方向称为下行信道</strong>。上行信道带宽一般在<strong>200 kbps ~ 10 Mbps</strong></p>
+<ul>
+<li>从 <strong>数据传输</strong> 方向上，Cable Modem 可分为单向、双向两类</li>
+<li>从 <strong>传输方式</strong> 上，Cable Modem 可以分为<strong>双向对称式传输</strong>和<strong>非对称式传输两类</strong></li>
+<li>从 <strong>同步方式</strong> 上，Cable Modem 可分为类似于 Etheme 的同步交换和类似于 ATM 技术的一部交换两类</li>
+<li>从 <strong>接入的角度</strong>，Cable Modem 可分为个人 Cable Modem 和宽带多用户Cable Modem</li>
+<li>从 <strong>接口角度</strong>，Cable Modem 可分为外置式，内置式和交互式机顶盒 3 种</li>
+</ul>
+</li>
+</ul>
+<h3 id="光纤接入技术"><a href="#光纤接入技术" class="headerlink" title="光纤接入技术"></a>光纤接入技术</h3><p>APON（宽带无源光网络）是 ATMPON 的简称。<strong>ATM 是一种基于信元的传输协议</strong>，能为接入网 <strong>提供动态的宽带分配</strong>，从而更适合宽带数据业务的需求</p>
+<p>EPON（以太网无源光网络）是级语以太网的 PON 技术。EPON 采用点到多点结构、无源光纤传输，在以太网之上提供多种业务，<strong>EPON 是一种实现光纤到户的重要技术</strong></p>
+<ul>
+<li>无线光纤网（PON）是 ITU “基于无源光纤网的高速光纤接入系统”下进行标准化的</li>
+<li><strong>OC-3, 155.520Mbit/s 的对称业务</strong></li>
+<li><strong>上行 OC-3, 155.520Mbit/s; 下行 OC-12, 622.020Mbit/s 的不对称业务</strong></li>
+<li><strong>OC-(n) = 51.84 * n Mbps</strong></li>
+<li>传输介质可以是一根或两根单模光纤，双向传输通过波分复用（一根或两根光纤）实现</li>
+</ul>
+<h3 id="宽带无线接入技术"><a href="#宽带无线接入技术" class="headerlink" title="宽带无线接入技术"></a>宽带无线接入技术</h3><ol>
+<li><p>无线接入技术的分类与应用</p>
+<p><strong>近距离使用可以采用 IEEE802.11 标准的无线局域网技术</strong>（WLAN），它可以满足一定地理范围内的用户无线接入需求；<strong>远距离使用则采用 IEEE802.16 标准的 WiMAX</strong>，该技术可以在 50km 范围内提供最高 70Mbit/s 的传输速率</p>
+<p>IEEE802.11 标准于 IEEE802.16标准均针对无线环境，但由于适用对象不同，采用的技术于协议解决问题的重点也不相同IEEE802.11 标准的重点在解决局域网范围的移动节点通信问题，而 IEEE802.16 标准的重点是解决建筑物之间的数据通信问题**</p>
+</li>
+<li><p>IEEE802.11 标准与无线局域网</p>
+<ul>
+<li>IEEE802.11 定义了使用<strong>红外</strong>、<strong>调频扩频</strong>与<strong>直接序列扩频</strong>技术，数据传输速率为 1Mbit/s 或 2Mbit/s</li>
+<li><strong>IEEE802.11a 将传输速率提高到 53Mbit/s</strong></li>
+<li>IEEE802.11b 定义了使用直序扩频技术，传输速率为 1Mbit/s、2Mbit/s、5.5Mbit/s 与 11Mbit/s</li>
+</ul>
+</li>
+<li><p>IEEE802.16 标准与无线城域网</p>
+<ul>
+<li>按 IEEE802.16 标准建立采用 <strong>全双工、宽带通信方式</strong> 工作的基站</li>
+<li>IEEE802.16 标准规定了无线网络使用更高的、毫米波 <strong>10 ~ 66GHz</strong> 波段的频率</li>
+<li>在 IEEE802.16 标准上增加了两个物理层标准 IEEE802.16d 与 IEEE802.16e;</li>
+<li><strong>与 IEEE802.16 标准工作组对应的论坛组织是 WiMAX，最高的速率为 134Mib/s</strong></li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>协议标准</th>
+<th>使用频段</th>
+<th>信道条件</th>
+<th>固定/移动</th>
+<th>行到带宽（MHz）</th>
+<th>传输速度（Mbit/s）</th>
+<th>额定小区半径（Km）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IEEE802.16</td>
+<td>10~66GHz</td>
+<td>视距</td>
+<td>固定</td>
+<td>25/28</td>
+<td>32~134</td>
+<td>&lt;5</td>
+</tr>
+<tr>
+<td>IEEE802.16a</td>
+<td>&lt;11GHz</td>
+<td>非视距</td>
+<td>固定</td>
+<td>1.25/20</td>
+<td>75</td>
+<td>5~10</td>
+</tr>
+<tr>
+<td>IEEE802.16d-2004</td>
+<td>10~66GHz &lt; 11GHz&gt;</td>
+<td>视距 + 非视距</td>
+<td>固定</td>
+<td>1.25/20</td>
+<td>75</td>
+<td>5~10</td>
+</tr>
+<tr>
+<td>IEEE802.16e-2005</td>
+<td>&lt;6GHz</td>
+<td>非视距</td>
+<td>固定 移动 + 漫游</td>
+<td>1.25/20</td>
+<td>75</td>
+<td>若干</td>
+</tr>
+</tbody></table>
+<p><img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/image-20210322085836224-16354230269262.png" alt="image-20210322085836224"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/" rel="prev" title="JS模块">
+                  <i class="fa fa-chevron-left"></i> JS模块
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%8C%E7%AB%A0/" rel="next" title="中小型网络系统总体规划与设计">
+                  中小型网络系统总体规划与设计 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

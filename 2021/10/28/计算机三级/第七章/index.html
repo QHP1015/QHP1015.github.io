@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="路由器基础与基本命令 路由器是工作在网络层的设备。路由器负责将数据分组从源端主机经最佳路径传送到目的端主机 路由器主要用于同类或异类局域网以及局域网与广域网之间的互联 是连接不同逻辑子网的网络互连设备 路由器具有异构网络互连、广域网互连、和隔离广播信息的能力。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路由器及其配置">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="路由器基础与基本命令 路由器是工作在网络层的设备。路由器负责将数据分组从源端主机经最佳路径传送到目的端主机 路由器主要用于同类或异类局域网以及局域网与广域网之间的互联 是连接不同逻辑子网的网络互连设备 路由器具有异构网络互连、广域网互连、和隔离广播信息的能力。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/image-20210321100110936.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/image-20210321115048654.png">
+<meta property="article:published_time" content="2021-10-28T12:17:04.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.889Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/image-20210321100110936.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/","path":"2021/10/28/计算机三级/第七章/","title":"路由器及其配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>路由器及其配置 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">路由器基础与基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-text">路由器的基本功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="nav-text">路由表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E5%AE%9E%E4%BE%8B%E4%B8%80-%EF%BC%88cisco12000%E4%B8%8A%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A1%A8%EF%BC%89"><span class="nav-text">路由表实例一 （cisco12000上的路由表）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E5%AE%9E%E4%BE%8B%E4%BA%8C-%EF%BC%88%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%8A%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A1%A8%EF%BC%89"><span class="nav-text">路由表实例二 （三层交换机上的路由表）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">路由器的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-text">路由器的工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-text">路由器的基本操作与配置方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-text">路由器基本配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%85%AC%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-text">路由器公用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE%E3%80%81-Pos%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE"><span class="nav-text">接口配置、 Pos接口配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%88%97%E8%A1%A8"><span class="nav-text">访问控制列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEIP%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%88%97%E8%A1%A8"><span class="nav-text">配置IP访问控制列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-text">静态路由配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-text">动态路由配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RIP%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">RIP动态路由协议的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSPF%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">OSPF动态路由协议的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84DHCP%E9%85%8D%E7%BD%AE"><span class="nav-text">路由器的DHCP配置</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          路由器及其配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:17:04" itemprop="dateCreated datePublished" datetime="2021-10-28T20:17:04+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="路由器基础与基本命令"><a href="#路由器基础与基本命令" class="headerlink" title="路由器基础与基本命令"></a>路由器基础与基本命令</h2><ul>
+<li>路由器是工作在<strong>网络层</strong>的设备。路由器负责将数据分组从源端主机经<strong>最佳路径</strong>传送到目的端主机</li>
+<li>路由器主要用于同类或异类局域网以及局域网与广域网之间的互联</li>
+<li>是连接不同逻辑子网的网络互连设备</li>
+<li>路由器具有异构网络互连、广域网互连、和<strong>隔离广播信息</strong>的能力。</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="路由器的基本功能"><a href="#路由器的基本功能" class="headerlink" title="路由器的基本功能"></a>路由器的基本功能</h3><ol>
+<li>路由选择<ul>
+<li>路由选择就是路由器依据目的IP地址的网络地址部分，通过路由选择算法确定一条从源结点到达目的结点的最佳路由</li>
+<li>路由器通过路由协议、网络连接的情况及网络的性能来建立网络的拓结构</li>
+<li>路由算法为网络上的路由产生一个权值，路由器通过权值来选择最佳路由，权值越小，路由越佳</li>
+</ul>
+</li>
+<li><strong>分组转发</strong><ul>
+<li>对于一台路由器，其分组转发的任务即是在收到数据包后，根据<strong>路由表</strong>所提供的最佳路径的信息，将其转发给下一跳的路由器、目的端口或是缺省路由器</li>
+<li>缺省路由也称为缺省网关，它是与主机在同一个子网中的路由器端口的IP地址。</li>
+<li>路由器也有它的缺省网关。如果目标网络没有直接显示在路由表里的时候，那么就将数据分组传送给缺省网关。它一般指向与该路由器的一个端口的直接相连接的，并且通往Internet的出口路由器。</li>
+<li><strong>分组转发的思想</strong><ul>
+<li><strong>目的IP地址，全程不变。</strong></li>
+<li><strong>目的MAC地址，逐跳修改。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h3><p>路由器通过对路由表的查询来选择最佳路径的策略，路由表中保存着各种传输路径的相关数据，供路由选择时使用</p>
+<p>路由表的内容主要包括</p>
+<ul>
+<li>目的网络地址及其所对应的目的端口</li>
+<li>下一跳路由器的名字</li>
+<li>缺省路由的信息。</li>
+</ul>
+<p>路由表可以是由系统管理员固定设置好的，也可以由系统动态修改，可以由路由器自动调整，也可以由主机控制</p>
+<h4 id="路由表实例一-（cisco12000上的路由表）"><a href="#路由表实例一-（cisco12000上的路由表）" class="headerlink" title="路由表实例一 （cisco12000上的路由表）"></a>路由表实例一 （cisco12000上的路由表）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C   212.112.7.0/24 is directly connected, FastEthernet2/5</span><br><span class="line">​   212.112.37.0/30 is subnetted, 1 subnets</span><br><span class="line">C   212.112.37.16/24 is directly connected, POS3/0</span><br><span class="line">S   167.105.125.128 [1/0] via 202.112.7.1</span><br><span class="line">S*  0.0.0.0/0 [1/0] via 202.112.41.217</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/image-20210321100110936.png" alt="image-20210321100110936"></p>
+<p>路由表项</p>
+<ul>
+<li>路由源码<ul>
+<li>“C”: 直连</li>
+<li>“S”: 静态</li>
+<li>“I” : IGRP</li>
+<li>“O”: OSPF</li>
+<li>“R”: RIP</li>
+<li>“i”: IS-IS</li>
+<li>“B”: BGP</li>
+<li>“E”: EGP</li>
+</ul>
+</li>
+<li>第2列是目的网络地址和掩码</li>
+<li>第3列是目的端口或下一跳路由器地址，如果有下一跳路由器，则为下一跳路由器的IP地址</li>
+<li>缺省路由的路由表项<ul>
+<li>网络地址和掩码全是0</li>
+</ul>
+</li>
+</ul>
+<h4 id="路由表实例二-（三层交换机上的路由表）"><a href="#路由表实例二-（三层交换机上的路由表）" class="headerlink" title="路由表实例二 （三层交换机上的路由表）"></a>路由表实例二 （三层交换机上的路由表）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">O    222.29.2.0/24 [110/3] via 162.105.1.145,00:13:43,vlan1</span><br><span class="line">O    222.29.32.0/24 [110/3] via 162.105.1.145,00:13:43,vlan1</span><br><span class="line">     202.37.140.0/24 is variably subnetted, 3 subnets,2 masks</span><br><span class="line">O E2 202.37.140.40/289 [110/20] via 162.105.1.145,00:13:43,Vlan1</span><br><span class="line">O E1 202.37.140.0/28 [110/22] via 162.105.1.145,00:13:43,Vlan1</span><br></pre></td></tr></table></figure>
+
+<p>第2列表示路由类型</p>
+<ul>
+<li>E1：OSPF外部路由类型1</li>
+<li>E2：OSPF外部路由类型2</li>
+</ul>
+<p>第4列，如 [110/22]：<strong>110是管理距离，22是权值（metric）或成本</strong></p>
+<p><strong>管理距离</strong>用于衡量路由表中给定的路由信息源的“<strong>可信度</strong>”</p>
+<table>
+<thead>
+<tr>
+<th>路由协议</th>
+<th>管理距离</th>
+<th>路由协议</th>
+<th>管理距离</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>直接连接</td>
+<td>0</td>
+<td>静态路由</td>
+<td>1</td>
+</tr>
+<tr>
+<td>外部BGP</td>
+<td>20</td>
+<td>内部EIGRP</td>
+<td>90</td>
+</tr>
+<tr>
+<td>IGRP</td>
+<td>100</td>
+<td>OSPF</td>
+<td>110</td>
+</tr>
+<tr>
+<td>IS-IS</td>
+<td>115</td>
+<td>RIP</td>
+<td>120</td>
+</tr>
+<tr>
+<td>外部EIGRP</td>
+<td>170</td>
+<td>内部BGP</td>
+<td>200</td>
+</tr>
+<tr>
+<td>未知</td>
+<td>255</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>权值是路由器通过路径选择算法为网络上的路径产生的一个数字。路由器根据这个值确定最佳路径</p>
+<p>路由器常用的权值： （了解）</p>
+<ul>
+<li>带宽：链路的数据能力</li>
+<li>延迟：数据包从源送到目的所需的时间</li>
+<li>负载：链路上的活动数量</li>
+<li>可靠性：链路的差错率</li>
+<li>跳数：通过路由器的数量</li>
+<li>滴答数：用IBM PC的时钟滴答计数延迟</li>
+<li>花费：cost，一般由管理员指定。</li>
+</ul>
+<h3 id="路由器的结构"><a href="#路由器的结构" class="headerlink" title="路由器的结构"></a>路由器的结构</h3><p><img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/image-20210321115048654.png" alt="image-20210321115048654"></p>
+<ul>
+<li>中央处理器<ul>
+<li>CPU是路由器的处理中心，CPU负责实现路由协议、路径选择计算、交换路由信息、查找路由表、分发路由表和维护各种表格，以及转发数据包等功能</li>
+<li>CPU的处理能力直接影响路由表查找事件、吞吐量和路由器的性能</li>
+</ul>
+</li>
+<li>内存<ul>
+<li>只读内存（Read Only Memory，ROM） <ul>
+<li>ROM中包括开机开机诊断程序、引导程序和操作系统软件</li>
+<li>不能修改其中保存的内容</li>
+</ul>
+</li>
+<li>随机存储器（RAM）<ul>
+<li>RAM是可读可写存储器。用来存储用户的数据包队列以及路由器在运行过程中产生的<strong>中间数据</strong>，如路由表、ARP缓冲区等</li>
+<li>RAM还用来存储路由器的运行配置文件</li>
+<li>当<strong>路由器被关闭或重新启动时，RAM中的内容都将丢失</strong></li>
+</ul>
+</li>
+<li>非易失性随机存储器（NVRAM）<ul>
+<li>NVRAM是可读可写存储器。是用来<strong>存储路由器的启动配置文件</strong></li>
+<li>在路由器断电时，其内容仍能保持</li>
+</ul>
+</li>
+<li>闪存（FLASH）<ul>
+<li>是可擦写的ROM。它主要负责<strong>保存操作系统的映像文件和一些微代码</strong></li>
+<li>在路由器断电时，其内容仍能保持。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由器的工作模式"><a href="#路由器的工作模式" class="headerlink" title="路由器的工作模式"></a>路由器的工作模式</h3><ol>
+<li><p>用户模式（User EXEC）</p>
+<ul>
+<li>当通过控制台或Telnet成功登录到路由器后，将会看到</li>
+<li>它是一种只读模式，用户可以浏览关于路由器的某些信息，但不能进行任何修改</li>
+<li>该模式默认的提示符为：<code>router&gt;</code></li>
+</ul>
+</li>
+<li><p>特权模式（Priviledged EXEC）</p>
+<ul>
+<li>在用户EXEC模式提示符后键入enable命令并按提示输入使能口令后将进入特权模式</li>
+<li>可以管理系统时钟、进行错误检测、查看和保存配置文件、清楚闪存、处理并完成路由器的冷启动等操作</li>
+<li>该模式不能对端口及网络协议进行配置</li>
+<li>该模式默认的提示符为：<code>router#</code></li>
+</ul>
+</li>
+<li><p>全局配置模式（Global Configuration）</p>
+<ul>
+<li>在特权EXEC模式下，通过键入<code>configure terminal</code>命令可以进入</li>
+<li>全局配置模式用于配置路由器的全局性的参数（主机名、口令、TFTP服务器、静态路由、访问控制列表等），更改已有配置等</li>
+<li>全局配置模式的默认提示符为:<code>router(config)#</code></li>
+</ul>
+</li>
+<li><p>其他配置模式：包括接口配置模式、虚拟终端配置模式、路由配置模式等</p>
+<ul>
+<li><p>接口配置模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router (config)#interface f0/12</span><br><span class="line">router（config-if）#</span><br></pre></td></tr></table></figure></li>
+<li><p>虚拟终端配置模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router (config)#line vty 0 15</span><br><span class="line">router（config-line）#</span><br></pre></td></tr></table></figure></li>
+<li><p>路由配置模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router (config)#router rip</span><br><span class="line">router（config-router）#</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>设置模式（Setup）</p>
+<ul>
+<li>当通过console端口进入一台刚出场的没有任何配置的路由器启动时会进入设置模式</li>
+<li>系统以对话框提示用户设置路由器，协助用户建立第一次的配置文件</li>
+</ul>
+</li>
+<li><p>RXBOOT模式</p>
+<ul>
+<li>RXBOOT模式是路由器的维护模式</li>
+<li>在密码丢失时，可以进入RXBOOT模式，以<strong>恢复密码</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="路由器的基本操作与配置方法"><a href="#路由器的基本操作与配置方法" class="headerlink" title="路由器的基本操作与配置方法"></a>路由器的基本操作与配置方法</h3><ul>
+<li><p>路由器的配置方式</p>
+<ul>
+<li><strong>AUX</strong>，通过<strong>远程拨号配置</strong>路由器</li>
+</ul>
+</li>
+<li><p>使用控制端口(Console)配置路由器</p>
+</li>
+<li><p>使用telnet配置路由器</p>
+<ul>
+<li><p>必备条件</p>
+<ol>
+<li>作为模拟终端的计算机与路由器都必须与网络连通，它们之间能够相互通信</li>
+<li>计算机必须有访问路由器的权限</li>
+<li>路由器必须预先配置好远程登录的密码</li>
+</ol>
+</li>
+<li><p>路由器的配置（08下）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router (config)#line vty 0 15</span><br><span class="line">router（config-line）#password 7 zzz307</span><br></pre></td></tr></table></figure></li>
+<li><p>远程登录的具体步骤</p>
+<ul>
+<li>进入“运行串口”，输入 <code>telnet 202.112.7.4</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用TFTP配置路由器（了解）</p>
+<ol>
+<li><p>在网络上必须配备一台计算机作为TFTP server,且必须安装并运行TFTP server软件。</p>
+</li>
+<li><p>路由器的操作步骤</p>
+<ul>
+<li><p>拷贝配置文件到TFTP server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router#</span><span class="bash">write network</span></span><br><span class="line">Remote host [ ]? 202.105.130.120  </span><br><span class="line">Name of configuration file to write [router-config]?   </span><br><span class="line">Write file router-config on host 202.105.130.120 ? [confirm] </span><br><span class="line">\################</span><br><span class="line">Writing router-config ……</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="路由器基本配置"><a href="#路由器基本配置" class="headerlink" title="路由器基本配置"></a>路由器基本配置</h2><ul>
+<li><p>配置主机名</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router（config）<span class="comment">#hostname router-phy</span></span><br></pre></td></tr></table></figure></li>
+<li><p>配置超级用户口令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router（config）#enable secret phy123</span><br><span class="line">Router（config）#enable password 7 phy123</span><br></pre></td></tr></table></figure></li>
+<li><p>配置系统时钟</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router#</span><span class="bash"> calendar <span class="built_in">set</span> hh:mm:ss &lt;1 -31&gt; MONTH &lt;1993-2035&gt;</span></span><br><span class="line">如：Router# calendar set 10:24:00 22 march 2007</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="路由器公用命令"><a href="#路由器公用命令" class="headerlink" title="路由器公用命令"></a>路由器公用命令</h2><ul>
+<li><p>退出命令（exit）</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Router（config-if）#exit</span><br><span class="line">Router（config）#exit</span><br><span class="line"><span class="meta">Router#</span><span class="bash"></span></span><br><span class="line"><span class="bash">Router（config-if）<span class="comment">#end</span></span></span><br><span class="line"><span class="meta">Router#</span></span><br></pre></td></tr></table></figure></li>
+<li><p>保存配置</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router#</span><span class="bash"> write memory            //保存到路由器的NVRAM中</span></span><br><span class="line"><span class="meta">Router#</span><span class="bash"> write network tftp      //保存到TFTP服务器中</span></span><br></pre></td></tr></table></figure></li>
+<li><p>删除配置</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router<span class="comment"># write erase</span></span><br></pre></td></tr></table></figure></li>
+<li><p>网络的基本检测命令</p>
+<ul>
+<li><p>telnet</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router&gt; telnet paris (或IP地址)</span><br></pre></td></tr></table></figure></li>
+<li><p>ping</p>
+</li>
+<li><p>trace</p>
+</li>
+<li><p>show命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router&gt;</span><span class="bash">show flash</span></span><br><span class="line"><span class="meta">Router&gt;</span><span class="bash">show clock</span></span><br><span class="line"><span class="meta">Router&gt;</span><span class="bash">show version</span></span><br><span class="line"><span class="meta">Router&gt;</span><span class="bash">show configuration</span></span><br><span class="line"><span class="meta">Router#</span><span class="bash"> show ip route          //注意模式与命令的拼写</span></span><br><span class="line"><span class="meta">Router#</span><span class="bash"> show ip protocols</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="接口配置、-Pos接口配置"><a href="#接口配置、-Pos接口配置" class="headerlink" title="接口配置、 Pos接口配置"></a>接口配置、 Pos接口配置</h2><ul>
+<li><p>路由器接口的基本配置 </p>
+<ol>
+<li><p>配置接口描述信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router（config）#int g6/0</span><br><span class="line">Router（config-if）#description to-beijing </span><br></pre></td></tr></table></figure></li>
+<li><p>配置接口带宽</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router（config）#int POS3/0</span><br><span class="line">Router（config-if）#bandwidth 2500000 (设置接口带宽为2.5Gbps)</span><br></pre></td></tr></table></figure></li>
+<li><p>配置接口的IP地址</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router（config-if）<span class="comment">#ip add 202.112.7.249 255.255.255.252</span></span><br></pre></td></tr></table></figure></li>
+<li><p>接口的开启与关闭</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router（config-if）<span class="comment">#shutdown</span></span><br><span class="line">Router（config-if）<span class="comment">#no shutdown</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>局域网接口配置</p>
+<ol>
+<li><p>配置标准以太网接口（Ethernet）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Router（config）# interface Ethernet0 </span><br><span class="line">Router（config-if）# description TO Beijing </span><br><span class="line">Router（config-if）# ip address 202.112.7.4 255.255.255.0 </span><br><span class="line">Router（config-if）# bandwidth 10000 </span><br><span class="line">Router（config-if）# no shutdown </span><br><span class="line">Router（config-if）# exit</span><br></pre></td></tr></table></figure></li>
+<li><p>配置快速以太网接口（Fast Ethernet)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Router（config）# interface f2/1 </span><br><span class="line">Router（config-if）# description TO BEIJING </span><br><span class="line">Router（config-if）# ip address 202.111.41.145.255.255.255.240 </span><br><span class="line">Router（config-if）# bandwidth 100000</span><br><span class="line">Router（config-if）# duplex full </span><br><span class="line">Router（config-if）# no ip directed-broadcast </span><br><span class="line">Router（config-if）# no ip proxy-arp </span><br><span class="line">Router（config-if）# no shutdown </span><br><span class="line">Router（config-if）# exit </span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>广域网接口配置</p>
+<ol>
+<li><p>配置异步串行口(用于连接modem，为用户提供<strong>拨号上网服务</strong>)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Router（config）<span class="comment"># interface a1（异步口，以a开头）</span></span><br><span class="line">Router（config-if）<span class="comment"># ip unnumbered ethernet0 </span></span><br><span class="line">Router（config-if）<span class="comment"># Encapsulation ppp （不能封装为HDLC）</span></span><br><span class="line">Router（config-if）<span class="comment"># Async default ip address 202.112.7.129 </span></span><br><span class="line">Router（config-if）<span class="comment"># Async dynamic routing </span></span><br><span class="line">Router（config-if）<span class="comment"># Async mode interactive </span></span><br><span class="line">Router（config-if）<span class="comment"># no shutdown </span></span><br><span class="line">Router（config-if）<span class="comment"># Exit </span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>配置同步串行口</strong></p>
+<p>高速同步串行接口类型是Serial，可简写为s。它主要用于<strong>DDN专线、帧中继、卫星、微波等广域网连接</strong></p>
+<p>需要配置的参数主要有接口带宽、接口协议和接口的IP地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Router（config）# Interface s1/1 （同步口，以s开头）</span><br><span class="line">Router（config-if）# Description TOBEIJING </span><br><span class="line">Router（config-if）# Bandwidth 2048 （带宽为2M）</span><br><span class="line">Router（config-if）# Ip address 212.112.41.81 255.255.255.252 </span><br><span class="line">Router（config-if）# Encapsulation hdlc （封装HDLC或PPP协议，HDLC为缺省）</span><br><span class="line">Router（config-if）# No ip directed-broadcast </span><br><span class="line">Router（config-if）# No ip proxy-arp </span><br><span class="line">Router（config-if）# No shutdown </span><br><span class="line">Router（config-if）# Exit </span><br></pre></td></tr></table></figure></li>
+<li><p><strong>配置POS接口</strong>（综合题）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Router（config）# Interface POS3/0 </span><br><span class="line">Router（config-if）# Description TO BEIJING </span><br><span class="line">Router（config-if）# Bandwidth 2500000 （单位是Kbps）</span><br><span class="line">Router（config-if）# Ip address 212.14.37.18 255.255.255.252 </span><br><span class="line">Router（config-if）# Crc 32 （可选的CRC校验位是16和32）</span><br><span class="line">Router（config-if）# Pos framing sdh （可选帧格式是SDH和SONET）</span><br><span class="line">Router（config-if）# No ip directed-broadcast </span><br><span class="line">Router（config-if）# Pos flag sls0 2</span><br></pre></td></tr></table></figure>
+
+<p> <strong>（sls0=00表示是SONET帧数据，sls0＝10（十进制2）表示是SDH帧）</strong></p>
+</li>
+<li><p>loopback接口配置</p>
+<p>loopback接口没有一个实际的物理接口与之相对应，也没有与其他网络节点相连接的物理链路</p>
+<p>它是一个<strong>虚拟的接口</strong>，loopback接口号的有效值为<strong>0~2147483647</strong></p>
+<p>主要作用是他作为一台路由器的管理地址，使网络管理员可以随时登录到路由器上，对路由器进行配置管理</p>
+<p>它还可以作为动态路由协议ospf和bgp的router id ，使路由器功能更加稳定可靠</p>
+<p>每台路由器上都配置一个环回接口，它<strong>永远处于激活状态</strong></p>
+<p>网络管理员为loopback接口分配一个IP地址作为管理地址，其<strong>掩码应为255.255.255.255</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Router（config）<span class="comment"># Int loopback 0 </span></span><br><span class="line">Router（config-if）<span class="comment"># Ip address 192.168.1.1 255.255.255.255 （掩码一定为255.255.255.255）</span></span><br><span class="line">Router（config-if）<span class="comment"># No ip route-cache </span></span><br><span class="line">Router（config-if）<span class="comment"># No ip mroute-cache </span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h2 id="访问控制列表"><a href="#访问控制列表" class="headerlink" title="访问控制列表"></a>访问控制列表</h2><ul>
+<li>IP访问控制列表的主要功能<ul>
+<li>通过灵活地增加访问控制列表，ACL可以当作一种网络控制的有力工具，用来过滤流入和流出路由器接口的数据包</li>
+</ul>
+</li>
+<li>IP访问控制列表的过滤准则<ul>
+<li>过滤源地址或目的地址</li>
+<li>过滤端口号</li>
+<li>过滤协议（ICMP、TCP、UDP）</li>
+</ul>
+</li>
+<li>访问控制列表的分类<ul>
+<li>标准访问控制列表：只能检查数据包的<strong>源地址</strong>。表号的范围是：<strong>1-99</strong>，<strong>扩展后是1300-1999</strong></li>
+<li>扩展访问控制列表：检查数据包的<strong>源地址与目的地址</strong>。根据源网络，目的网络，子网掩码，主机的ip地址决定数据包的过滤</li>
+<li>该列表还可以检查指定的<strong>协议</strong>以及<strong>端口号</strong>，表号范围是<strong>100-199</strong>，<strong>扩展后是2000-2699</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="配置IP访问控制列表"><a href="#配置IP访问控制列表" class="headerlink" title="配置IP访问控制列表"></a>配置IP访问控制列表</h4><ol>
+<li>首先在全局配置模式下定义访问列表，然后将其应用到接口中，使通过该接口的数据包需要进行相应的匹配，然后决定被通过还是拒绝</li>
+<li>并且访问列表语句按顺序自上向下开始匹配数据包</li>
+<li>如果一个数据包头与访问权限表的某一语句不匹配，则继续检测列表中的下一个语句</li>
+<li>在执行到访问列表的最后，还没有与其相匹配的语句，数据包将被隐含的“拒绝”语句所拒绝</li>
+</ol>
+<p>ACL语句的顺序非常重要。若要允许除202.204.4.2意外的所有源地址通过路由器，需要先配置“deny 202.202.4.2”再配置“permit any”</p>
+<ul>
+<li><p>配置访问控制列表的两个重要参数</p>
+<ul>
+<li>表号和名字<ul>
+<li>表号是用来标识或是引用某个访问控制列表</li>
+<li>访问控制列名的名字用字符串来表示</li>
+</ul>
+</li>
+<li>通配符掩码<ul>
+<li>访问控制列表的通配符掩码是一个32bit的数字字符串，它点分成4个8位，每组包含8bit</li>
+<li>在通配符掩码位中，表示形式与IP地址的子网掩码相同</li>
+<li>它实际上即是<strong>子网掩码的反码</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>配置IP访问控制列表</strong></p>
+<ul>
+<li><p><strong>配置标准访问控制列表</strong></p>
+<p>在全局模式下，命令格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access-list access-list-number &#123;permit | deny&#125; source wildcard-mask</span><br></pre></td></tr></table></figure></li>
+<li><p>配置扩展访问控制列表</p>
+<ol>
+<li><p>使用access-list命令</p>
+<p>在全局配置模式下，命令格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access-list access-list-number &#123;permit | deny&#125; protocol source wildcard-mask destination wildcard-mask [operator] [operand]</span><br></pre></td></tr></table></figure>
+
+<p>其中：operator(操作)，操作有“lt”（小于）、“gt”（大于）、“eq”（等于）、“neq”(不等于)、operatand（操作数），指的是端口号</p>
+</li>
+<li><p>使用ip access-list命令</p>
+<p>在全局配置模式下，命令格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip access-list extended | standard access-list-number | name</span><br></pre></td></tr></table></figure>
+
+<p>在扩展或标准访问控制列表模式下(如：Router(config-ext-nacl)#)，配置过滤规则，命令格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permit | deny protocol source wildcard-mask destination wildcard-mask [operator] [operand]</span><br></pre></td></tr></table></figure></li>
+<li><p>用名字标识访问控制列表的配置方法</p>
+<p>在全局配置模式下，命令格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip access-list extended | standard access-list-number | name</span><br></pre></td></tr></table></figure>
+
+<p>在扩展或标准访问控制列表模式下（如：Router(config-ext-nacl)#）,配置过滤准则，命令格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permit|deny protocol <span class="built_in">source</span> wildcard-mask destination wildcard-mask [operator] [operand]</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="静态路由配置"><a href="#静态路由配置" class="headerlink" title="静态路由配置"></a>静态路由配置</h2><ul>
+<li><p>静态路由的配置方法</p>
+<p>Router（config）# <strong>ip route</strong> &lt;**目的网络地址**&gt;&lt;**子网掩码**&gt;&lt;**下一跳路由器的IP地址**&gt; </p>
+<p>如：<code>Router（config）# ip route 59.65.96.0 255.255.240.0 222.112.37.1</code></p>
+</li>
+<li><p>静态默认路由的配置方法</p>
+<p>默认路由指路由器对接收的数据包找不到匹配路由表项时，如果路由表中有默认路由，路由器按默认路由的下一跳地址转发数据包</p>
+<p>Router（config）# ip route <strong>0.0.0.0 0.0.0.0</strong> &lt;下一跳路由器的IP地址&gt;</p>
+</li>
+</ul>
+<h2 id="动态路由配置"><a href="#动态路由配置" class="headerlink" title="动态路由配置"></a>动态路由配置</h2><h3 id="RIP动态路由协议的配置"><a href="#RIP动态路由协议的配置" class="headerlink" title="RIP动态路由协议的配置"></a>RIP动态路由协议的配置</h3><p>RIP路由协议只依据路由器<strong>跳数</strong>（hop数）决定最佳路径，不考虑带宽、延时和其他因素</p>
+<p>具有<strong>最小跳数值的路径为”最优”路径</strong>。RIP限制最大跳数为<strong>15</strong>，如果为16，意味着路径不可达</p>
+<p>另外，RIP在路由更新报文中部携带子网掩码信息，不支持VLSM。RIP定时更新路由周期为30秒。</p>
+<p>RIP有两个版本：v1和v2。版本2提供了VLSM，多点广播路由更新和路由更新认证等新功能</p>
+<ul>
+<li><p><strong>RIP的基本配置</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router(config)#</span><span class="bash">router rip</span></span><br><span class="line"><span class="meta">Router(config-router)#</span><span class="bash">network 159.105.0.0</span></span><br><span class="line"><span class="meta">Router(config-router)#</span><span class="bash">network 212.112.7.0（网络地址写类地址，主机号都为0）</span></span><br></pre></td></tr></table></figure></li>
+<li><p>RIP的高级配置</p>
+<ul>
+<li><p>配置被动接口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router(config)<span class="comment">#router rip </span></span><br><span class="line">Router(config-router)<span class="comment">#passive-interface ethernet 0</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>配置路由过滤</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Router(config)<span class="comment">#access-list 12 deny any</span></span><br><span class="line">Router(config)<span class="comment">#router rip</span></span><br><span class="line">Router(config-router)<span class="comment">#distribute-list 12 in ethernet0</span></span><br></pre></td></tr></table></figure></li>
+<li><p>配置管理距离</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router(config)#</span><span class="bash">router rip</span> </span><br><span class="line"><span class="meta">Router(config-router)#</span><span class="bash">distance 50</span></span><br></pre></td></tr></table></figure></li>
+<li><p>定义邻居路由器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router(config)#</span><span class="bash">router rip</span> </span><br><span class="line"><span class="meta">Router(config-router)#</span><span class="bash">neighbor 202.112.7.2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="OSPF动态路由协议的配置"><a href="#OSPF动态路由协议的配置" class="headerlink" title="OSPF动态路由协议的配置"></a>OSPF动态路由协议的配置</h3><ul>
+<li><p>OSPF的基本配置</p>
+<ul>
+<li><p>使用network命令定义参与OSPF的子网地址</p>
+<p>配置单个IP地址参与OSPF </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router (config) # router ospf 63 （进程号）</span><br><span class="line">Router (config-router) # network 131.107.25.1 0.0.0.0（反掩码） area 0 </span><br></pre></td></tr></table></figure>
+
+<p>网络地址参与OSPF </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # network 133.181.0.0 0.0.255.255 area 0</span><br></pre></td></tr></table></figure></li>
+<li><p>定义参与OSPF的子网地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # area 0 range 212.37.123.0 255.255.255.0 （正掩码）</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>常用OSPF参数的配置（了解）</p>
+<ul>
+<li><p>配置被动接口(包括路由器和第三层交换机的配置) </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # passive-interface Ethernet 0 </span><br><span class="line">Router (config-router) # passive-interface vlan37 </span><br></pre></td></tr></table></figure></li>
+<li><p>配置路由过滤</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Router (config) # access-list 12 deny any </span><br><span class="line">Router (config) # router ospf 63 </span><br><span class="line">Router (config-router) # distribute-list 12 in serial 0 </span><br></pre></td></tr></table></figure></li>
+<li><p>配置管理距离</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # distance 10 </span><br></pre></td></tr></table></figure></li>
+<li><p>配置引入外部路由到OSPF的参数</p>
+<p>配置OSPF引入外部路由的花费值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # redistribute metric 100 </span><br></pre></td></tr></table></figure>
+
+<p>配置引入外部路由时缺省的标记值</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) <span class="comment"># redistribute tag 10 </span></span><br></pre></td></tr></table></figure>
+
+<p>配置引入外部路由时缺省的外部路由类型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config-router) # redistribute connected metric-type 1 subnets </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="路由器的DHCP配置"><a href="#路由器的DHCP配置" class="headerlink" title="路由器的DHCP配置"></a>路由器的DHCP配置</h2><p>IP地址分配有<strong>静态分配</strong>和<strong>动态分配</strong>两种分配方式</p>
+<p>动态分配是使用动<strong>态主机配置协议（DHCP）</strong>，由网络站点提出DHCP请求，从DHCP服务器上自动获取一个IP地址与缺省网关、域名及域名服务器的IP地址等相关的TCP/IP属性的信息</p>
+<ol>
+<li><p>配置IP地址池的名称，并进入DHCP Pool配置模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router (config) # ip dhcp pool ttt </span><br></pre></td></tr></table></figure></li>
+<li><p>配置IP地址池的子网地址和子网掩码</p>
+<ul>
+<li><p>在DHCP Pool配置模式下，命令格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- network &lt;network-number&gt; [mask | /prefix-length]</span><br><span class="line"><span class="meta">Router(dhcp-config)#</span><span class="bash">network 201.23.98.0 255.255.255.0</span></span><br><span class="line"><span class="meta">Router(dhcp-config)#</span><span class="bash">network 201.23.98.0/24</span></span><br></pre></td></tr></table></figure></li>
+<li><p>配置不用于动态分配的IP地址（除外地址），命令格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip dhcp excluded-address low-address [high-address]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>排除从201.23.98.2到201.23.98.10的一段IP地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router(config)#</span><span class="bash">ip dhcp excluded-address 201.23.98.2 201.23.98.10</span></span><br></pre></td></tr></table></figure></li>
+<li><p>排除单个IP地址201.23.98.193</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Router(config)#</span><span class="bash">ip dhcp excluded-address 201.23.98.193</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置IP地址池的缺省网关，命令格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- default-router address [address2 ... address8]</span><br><span class="line"><span class="meta">Router(dhcp-config)#</span><span class="bash">default-router 201.23.98.1</span></span><br></pre></td></tr></table></figure></li>
+<li><p>配置IP地址池的域名系统</p>
+<ul>
+<li><p>配置IP地址池的域名</p>
+<p>在DHCP Pool配置模式下：</p>
+<p>命令格式：domain-name <name></name></p>
+<p>Router(dhcp-config)#domain-name pku.edu.cn</p>
+</li>
+<li><p>配置IP地址池的域名服务器的IP地址</p>
+<p>在DHCP Pool配置模式下：</p>
+<p>命令格式：dns-server address [address2 … address8]</p>
+<p>Router(dhcp-config)#dns-server address 212.105.129.27 212.105.129.26</p>
+</li>
+</ul>
+</li>
+<li><p>配置IP地址池的地址租约时间</p>
+<p>在DHCP Pool配置模式下： （注意单位）</p>
+<p>命令格式：lease {days [hours][minutes]|infinite}</p>
+<p>例：设置租约时间为5小时</p>
+<p>Router(dhcp-config)#lease 0 5</p>
+</li>
+<li><p>取消地址冲突记录日志</p>
+<p>在全局配置模式下：</p>
+<p>Router(config)#no ip dhcp conflict logging</p>
+</li>
+</ol>
+<p>一个完整的DHCP配置信息：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">no ip dhcp conflict logging</span><br><span class="line">ip dhcp exeluded-address 182.105.246.2 182.105.246.10</span><br><span class="line">ip dhcp exeluded-address 182.105.247.200 182.105.247.254 </span><br><span class="line">ip dhcp pool 246</span><br><span class="line">network 182.105.246.0 255.255.255.0</span><br><span class="line"> default-router 182.105.246.1</span><br><span class="line"> domain-name pku.edu.cn</span><br><span class="line"> dns-server 182.105.129.26 182.105.129.27 222.112.7.13</span><br><span class="line"> lease 0 5</span><br><span class="line">ip dhcp pool 247</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/" rel="prev" title="交换机及其配置">
+                  <i class="fa fa-chevron-left"></i> 交换机及其配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AB%E7%AB%A0/" rel="next" title="无线局域网设备安装与调试">
+                  无线局域网设备安装与调试 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

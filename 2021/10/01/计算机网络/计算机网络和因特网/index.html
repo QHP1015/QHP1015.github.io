@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="什么是因特网？ 边（通信链路）：  接入网链路：主机连接到互联网的链路 主干链路：路由器间的链路   节点：  主机及其上运行的应用程序 路由器、交换机等网络交换设备   协议：  控制信息的接受和发送">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络和因特网">
+<meta property="og:url" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="什么是因特网？ 边（通信链路）：  接入网链路：主机连接到互联网的链路 主干链路：路由器间的链路   节点：  主机及其上运行的应用程序 路由器、交换机等网络交换设备   协议：  控制信息的接受和发送">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210717161824910.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210720194639958.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721083115069.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721092802414.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721092815495.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722141359884.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722141543303.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722142941350.png">
+<meta property="article:published_time" content="2021-10-01T11:42:27.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.921Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="大学课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210717161824910.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/","path":"2021/10/01/计算机网络/计算机网络和因特网/","title":"计算机网络和因特网"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机网络和因特网 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%A0%E7%89%B9%E7%BD%91%EF%BC%9F"><span class="nav-text">什么是因特网？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%9E%84%E6%88%90%E6%8F%8F%E8%BF%B0"><span class="nav-text">具体构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%8F%8F%E8%BF%B0"><span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-text">网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%BE%B9%E7%BC%98"><span class="nav-text">网络边缘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%87%E7%94%A8%E7%BD%91%E7%BB%9C%E8%AE%BE%E6%96%BD%E7%9A%84%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="nav-text">采用网络设施的面向连接服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%87%E7%94%A8%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E7%9A%84%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="nav-text">采用基础设施的无连接服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A0%B8%E5%BF%83"><span class="nav-text">网络核心</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2"><span class="nav-text">电路交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2"><span class="nav-text">分组交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2VS%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2"><span class="nav-text">分组交换VS电路交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C%EF%BC%9A%E5%AD%98%E5%82%A8-%E8%BD%AC%E5%8F%91"><span class="nav-text">分组交换网络：存储-转发</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%BD%91"><span class="nav-text">接入网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%8F%E5%AE%85%E6%8E%A5%E5%85%A5"><span class="nav-text">住宅接入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#modem%EF%BC%88%E8%B0%83%E5%88%B6%E8%A7%A3%E8%B0%83%E5%99%A8%EF%BC%89"><span class="nav-text">modem（调制解调器）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DSL%EF%BC%88digital-subscriber-line%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%94%A8%E6%88%B7%E7%BA%BF%EF%BC%89"><span class="nav-text">DSL（digital subscriber line，数据用户线）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%BC%86%E7%BD%91%E7%BB%9C"><span class="nav-text">线缆网络</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FTTH%EF%BC%88Fiber-to-the-home%EF%BC%8C%E5%85%89%E7%BA%A4%E5%88%B0%E6%88%B7%EF%BC%89"><span class="nav-text">FTTH（Fiber to the home，光纤到户）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E6%8E%A5%E5%85%A5"><span class="nav-text">企业接入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E6%8E%A5%E5%85%A5"><span class="nav-text">无线接入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="nav-text">物理媒体</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E7%BB%9E%E7%BA%BF%EF%BC%88TP%EF%BC%89"><span class="nav-text">双绞线（TP）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86"><span class="nav-text">同轴电缆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%89%E7%BA%A4"><span class="nav-text">光纤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E9%93%BE%E8%B7%AF"><span class="nav-text">无线链路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Internet%E7%BB%93%E6%9E%84%E5%92%8CISP"><span class="nav-text">Internet结构和ISP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%BB%B6%E6%97%B6%E3%80%81%E4%B8%A2%E5%8C%85%E5%92%8C%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-text">分组延时、丢包和吞吐量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82%E6%AC%A1%E5%8F%8A%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">协议层次及服务模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1"><span class="nav-text">服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-text">服务类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%8D%8F%E8%AE%AE"><span class="nav-text">服务和协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%95%E5%85%83%EF%BC%88DU%EF%BC%89"><span class="nav-text">数据单元（DU）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E6%A0%88"><span class="nav-text">协议栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI-%E6%A8%A1%E5%9E%8B"><span class="nav-text">OSI 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-text">封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2"><span class="nav-text">历史</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络和因特网
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-01 19:42:27" itemprop="dateCreated datePublished" datetime="2021-10-01T19:42:27+08:00">2021-10-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="什么是因特网？"><a href="#什么是因特网？" class="headerlink" title="什么是因特网？"></a>什么是因特网？</h2><ul>
+<li><p>边（通信链路）：</p>
+<ul>
+<li>接入网链路：主机连接到互联网的链路</li>
+<li>主干链路：路由器间的链路</li>
+</ul>
+</li>
+<li><p>节点：</p>
+<ul>
+<li>主机及其上运行的应用程序</li>
+<li>路由器、交换机等网络交换设备</li>
+</ul>
+</li>
+<li><p>协议：</p>
+<ul>
+<li>控制信息的接受和发送</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<p>互联网是“网络的网络“，由网络通过网络互联设备连接的网络</p>
+<h3 id="具体构成描述"><a href="#具体构成描述" class="headerlink" title="具体构成描述"></a>具体构成描述</h3><ul>
+<li><p>数以亿计的、互联的计算设备：</p>
+<ul>
+<li>主机（端系统）</li>
+<li>运行网络应用程序</li>
+</ul>
+</li>
+<li><p>通信链路：</p>
+<ul>
+<li>光纤、同轴电缆、无限电、卫星</li>
+<li>传输速率 = 带宽（bps）</li>
+</ul>
+</li>
+<li><p>分组交换设备（转发分组）</p>
+<blockquote>
+<p>分组（packets）：端系统发送数据到另一端系统时形成的数据包</p>
+</blockquote>
+<ul>
+<li>路由器</li>
+<li>链路层交换机</li>
+</ul>
+</li>
+<li><p>因特网</p>
+<ul>
+<li><p>松散的层次结构、互联的ISP</p>
+<blockquote>
+<p>ISP（Internet Service Provider，因特网服务提供商）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>协议</p>
+<ul>
+<li><p>控制信息的接受和发送</p>
+</li>
+<li><p>TCP、IP、HTTP、FTP、PPP</p>
+<blockquote>
+<p>协议（protocol）定义了在两个或多个通信实体之间交换的报文的格式和顺序，以及报文发送或接收一条报文或其他事件所采取的动作</p>
+<p>Internet中所有的通信行为都受到协议制约</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Internet标准</p>
+<ul>
+<li>IETF（Internet Engineering Task Force，因特网工程任务组）研发</li>
+<li>RFC（Request For Comment，请求评论），IETF的标准文档</li>
+</ul>
+</li>
+</ul>
+<h3 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h3><ul>
+<li>使用通信设施进行通信的分布式应用</li>
+<li>通信基础设施为应用程序提供编程接口（通信服务）（socket interface，套接字接口）<ul>
+<li>将发送和接收数据的应用程序与互联网连接起来</li>
+<li>通信服务的方式<ol>
+<li>无连接不可靠服务（UDP提供）</li>
+<li>面向连接的可靠服务（TCP提供）</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><ul>
+<li>网络边缘<ul>
+<li>主机</li>
+<li>应用程序（客户端和服务器）</li>
+</ul>
+</li>
+<li>网络核心<ul>
+<li>互连的路由器</li>
+<li>网络的网络</li>
+</ul>
+</li>
+<li>接入网、物理媒体<ul>
+<li>有线或无线通信链路</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h3><ul>
+<li><p>端系统（主机）</p>
+<ul>
+<li>运行应用程序</li>
+<li>如Web、email</li>
+<li>在 “网络的边缘” </li>
+</ul>
+</li>
+<li><p>客户/服务器模式（C/S模式）</p>
+<ul>
+<li>客户端向服务器请求、接收服务</li>
+<li>如Web浏览器/服务器；email 客户端/服务器</li>
+</ul>
+</li>
+<li><p>对等（peer-peer，P2P ）模式</p>
+<ul>
+<li>很少（甚至没有）专门的服务器</li>
+<li>如 Gnutella、KaZaA、Emule</li>
+</ul>
+</li>
+</ul>
+<h4 id="采用网络设施的面向连接服务"><a href="#采用网络设施的面向连接服务" class="headerlink" title="采用网络设施的面向连接服务"></a>采用网络设施的面向连接服务</h4><p>目标：在端系统之间传输数据，应用进程通信前需要握手</p>
+<blockquote>
+<p>握手：在数据传输之前做好准备</p>
+<ul>
+<li>两个通信主机之间为连接建立状态</li>
+</ul>
+<p>TCP – 传输控制协议（ Transmission Control  Protocol ）[RFC 793]</p>
+<ul>
+<li>面向连接</li>
+<li>可靠地、按顺序地传送数据：确认和重传</li>
+<li>流量控制：发送方不会淹没接收方，发送方的速度会依据接收方调整</li>
+<li>拥塞控制：当网络拥塞时，发送方降低发送速率</li>
+</ul>
+<p>使用TCP的应用</p>
+<ul>
+<li>HTTP (Web)</li>
+<li>FTP (文件传 送)</li>
+<li>Telnet (远程登录)</li>
+<li>SMTP (email) </li>
+</ul>
+</blockquote>
+<p>[^有连接和面向连接的区别：连接状态的维持仅由端系统维持的是面向连接；路径上的节点都知道连接协议，并维持它，为有连接]: </p>
+<h4 id="采用基础设施的无连接服务"><a href="#采用基础设施的无连接服务" class="headerlink" title="采用基础设施的无连接服务"></a>采用基础设施的无连接服务</h4><p>目标：在端系统之间传输数据，使用无连接服务</p>
+<blockquote>
+<p>UDP – 用户数据报协议（User Datagram  Protocol） [RFC 768]</p>
+<ul>
+<li>无连接</li>
+<li>不可靠数据传输</li>
+<li>无流量控制</li>
+<li>无拥塞控制</li>
+</ul>
+<p>使用 UDP的应用</p>
+<ul>
+<li>流媒体</li>
+<li>远程会议</li>
+<li>DNS</li>
+<li>Internet电话</li>
+</ul>
+</blockquote>
+<h3 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h3><p>网络核心：路由器的网状网络</p>
+<p>网络传输方式</p>
+<ol>
+<li> 电路交换（circuit switching）：为每个呼叫预留一条专有电路：如电话网 </li>
+<li>分组交换（pocket switching）<ul>
+<li>将要传送的数据（报文）分成一个个单位： 分组</li>
+<li>将分组从一个路由器传到相邻路由器（hop），一段段最终从源端传到目标端</li>
+<li>每段：采用链路的最大传输能力（ 带宽）</li>
+</ul>
+</li>
+</ol>
+<h4 id="电路交换"><a href="#电路交换" class="headerlink" title="电路交换"></a>电路交换</h4><p>端到端的资源被分配给从源端到目标端的呼叫 “call”</p>
+<ul>
+<li>独享资源：不共享，每个呼叫一旦建立起来就能够保证性能</li>
+<li>如果呼叫没有数据发送，被分配的资源就会被浪费（no sharing）</li>
+<li>通常被传统电话网络采用</li>
+</ul>
+<p>为呼叫预留端-端资源</p>
+<ul>
+<li>预留链路带宽、交换能力</li>
+<li>专用资源：不共享</li>
+<li>保证性能</li>
+<li>要求建立呼叫连接</li>
+</ul>
+<p><strong>电路交换的复用</strong></p>
+<p>网络资源（如带宽）被分成片（piece）</p>
+<ul>
+<li>为呼叫分配片</li>
+<li>如果某个呼叫没有数据， 则其资源片处于空闲状态（不共享）</li>
+</ul>
+<p>复用方式</p>
+<ul>
+<li><p>频分（Frequency-division multiplexing，FDM）：将带宽可用通信范围进行划分</p>
+</li>
+<li><p>时分（Time-division  multiplexing，TDM）：将带宽划为T，一个大T划为若干个时隙（slat）</p>
+</li>
+<li><p>波分（Wave-division  multiplexing，WDM）：光纤通信，将光波段划分为小波段</p>
+<p><br><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210717161824910.png" alt="image-20210717161824910"></p>
+</li>
+</ul>
+<p>电路交换不适合计算机之间的通信的原因</p>
+<ol>
+<li>连接建立时间长</li>
+<li>计算机之间的通信有突发性，如果使用线路交换，则浪费的片较多，因为即使这个呼叫没有数据传递，其所占据的片也不能够被别的呼叫使用</li>
+<li>可靠性不高</li>
+</ol>
+<h4 id="分组交换"><a href="#分组交换" class="headerlink" title="分组交换"></a>分组交换</h4><p>在源和目的端之间，每个分组通过通信链路和分组交换机（路由器和链路层交换机）传送</p>
+<p>以分组为单位存储-转发方式</p>
+<ul>
+<li>网络带宽资源不再分为一个个片，传输时使用全部带宽</li>
+<li>主机之间传输的数据被分为一个个分组 </li>
+</ul>
+<p>资源共享，按需使用</p>
+<ul>
+<li><p>存储-转发：分组每次移动一跳（ hop ）</p>
+<ul>
+<li><p>在转发之前，节点必须收到整个分组</p>
+</li>
+<li><p>延迟比线路交换要大（接收到整个分组后再进行转发）</p>
+</li>
+<li><p>排队时间</p>
+<blockquote>
+<p>排队和延迟：如果到达速率&gt;链路的输出速率</p>
+<ul>
+<li>分组将会排队，等待传输</li>
+<li>如果路由器的缓存用完了，分组将会被抛弃，即丢包</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>转发表和路由选择协议</p>
+<ul>
+<li><p>转发: 将分组从路由器的输入链路转移到输出链路</p>
+<blockquote>
+<p>转发表（forwarding table）：用于将目的地址映射成为输出链路</p>
+</blockquote>
+</li>
+<li><p>路由: 决定分组采用的源到目标的路径（由路由算法决定）</p>
+<blockquote>
+<p>路由选择协议（routing protocol）：用于自动地设置转发表</p>
+</blockquote>
+</li>
+</ul>
+<p>分组交换采用的复用方式：统计多路复用（特殊的TDM），划分时间片的方式是不固定的</p>
+<h4 id="分组交换VS电路交换"><a href="#分组交换VS电路交换" class="headerlink" title="分组交换VS电路交换"></a>分组交换VS电路交换</h4><p>同样的网络资源，分组交换允许更多用户使用网络</p>
+<p>分组交换</p>
+<ol>
+<li>适合于对突发式数据传输<ul>
+<li>资源共享</li>
+<li>简单，不必建立呼叫</li>
+</ul>
+</li>
+<li>过度使用会造成网络拥塞：分组延时和丢失<ul>
+<li>对可靠的数据传输需要协议来约束：拥塞控制</li>
+</ul>
+</li>
+</ol>
+<h4 id="分组交换网络：存储-转发"><a href="#分组交换网络：存储-转发" class="headerlink" title="分组交换网络：存储-转发"></a>分组交换网络：存储-转发</h4><p>分组交换: 分组的存储转发一段一段从源端传到目标端 ，按照有无网络层的连接，分成：</p>
+<ol>
+<li><p>数据报网络</p>
+<ul>
+<li><p>分组的目标地址决定下一跳</p>
+</li>
+<li><p>在不同的阶段，路由可以改变</p>
+</li>
+<li><p>类似：问路</p>
+</li>
+<li><p>Internet</p>
+<blockquote>
+<p>数据报(datagram) 的工作原理</p>
+<ul>
+<li>在通信之前,无须建立起一个连接,有数据就传输</li>
+<li>每一个分组都独立路由（路径不一样,可能会失序）</li>
+<li>路由器根据分组的目标地址进行路由</li>
+<li>每个分组携带完整的目标地址，无网络层连接，路由器间不维护通信状态</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>虚电路网络</p>
+<ul>
+<li>每个分组都带标签（虚电路标识 VC ID），标签决定下一跳</li>
+<li>在呼叫建立时决定路径，在整个呼叫中路径保持不变</li>
+<li>路由器维持每个呼叫的状态信息</li>
+<li>X.25 和ATM</li>
+</ul>
+</li>
+</ol>
+<h3 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h3><ul>
+<li>住宅接入网络</li>
+<li>单位接入网络 （学校、公 司）</li>
+<li>无线接入网络</li>
+</ul>
+<h4 id="住宅接入"><a href="#住宅接入" class="headerlink" title="住宅接入"></a>住宅接入</h4><h5 id="modem（调制解调器）"><a href="#modem（调制解调器）" class="headerlink" title="modem（调制解调器）"></a>modem（调制解调器）</h5><ul>
+<li>将上网数据调制加载音频信号上， 在电话线上传输，在局端将其中的数据解调出来<ul>
+<li>调频</li>
+<li>调幅</li>
+<li>调相位</li>
+<li>综合调制</li>
+</ul>
+</li>
+<li>拨号调制解调器<ul>
+<li>56Kbps 的速率直接接入路由器（通常更低）</li>
+<li>不能同时上网和打电话：不能总是在线</li>
+</ul>
+</li>
+</ul>
+<h5 id="DSL（digital-subscriber-line，数据用户线）"><a href="#DSL（digital-subscriber-line，数据用户线）" class="headerlink" title="DSL（digital subscriber line，数据用户线）"></a>DSL（digital subscriber line，数据用户线）</h5><ul>
+<li>采用现存的到交换局DSLAM的电话线<ul>
+<li>DSL线路上的数据被传到互联网</li>
+<li>DSL线路上的语音被传到电话网</li>
+</ul>
+</li>
+<li>&lt; 2.5Mbps上行传输速率（通常 &lt; 1Mbps）</li>
+<li>&lt; 24Mbps下行传输速率（通常 &lt; 10Mbps）</li>
+<li>ADSL，非对称传输</li>
+</ul>
+<h5 id="线缆网络"><a href="#线缆网络" class="headerlink" title="线缆网络"></a>线缆网络</h5><p>有线电视信号线缆双向改造</p>
+<p>FDM：在不同频段传输不同信道的数据， 数字电视和上网数据（上下行，上行带宽共享）</p>
+<p>HFC（hybrid fiber coax，混合光纤同轴）</p>
+<ul>
+<li>非对称：最高30Mbps的下行传输速率，2Mbps 上行传输速率</li>
+</ul>
+<p>线缆和光纤网络将个家庭用户接入到 ISP 路由器</p>
+<p>各用户共享到线缆头端的接入网络</p>
+<ul>
+<li>与DSL不同，DSL每个用户一个专用线路到CO（central  office）</li>
+</ul>
+<h5 id="FTTH（Fiber-to-the-home，光纤到户）"><a href="#FTTH（Fiber-to-the-home，光纤到户）" class="headerlink" title="FTTH（Fiber to the home，光纤到户）"></a>FTTH（Fiber to the home，光纤到户）</h5><p>从CO（本地中心局）直接到家庭提供一条光纤路径</p>
+<h4 id="企业接入"><a href="#企业接入" class="headerlink" title="企业接入"></a>企业接入</h4><ul>
+<li>经常被企业或者大学等机构采用</li>
+<li>10Mbps，100Mbps，1Gbps，10Gbps传输率</li>
+<li>现在，端系统经常直接接到以太网络交换机上</li>
+</ul>
+<h4 id="无线接入"><a href="#无线接入" class="headerlink" title="无线接入"></a>无线接入</h4><p>各无线端系统共享无线接入网络端系统到无线路由器（通过基站或者接入点）</p>
+<ul>
+<li>无线LAN<ul>
+<li>建筑物内部</li>
+<li>802.11b/g（WiFi）: 11，54Mbps 传输速率</li>
+</ul>
+</li>
+<li>广域无线接入<ul>
+<li>由电信运营商提供 (cellular) , 10’s km</li>
+<li>1 到 10Mbps</li>
+<li>3G和4G：LTE</li>
+</ul>
+</li>
+</ul>
+<h3 id="物理媒体"><a href="#物理媒体" class="headerlink" title="物理媒体"></a>物理媒体</h3><p>Bit（比特）：在发送-接收对间传播</p>
+<p>物理链路：连接每个发送-接收对之间的物理媒体</p>
+<ul>
+<li>导引型媒体：有形介质，电波沿着固体媒体前行，如光缆、双绞铜线或同轴电缆。电波传的更远</li>
+<li>非导引型媒体：电波在空气或外层空间中传播，如无线局域网或数字卫星频道中</li>
+</ul>
+<h4 id="双绞线（TP）"><a href="#双绞线（TP）" class="headerlink" title="双绞线（TP）"></a>双绞线（TP）</h4><ul>
+<li>两根绝缘铜导线拧合</li>
+<li>5类：100Mbps 以太网，Gbps 千兆位以太网</li>
+<li>6类：10Gbps万兆以太网</li>
+<li>无屏蔽双绞线（Unshielded Twisted Pair ，UTP）</li>
+</ul>
+<h4 id="同轴电缆"><a href="#同轴电缆" class="headerlink" title="同轴电缆"></a>同轴电缆</h4><ul>
+<li>两根同轴的铜导线</li>
+<li>双向</li>
+<li>基带电缆<ul>
+<li>电缆上一个单个信道</li>
+<li>Ethernet</li>
+</ul>
+</li>
+<li>宽带电缆<ul>
+<li>电缆上有多个信道</li>
+<li>HFC</li>
+</ul>
+</li>
+</ul>
+<h4 id="光纤"><a href="#光纤" class="headerlink" title="光纤"></a>光纤</h4><ul>
+<li>光脉冲，每个脉冲表示一个 bit，在玻璃纤维中传输</li>
+<li>高速：点到点的高速传输（如10Gps-100Gbps传输速率 ）</li>
+<li>低误码率：在两个中继器之间可以有很长的距离，不受电磁噪声的干扰</li>
+<li>安全</li>
+</ul>
+<h4 id="无线链路"><a href="#无线链路" class="headerlink" title="无线链路"></a>无线链路</h4><ul>
+<li>开放空间传输电磁波，携带要传输的数据</li>
+<li>无需物理”线缆”</li>
+<li>双向</li>
+<li>强度与距离的平方成反比</li>
+<li>传播环境效应<ul>
+<li>反射</li>
+<li>吸收</li>
+<li>干扰</li>
+</ul>
+</li>
+</ul>
+<p><strong>无线链路类型</strong></p>
+<ul>
+<li>地面微波<ul>
+<li>e.g  up to 45Mbps channels</li>
+</ul>
+</li>
+<li>LAN （e.g，WiFi）<ul>
+<li>11Mbps, 54Mbps,540Mbps… </li>
+</ul>
+</li>
+<li>wide-area (e.g.，蜂窝)<ul>
+<li>3G cellular：数Mbps </li>
+<li>4G 10Mbps</li>
+<li>5G 数Gbps</li>
+</ul>
+</li>
+<li>卫星<ul>
+<li>每个信道Kbps 到45Mbps（或者多个聚集信道）</li>
+<li>270ms 端到端延迟</li>
+<li>同步静止卫星和低轨卫星（LEO）</li>
+</ul>
+</li>
+</ul>
+<h2 id="Internet结构和ISP"><a href="#Internet结构和ISP" class="headerlink" title="Internet结构和ISP"></a>Internet结构和ISP</h2><ul>
+<li>端系统通过接入ISPs (Internet Service Providers)连接到互联网——住宅，公司和大学的ISPs</li>
+<li>接入ISPs相应的必须是互联的<ul>
+<li>因此任何2个端系统可相互发送分组到对方</li>
+</ul>
+</li>
+<li>导致的“网络的网络”非常复杂<ul>
+<li>发展和演化是通过经济的和国家的政策来驱动的</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>若存在多个接入ISP（用户），将每两个ISPs直接相连，则不可扩展，需要$O（N^2）$连接</p>
+</li>
+<li><p>所以将每个接入ISP都连接到全局ISP（全局范围内覆盖），客户ISPs和提供者ISPs有经济合约</p>
+<blockquote>
+<p>竞争：但如果全局ISP是有利可为的业务，那会有竞争者 </p>
+<p>合作：通过ISP之间的合作可以完成业务的扩展，肯定会有互联，对等互联的结算关系</p>
+</blockquote>
+</li>
+<li><p>然后业务细分（全球接入和区域接入），区域网络将出现，用与将接入ISPs连接到全局ISPs</p>
+</li>
+<li><p>内容提供商网络（Internet Content Providers,ICP）可能会构建它们自己的网络，将它们的服务、内容更加靠近端用户，向用户提供更好的服务,减少自己的运营支出</p>
+<blockquote>
+<p>很多内容提供商(如：Google, Akamai )可能会部署自己的网络，在全球范围内建立数据中心机房（DC），自己铺设电缆或租用运营商电缆，DC之间由专用线缆连接，连接自己的在各地的DC，走自己的数据</p>
+<p>连接若干local ISP和各级（包括一层）ISP，更加靠近用户</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210720194639958.png" alt="image-20210720194639958"></p>
+<p>在网络的最中心，一些为数不多的充分连接的大范围网络（分布广、节点有限、 但是之间有着多重连接）</p>
+<ul>
+<li>“tier-1” commercial ISPs (如 Level 3, Sprint, AT&amp;T, NTT)，国家或者国际范围的覆盖</li>
+<li>content provider network (如Google): 将它们的数据中心接入ISP，方便周边用户的访问；通常私有网络之间用专网绕过第一层ISP和区域ISP</li>
+</ul>
+<p><strong>网络的网络</strong></p>
+<ul>
+<li><p>松散的层次模型</p>
+</li>
+<li><p>一个分组要经过许多网络</p>
+</li>
+<li><p>中心：第一层ISP（如UUNet, BBN/Genuity, Sprint,  AT&amp;T）国家/国际覆盖，速率极高</p>
+<ul>
+<li>直接与其他第一层ISP相连</li>
+<li>与大量的第二层ISP和其他客户网络相连</li>
+</ul>
+</li>
+<li><p>第二层ISP：更小些的 (通常是区域性的) ISP</p>
+<ul>
+<li>与一个或多个第一层ISPs，也可能与其他第二层ISP</li>
+</ul>
+</li>
+<li><p>第三层ISP与其他本地ISP</p>
+<ul>
+<li>接入网 (与端系统最近)</li>
+</ul>
+</li>
+</ul>
+<p><strong>ISP之间的连接</strong></p>
+<ul>
+<li><p>POP：高层ISP面向客户网络的接入点，涉及费用结算</p>
+<ul>
+<li><p>如一个低层ISP接入多个高层ISP，多宿（multi home）</p>
+<blockquote>
+<p>多宿：与两个或多个提供商ISP连接</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>对等接入：2个ISP对等互接，不涉及费用结算</p>
+</li>
+<li><p>IXP（因特网交换点）：多个对等ISP互联互通之处，通常不涉及费用结算</p>
+<ul>
+<li>对等接入</li>
+</ul>
+</li>
+<li><p>ICP自己部署专用网络，同时和各级ISP连接</p>
+</li>
+</ul>
+<h2 id="分组延时、丢包和吞吐量"><a href="#分组延时、丢包和吞吐量" class="headerlink" title="分组延时、丢包和吞吐量"></a>分组延时、丢包和吞吐量</h2><p>分组延时类型</p>
+<ol>
+<li>节点处理延时<ul>
+<li>检查 bit级差错</li>
+<li>检查分组首部和决定将分组导向何处</li>
+</ul>
+</li>
+<li>排队延时<ul>
+<li>在输出链路上等待传输的时间</li>
+<li>依赖于路由器的拥塞程度</li>
+</ul>
+</li>
+<li>传输延时<ul>
+<li>R = 链路带宽(bps)</li>
+<li>L = 分组长度(bits)</li>
+<li>将分组发送到链路上的时间 = L/R</li>
+<li>存储转发延时</li>
+<li>传输延时越短信道容量越小</li>
+</ul>
+</li>
+<li>传播延时<ul>
+<li>d = 物理链路的长度</li>
+<li>s = 在媒体上的传播速度 (通常为3x$10^8$ m/sec或2x$10^8$ m/sec)</li>
+<li>传播延时 = d/s</li>
+</ul>
+</li>
+</ol>
+<p>节点总延时：$d_{nodal}=d_{proc}+d_{queue}+d_{trans}+d_{prop}$</p>
+<ul>
+<li><p>$d_{proc}=$   处理延时，通常试微妙数量级或更少</p>
+</li>
+<li><p>$d_{queue}= $  排队延时，取决于拥塞程度</p>
+</li>
+<li><p>$d_{trans}= $  传输延时，= L/R，对低速率的链路而言很大（如拨号），通常为微秒级到毫秒级</p>
+</li>
+<li><p>$d_{prop}= $  传播延时，通常为几微秒到几百毫秒</p>
+</li>
+</ul>
+<p>排队延时</p>
+<ul>
+<li>R = 链路带宽（bps)）</li>
+<li>L = 分组长度（bits）</li>
+<li>a = 分组到达队列的平均速率</li>
+<li>流量强度 = La/R<ul>
+<li>La/R ~ 0: 平均排队延时很小</li>
+<li>La/R -&gt; 1: 延时变得很大</li>
+<li>La/R &gt; 1: 比特到达队列的速率超过了从该队列输出的速率，平均排队延时将趋向无穷大</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721083115069.png" alt="image-20210721083115069"></p>
+<p><strong>设计系统时流量强度不能大于1</strong></p>
+<p>分组丢失（丢包）</p>
+<ul>
+<li>链路的队列缓冲区容量有限</li>
+<li>当分组到达一个满的队列时，该分组将会丢失</li>
+<li>丢失的分组可能会被前一个节点或源端系统重传，或根本不重传</li>
+</ul>
+<p>吞吐量: 在源端和目标端之间传输的速率（数据量/单位时间）</p>
+<ul>
+<li>瞬间吞吐量：在一个时间点的速率</li>
+<li>平均吞吐量：在一个长时间内平均值</li>
+</ul>
+<p>瓶颈链路：端到端路径上，限制端到端吞吐的链路</p>
+<p>具有N条链路的网络，传输速率分别是$R_1,R_2,……,R_N$，吞吐量为min{$R_1,R_2,……,R_N$}</p>
+<p>在实际场景中，要考虑到多个分组平均使用链路的情况</p>
+<h2 id="协议层次及服务模型"><a href="#协议层次及服务模型" class="headerlink" title="协议层次及服务模型"></a>协议层次及服务模型</h2><p>层次化方式实现复杂网络功能</p>
+<ul>
+<li>将网络复杂的功能分层功能明确的层次，每一层实现了其中一个或一组功能，功能中有其上层可以使用的功能：服务</li>
+<li>本层协议实体相互交互执行本层的协议动作，目的是实现本层功能，通过接口为上层提供更好的服务</li>
+<li>在实现本层协议的时候，直接利用了下层所提供的服务</li>
+<li>本层的服务：借助下层服务实现的本层协议实体之间交互带来的新功能（上层可以利用的）+  更下层所提供的服务</li>
+</ul>
+<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p>服务（Service）：低层实体向上层实体提供它们之间的通信的能力</p>
+<ul>
+<li>服务用户(service user)</li>
+<li>服务提供者(service provider ) </li>
+</ul>
+<p>原语(primitive)：上层使用下层服务的形式，高层使用低层提供的服务，以及低层向高层提供服务都是通过服务访问原语（如Socket API 的函数）来进行交互的，即提供服务的形式</p>
+<p>服务访问点 (Services Access Point，SAP) ：上层使用下层提供的服务通过层间的接口，用于区分不同的服务用户</p>
+<ul>
+<li>地址(address)：下层的一个实体支撑着上层的多个实体， SAP有标志不同上层实体的作用</li>
+<li>可以有不同的实现，队列</li>
+<li>如传输层的SAP：端口(port)</li>
+</ul>
+<h3 id="服务类型"><a href="#服务类型" class="headerlink" title="服务类型"></a>服务类型</h3><ul>
+<li>面向连接的服务（Connection-oriented Service）<ul>
+<li>连接(Connection)：两个通信实体为进行通信而建立的一 种结合</li>
+<li>面向连接的服务通信的过程：建立连接，通信，拆除连接</li>
+<li>面向连接的服务的例子：网络层的连接被成为虚电路</li>
+<li>适用范围：对于大的数据块要传输; 不适合小的零星报文</li>
+<li>特点：保序</li>
+<li>服务类型<ul>
+<li>可靠的信息流：传送页面（可靠的获得，通过接收方的确认）</li>
+<li>可靠的字节流：远程登录</li>
+<li>不可靠的连接：数字化声音</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无连接的服务（Connectionless Service）<ul>
+<li>无连接服务：两个对等层实体在通信前不需要建立一个连接，不预留资源；不需要通信双方都是活跃（例：寄信）</li>
+<li>特点：不可靠、可能重复、可能失序</li>
+<li>IP分组，数据包</li>
+<li>适用范围：适合传送零星数据</li>
+<li>服务类型<ul>
+<li>不可靠的数据报：电子方式的函件</li>
+<li>有确认的数据报：挂号信</li>
+<li>请求回答：信息查询</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="服务和协议"><a href="#服务和协议" class="headerlink" title="服务和协议"></a>服务和协议</h3><ul>
+<li>服务与协议的区别<ul>
+<li>服务(Service)：低层实体向上层实体提供它们之间的通信的能力，是通过原语(primitive)来操作的，垂直关系</li>
+<li>协议(protocol) ：对等层实体(peer entity)之间在相互通信的过程中，需要遵循的规则的集合，水平关系</li>
+</ul>
+</li>
+<li>服务与协议的联系<ul>
+<li>本层协议的实现要靠下层提供的服务来实现</li>
+<li>本层实体通过协议为上层提供更高级的服务</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据单元（DU）"><a href="#数据单元（DU）" class="headerlink" title="数据单元（DU）"></a>数据单元（DU）</h3><p>各层次的协议数据单元</p>
+<ul>
+<li>应用层：报文(message)</li>
+<li>传输层：报文段(segment)：TCP段，UDP数据报</li>
+<li>网络层：分组packet（如果无连接方式：数据报 datagram）</li>
+<li>数据链路层：帧(frame)</li>
+<li>物理层：位(bit)</li>
+</ul>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721092802414.png" alt="image-20210721092802414"></p>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210721092815495.png" alt="image-20210721092815495"></p>
+<p>分层处理和实现复杂系统的好处</p>
+<p>概念化：结构清晰，便于标示网络组件，以及描述其相互关系</p>
+<ul>
+<li>分层参考模型</li>
+</ul>
+<p>结构化：模块化更易于维护和系统升级</p>
+<ul>
+<li>改变某一层服务的实现不影响系统中的其他层次<ul>
+<li>对于其他层次而言是透明的</li>
+</ul>
+</li>
+<li>如改变登机程序并不影响系统的其它部分</li>
+</ul>
+<h3 id="协议栈"><a href="#协议栈" class="headerlink" title="协议栈"></a>协议栈</h3><ul>
+<li><p>应用层：网络应用</p>
+<ul>
+<li>为人类用户或者其他应用进程提供网络应用服务</li>
+<li>FTP，SMTP，HTTP，DNS</li>
+</ul>
+</li>
+<li><p>传输层：主机之间的数据传输</p>
+<ul>
+<li><p>传输层分组为报文段（segment）</p>
+</li>
+<li><p>在网络层提供的端到端通信基础上，细分为进程到进程，将不可靠的通信变成可靠地通信</p>
+</li>
+<li><p>TCP，UDP</p>
+</li>
+</ul>
+</li>
+<li><p>网络层：为数据报从源到目的选择路由</p>
+<ul>
+<li>主机主机之间的通信，端到端通信，不可靠</li>
+<li>IP，路由协议</li>
+</ul>
+</li>
+<li><p>链路层：相邻网络节点间的以帧为单位的数据传输</p>
+<ul>
+<li>链路层分组为帧（frame）</li>
+<li>2个相邻2点的通信，点到点通信，可靠或不可靠</li>
+<li>点对对协议PPP，802.11（WiFi），Ethernet</li>
+</ul>
+</li>
+<li><p>物理层：在线路上传送bit </p>
+</li>
+</ul>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722141359884.png" alt="image-20210722141359884"></p>
+<h3 id="OSI-模型"><a href="#OSI-模型" class="headerlink" title="OSI 模型"></a>OSI 模型</h3><ul>
+<li>表示层：允许应用解释传输的数据，如加密，压缩，机器相关的表示转换</li>
+<li>会话层：数据交换的同步，检查点，恢复</li>
+</ul>
+<p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722141543303.png" alt="image-20210722141543303"></p>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p><img src="/2021/10/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91/image-20210722142941350.png" alt="image-20210722142941350"></p>
+<p>每一层，一个分组具有两种类型的字段：首部字段和有效载荷字段，有效载荷字段通常来自上一层的分组</p>
+<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>早期（1960以前）计算机网络</p>
+<ul>
+<li>线路交换网络</li>
+<li>线路交换的特性使得其不适合计算机之间的通信<ul>
+<li>线路建立时间过长</li>
+<li>独享方式占用通信资源，不适合突发性很强的计算机之间的通信</li>
+<li>可靠性不高：非常不适合军事通信</li>
+</ul>
+</li>
+</ul>
+<p>1961-1972: 早期的分组交换概念</p>
+<ul>
+<li>三个小组独立地开展分组交换的研究<ul>
+<li>1961：Kleinrock(MIT)，排队论</li>
+<li>1964：Baran(美国兰德公司) – 军用网络上的分组交换</li>
+<li>1964：Donald（英国）等，NPL（英国国家物理实验室）</li>
+</ul>
+</li>
+<li>1967：Kleinrock和在MIT的同事在美国高级研究计划研究局（ARPA）考虑ARPA-net 计划（第一个分组交换计算机网络）</li>
+<li>1969：第一个 ARPA-net 节点（IMP：接口报文处理机）开始工作（安装在UCLA，加州大学洛杉矶分校） </li>
+<li>1969年底：建立了4个节点</li>
+<li>1972：ARPAnet 公众演示<ul>
+<li>网络控制协议是第一个端系统之间的主机-主机协议</li>
+<li>NCP协议：相当于传输层和网络层在一起，支持应用开发</li>
+<li>第一个e-mail 程序（ BBN）</li>
+<li>ARPA-net有15个节点</li>
+</ul>
+</li>
+</ul>
+<p>1972-1980：专用网络和网络互联</p>
+<ul>
+<li>出现了很多对以后来说重要的网络形式<ul>
+<li>1970：ALOHAnet,夏威夷上的微波网络</li>
+<li>1973: Metcalfe在博士论文中提出了 Ethernet</li>
+<li>ATM网络</li>
+<li>ALOHAnet，Telenet，Cyclades法国等</li>
+</ul>
+</li>
+<li>1970后期，网络体系结构的必要性<ul>
+<li>专用的体系结构： DECnet, SNA, XNA</li>
+<li>标准化的体系结构，达到网络的互通互联</li>
+</ul>
+</li>
+<li>1974：网际互联的Cerf and Kahn 体系结构</li>
+<li>1979：ARPA-net的规模在持续增加，体系结构也在酝酿着变化，以支持网络互联和 其他目的（性能）需求<ul>
+<li>节点数目增加，有200个节点</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Cerf and Kahn 网络互联原则定义了今天的Internet体系结构</p>
+<ul>
+<li>极简、自治（通过IP网连接所有网络）</li>
+<li>尽力而为（best  effort）服务模型（是否传到，是否有序无关）</li>
+<li>无状态的路由器</li>
+<li>分布控制</li>
+</ul>
+</blockquote>
+<p>1980-1990：体系结构变化, 网络数量激增，应用丰富</p>
+<ul>
+<li>1983：TCP/IP部署，标记日<ul>
+<li>NCP分化成2个层次，TCP/IP， 从而出现UDP</li>
+<li>覆盖式IP解决网络互联问题</li>
+<li>主机设备和网络交换设备分开</li>
+</ul>
+</li>
+<li>1982：smtp e-mail协议定义</li>
+<li>1983：DNS 定义，完成域名到IP地址的转换</li>
+<li>1985：ftp 协议定义</li>
+<li>1988：TCP拥塞控制</li>
+<li>其他网络形式的发展<ul>
+<li>新的国家级网络：Csnet，BITnet，NSFnet，Minitel</li>
+<li>1985年：ISO/OSI提出， 时机不对且太繁琐</li>
+</ul>
+</li>
+<li>100,000主机连接到网络联邦</li>
+</ul>
+<p>1990, 2000’s：商业化，Web，新的应用</p>
+<ul>
+<li><p>1990年代初：NSF为ARPA-net 的访问网，双主干网络，之后ARPA-net退役</p>
+</li>
+<li><p>1991：NSF放宽了对NSFnet用于商业目的的限制 (1995退役)， ASFNET非盈利性机构维护，后面叫Internet</p>
+</li>
+<li><p>UNIX 中TCP/IP的免费捆绑</p>
+</li>
+<li><p>1990年代初：Web</p>
+<ul>
+<li>hypertext，超文本 [Bush 1945, Nelson  1960’s]</li>
+<li>HTML，HTTP：Berners-Lee</li>
+<li>1994：Mosaic (Netscape， andreesen) </li>
+<li>1990年代后期：Web的商业化</li>
+</ul>
+</li>
+<li><p>1990后期 – 21世纪</p>
+<ul>
+<li>TCP/IP体系结构的包容性，在其上部署应用便捷，出现非常多的应用</li>
+<li>新一代杀手级应用（即时讯息 ，P2P 文件共享，社交网络等 ）更进一步促进互联网的发展</li>
+<li>安全问题不断出现和修订（互联网的补丁对策）</li>
+<li>2001网络泡沫，使得一些好公司沉淀下来（谷歌，微软，苹 果，Yahoo，思科）</li>
+<li>主干网的速率达到Gbps</li>
+</ul>
+</li>
+</ul>
+<p>2005-现在</p>
+<ul>
+<li>100+亿主机：包括智能手机和平板</li>
+<li>宽带接入的快速部署</li>
+<li>高速无线接入无处不在：移动互联时代<ul>
+<li>4G部署，5G蓄势待发</li>
+<li>带宽大，终端性能高，价格便宜，应用不断增多</li>
+</ul>
+</li>
+<li>在线社交网络等新型应用的出现<ul>
+<li>Facebook：10亿用户</li>
+<li>微信，QQ：数十亿用户</li>
+</ul>
+</li>
+<li>内容提供商 (Google, Microsoft)创建他们自己的网络<ul>
+<li>通过自己的专用网络提供对搜索、视频内容和电子邮件的即刻访问</li>
+</ul>
+</li>
+<li>电子商务，大学，企业在云中运行他们的服务 (e.g. Amazon EC2) </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B/" rel="tag"># 大学课程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/" rel="next" title="应用层">
+                  应用层 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

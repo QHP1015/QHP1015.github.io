@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="权限系统MySQL可以使用3种不同类型的安全检查  登陆验证：用户名、密码验证 授权：对用户设置其具体权限 访问控制：是否允许操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL权限管理">
+<meta property="og:url" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="权限系统MySQL可以使用3种不同类型的安全检查  登陆验证：用户名、密码验证 授权：对用户设置其具体权限 访问控制：是否允许操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-04T10:39:16.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="大学课程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/","path":"2021/10/04/数据库/MySQL权限管理/","title":"MySQL权限管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL权限管理 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F"><span class="nav-text">权限系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E8%A1%A8"><span class="nav-text">权限表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#user%E8%A1%A8"><span class="nav-text">user表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%AD%97%E6%AE%B5"><span class="nav-text">用户字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%AD%97%E6%AE%B5"><span class="nav-text">权限字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%AD%97%E6%AE%B5"><span class="nav-text">安全字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%8E%A7%E5%88%B6%E5%88%97"><span class="nav-text">资源控制列</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#db%E8%A1%A8%E5%92%8Chost%E8%A1%A8"><span class="nav-text">db表和host表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%88%97"><span class="nav-text">用户列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%88%97"><span class="nav-text">权限列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tables-priv%E8%A1%A8"><span class="nav-text">tables_priv表</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#columns-priv%E8%A1%A8"><span class="nav-text">columns_priv表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#procs-priv%E8%A1%A8"><span class="nav-text">procs_priv表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7"><span class="nav-text">添加用户</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8CREATE-USER%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E8%B4%A6%E5%8F%B7"><span class="nav-text">使用CREATE USER语句创建用户账号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8INSERT%E8%AF%AD%E5%8F%A5%E6%96%B0%E5%BB%BA%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7"><span class="nav-text">使用INSERT语句新建普通用户</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8GRANT%E8%AF%AD%E5%8F%A5%E6%96%B0%E5%BB%BA%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7"><span class="nav-text">使用GRANT语句新建普通用户</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7"><span class="nav-text">查看用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E8%B4%A6%E5%8F%B7"><span class="nav-text">修改用户账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%8F%A3%E4%BB%A4"><span class="nav-text">修改用户口令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-text">删除用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A6%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="nav-text">账户权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%8E%88%E4%BA%88"><span class="nav-text">权限授予</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%9A%84%E8%BD%AC%E7%A7%BB%E5%92%8C%E9%99%90%E5%88%B6"><span class="nav-text">权限的转移和限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%9A%84%E6%92%A4%E9%94%80"><span class="nav-text">权限的撤销</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL权限管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-04 18:39:16" itemprop="dateCreated datePublished" datetime="2021-10-04T18:39:16+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="权限系统"><a href="#权限系统" class="headerlink" title="权限系统"></a>权限系统</h3><p>MySQL可以使用3种不同类型的安全检查</p>
+<ol>
+<li>登陆验证：用户名、密码验证</li>
+<li>授权：对用户设置其具体权限</li>
+<li>访问控制：是否允许操作</li>
+</ol>
+<span id="more"></span>
+
+<p>存储控制阶段：</p>
+<ol>
+<li>服务器检查是否允许连接</li>
+<li>若允许连接，服务器检查用户发出请求是否有相应的权限</li>
+</ol>
+<p>服务器在存取控制阶段使用user、db、host表</p>
+<p>在执行数据库操作时，需要通过root用户账号登录，对整个MySQL服务器具有完全控制</p>
+<h3 id="权限表"><a href="#权限表" class="headerlink" title="权限表"></a>权限表</h3><h4 id="user表"><a href="#user表" class="headerlink" title="user表"></a>user表</h4><p>user为MySQL中最终的一个权限表，可以使用<code>DESC</code>查看user的基本结构</p>
+<p>user列分为：用户列、权限列、安全列、资源控制列</p>
+<p>权限分为普通权限和管理权限：</p>
+<blockquote>
+<p>普通权限：主要用于对数据库的操作</p>
+<p>管理权限：主要用于对数据库进行管理的操作</p>
+</blockquote>
+<p>用户连接时，权限表的存取过程：先从user表中的host、user、password判断来连接的ip、用户名称、密码是否存在，若存在，通过身份验证，否则拒绝连接</p>
+<p>通过验证后，按照以下权限顺序得到数据库权限：user、db、table_priv、colums_priv，权限依次递减，全局覆盖局部</p>
+<h5 id="用户字段"><a href="#用户字段" class="headerlink" title="用户字段"></a>用户字段</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查询user表的相关用户字段</span></span><br><span class="line"><span class="keyword">SELECT</span> Host ,<span class="keyword">User</span> , <span class="string">&#x27;Password&#x27;</span> <span class="keyword">FROM</span> mysql.<span class="string">&#x27;user&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="权限字段"><a href="#权限字段" class="headerlink" title="权限字段"></a>权限字段</h5><p>权限字段以<code>priv</code>结尾，这些字段决定用户权限</p>
+<p>权限字段的值只有<code>Y</code>或<code>N</code>，表示有权限和无权限，默认值为<code>N</code>，可以使用<code>GRANT</code>为用户赋予权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看localhost主机下的用户的select、insert、update权限</span></span><br><span class="line"><span class="keyword">SELECT</span> SELECT_priv,insert_priv,update_priv,<span class="keyword">user</span>,host</span><br><span class="line"><span class="keyword">FROM</span> mysql.user <span class="keyword">WHERE</span> host <span class="operator">=</span> <span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="安全字段"><a href="#安全字段" class="headerlink" title="安全字段"></a>安全字段</h5><p>安全字段：ssl_type        ssl_cipher </p>
+<p>​                   x509_issuer    x509_subject      </p>
+<p>​                    另外两个与授权插件有关</p>
+<p><code>ssl</code>可用于加密；<code>x509</code>标准可用于标识用户；<code>plugin</code>字段标识可用于验证用户身份的插件，若该字段为空，服务器使用内建授权机制验证</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看hava_openssl是否具有ssl功能</span></span><br><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;hava_openssl&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="资源控制列"><a href="#资源控制列" class="headerlink" title="资源控制列"></a>资源控制列</h5><p>资源控制列用来限制用户使用的资源，有以下字段：</p>
+<ul>
+<li><code>max_question</code>：用户每小时允许执行的查询操作次数</li>
+<li><code>max_updates</code>：用户每小时允许执行的更新操作次数</li>
+<li><code>max_connections</code>：用户每小时允许执行的连接操作次数</li>
+<li><code>max_user_connections</code>：单个用户可以同时具有的连接次数</li>
+</ul>
+<p>默认值都为0，表示无限制</p>
+<h4 id="db表和host表"><a href="#db表和host表" class="headerlink" title="db表和host表"></a>db表和host表</h4><p>db表存储用户对某个数据库的操作权限，决定用户能从哪个主机存取哪个数据库</p>
+<p>host表存储某个主机对数据库的操作权限</p>
+<p>这两权限表不受<code>GRANT</code>和<code>REVOKE</code>语句影响，可以使用<code>DESC</code>语句查看两表的基本结构</p>
+<h5 id="用户列"><a href="#用户列" class="headerlink" title="用户列"></a>用户列</h5><p>db表的用户列：</p>
+<ul>
+<li>host：主机名</li>
+<li>db：数据库名</li>
+<li>uesr：用户名</li>
+</ul>
+<p>host表的用户列：</p>
+<ul>
+<li>host：主机名</li>
+<li>db：数据库名</li>
+</ul>
+<p>host为db的扩展，db表找不到host的值，需要到host表中寻找</p>
+<h5 id="权限列"><a href="#权限列" class="headerlink" title="权限列"></a>权限列</h5><p>db表与host表的权限列大致相同，<code>create_routine_priv</code>和<code>alter_routine_priv</code>表示用户是否有创建和修改存储过程的权限</p>
+<p>当希望用户只对某个数据库有操作权限，则将user表的对应权限设为<code>N</code>，在db表设置对应数据库的操作权限</p>
+<h5 id="tables-priv表"><a href="#tables-priv表" class="headerlink" title="tables_priv表"></a>tables_priv表</h5><p>tables_priv表可以对单个表进行权限设置，用来指定表级权限，可以使用<code>DESC</code>语句查看两表的基本结构</p>
+<p>tables_priv表字段：</p>
+<ul>
+<li>host：主机名</li>
+<li>db：数据库名</li>
+<li>uesr：用户名</li>
+<li>table_name：表名</li>
+<li>grantor：修改该记录的用户</li>
+<li>timestamp：修改该记录的时间</li>
+<li>table_priv：对表进行操作的权限，包括：select、insert、update、delete、create、drop、grant、reference、index、alter</li>
+<li>column_priv：对表中的列进行操作的权限，包括：select、insert、update、reference</li>
+</ul>
+<h4 id="columns-priv表"><a href="#columns-priv表" class="headerlink" title="columns_priv表"></a>columns_priv表</h4><p>columns_priv表可以对表中的某一列进行权限设置</p>
+<p>columns_priv表字段：</p>
+<ul>
+<li>host：主机名</li>
+<li>db：数据库名</li>
+<li>uesr：用户名</li>
+<li>table_name：表名</li>
+<li>column_name：指定对哪些数据列具有操作权限</li>
+<li>timestamp：修改该记录的时间</li>
+<li>column_priv：对表中的列进行操作的权限，包括：<code>select</code>、<code>insert</code>、<code>update</code>、<code>reference</code></li>
+</ul>
+<h4 id="procs-priv表"><a href="#procs-priv表" class="headerlink" title="procs_priv表"></a>procs_priv表</h4><p>procs_priv表可以对存储过程和存储函数进行权限设置，可以使用<code>DESC</code>语句查看两表的基本结构</p>
+<p>procs_priv表字段：</p>
+<ul>
+<li>host：主机名</li>
+<li>db：数据库名</li>
+<li>uesr：用户名</li>
+<li>routine_name：存储过程或存储函数的名称</li>
+<li>routine_type：存储过程或存储函数的类型，该字段有两个值：<code>function</code>表示存储函数，<code>procedure</code>表示存储过程</li>
+<li>grantor：存储插入或修改该记录的用户</li>
+<li>proc_priv：拥有的权限，包括：execute、alter routine、grant</li>
+<li>timestamp：存储记录更新的时间</li>
+</ul>
+<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看所有用户账号列表</span></span><br><span class="line">USE mysql；</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">user</span> <span class="keyword">FROM</span> <span class="keyword">user</span>；</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h4><p>新的MySQL数据库系统，只有一个root用户</p>
+<h5 id="使用CREATE-USER语句创建用户账号"><a href="#使用CREATE-USER语句创建用户账号" class="headerlink" title="使用CREATE USER语句创建用户账号"></a>使用<code>CREATE USER</code>语句创建用户账号</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span><span class="operator">&lt;</span>User_name<span class="operator">&gt;</span> [IDENTIFIED <span class="keyword">BY</span> <span class="operator">&lt;</span>password<span class="operator">&gt;</span>]</span><br><span class="line">[LOGIN POLICY <span class="operator">&lt;</span>policy_name<span class="operator">&gt;</span>]</span><br><span class="line">[FORCE PASSWORD CHANGE&#123; <span class="keyword">ON</span> <span class="operator">|</span> OFF &#125;]</span><br><span class="line"><span class="comment">--在MySQL服务器中添加新用户，用户名为zhangsan，主机名为localhost，口令设置为明文123</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;zhangsan&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIND <span class="keyword">BY</span> <span class="string">&#x27;123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>User_name</code>：指定创建用户账号，格式为：‘user_name‘@’host name’，user_name为用户名，host name为主机名</li>
+<li><code>IDENTIFIED BY</code>：用于指定用户账号对应的口令，无口令可省略</li>
+<li><code>policy_name</code>：指派给用户的登录策略的名称，无策略可省略</li>
+<li><code>password</code>：为用户指定口令，无口令的用户不能连接数据库</li>
+</ul>
+<p>用户ID和口令不能出现以下情况：</p>
+<ul>
+<li>以空格、单引号、双引号开头</li>
+<li>以空格结尾</li>
+<li>含有分号</li>
+</ul>
+<p><code>CREATE USER</code>语句使用说明：</p>
+<ul>
+<li>使用该语句，需要有MySQL数据库的<code>INSERT</code>权限或全局<code>CREATE USER</code>权限</li>
+<li>使用该语句创建用户账号后，会在系统自身的user表添加一条新纪录</li>
+<li>若两个用户具有相同的用户名和不同的主机名，MySQL会视为不同的用户，允许为两个用户分配不同权限</li>
+<li>使用该语句未指定口令，MySQL允许该用户可以不使用口令登录（不推荐）</li>
+<li>新创建的用户只允许进行不需要权限的操作，如查询所有存储引擎、字符串的列集等</li>
+</ul>
+<h5 id="使用INSERT语句新建普通用户"><a href="#使用INSERT语句新建普通用户" class="headerlink" title="使用INSERT语句新建普通用户"></a>使用<code>INSERT</code>语句新建普通用户</h5><p>使用<code>INSERT</code>语句需要有对user表的插入权限</p>
+<p>使用<code>INSERT</code>语句至少要插入六个字段的值：host、user、password、ssl_cipher、x09_issuer、x509_subject</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--插入xiaohong用户，主机名为localhost，密码时password(123)</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mysql.user(host,<span class="keyword">user</span>,password,ssl_cipher,x09_issuer,x509_subject)</span><br><span class="line">	<span class="keyword">VALUES</span>(<span class="string">&#x27;localhost&#x27;</span>,<span class="string">&#x27;xiaohong&#x27;</span>,password(<span class="number">123</span>),<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">	</span><br><span class="line"><span class="comment">--执行上述语句后，要使用’FLUSH PRIVILEGES&#x27;使命令生效，需要reload权限</span></span><br><span class="line">FLUSH PRIVILEGES</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用GRANT语句新建普通用户"><a href="#使用GRANT语句新建普通用户" class="headerlink" title="使用GRANT语句新建普通用户"></a>使用<code>GRANT</code>语句新建普通用户</h5><h4 id="查看用户"><a href="#查看用户" class="headerlink" title="查看用户"></a>查看用户</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> mysql.user <span class="keyword">WHERE</span> host<span class="operator">=</span><span class="string">&#x27;host_name&#x27;</span> <span class="keyword">AND</span> <span class="keyword">user</span><span class="operator">=</span><span class="string">&#x27;user_name&#x27;</span>			<span class="comment">--*表示所有列，也可以指定特定列</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改用户账号"><a href="#修改用户账号" class="headerlink" title="修改用户账号"></a>修改用户账号</h4><p>修改用户账号需要有MySQL数据库的<code>update</code>权限或全局<code>create user</code>权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RENAME <span class="keyword">USER</span> old_user <span class="keyword">TO</span> new_user [,old_user <span class="keyword">TO</span> new_user] ……     <span class="comment">--old_user：系统中已存在的用户账号</span></span><br><span class="line">																<span class="comment">--new_user：新的MySQL用户账号</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改用户口令"><a href="#修改用户口令" class="headerlink" title="修改用户口令"></a>修改用户口令</h4><p>使用<code>mysqladmin</code>命令修改密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin <span class="operator">-</span>u username p password，根据提示先输入旧密码，在输入新密码</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>set</code>语句修改</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> PASSWORD [<span class="keyword">FOR</span> <span class="string">&#x27;username&#x27;</span>@<span class="string">&#x27;hostname&#x27;</span>]<span class="operator">=</span>password(<span class="string">&#x27;new_password&#x27;</span>)   <span class="comment">--不加FOR……，则修改当前用户密码</span></span><br><span class="line"><span class="comment">--修改xiaohong密码为 &#x27;123&#x27;</span></span><br><span class="line"><span class="keyword">SET</span> PASSWORD [<span class="keyword">FOR</span> <span class="string">&#x27;xiaohong&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>]<span class="operator">=</span>password(<span class="string">&#x27;123&#x27;</span>) </span><br></pre></td></tr></table></figure>
+
+<p>修改user表，使用root登录，修改自己或普通用户密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE mysql.user <span class="keyword">SET</span> password<span class="operator">=</span>password(<span class="string">&#x27;new_password&#x27;</span>) <span class="keyword">WHERE</span> <span class="keyword">user</span><span class="operator">=</span><span class="string">&#x27;user_name&#x27;</span> <span class="keyword">AND</span> host<span class="operator">=</span><span class="string">&#x27;host_name&#x27;</span></span><br><span class="line"><span class="comment">--修改xiaohong的密码为 &#x27;123456&#x27;</span></span><br><span class="line">UPDATE mysql.user <span class="keyword">SET</span> password<span class="operator">=</span>password(<span class="string">&#x27;123456&#x27;</span>) <span class="keyword">WHERE</span> <span class="keyword">user</span><span class="operator">=</span><span class="string">&#x27;xiaohong&#x27;</span> <span class="keyword">AND</span> host<span class="operator">=</span><span class="string">&#x27;localhost&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>每次修改后，需要使用<code>FLUSH PRIVILEGES</code>命令重新加载权限</p>
+<h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><p>使用<code>DROP USER</code>语句删除普通用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="keyword">user</span>[,<span class="keyword">user</span>]……</span><br><span class="line"><span class="comment">--删除名为xiaohong用户，host值为localhost</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> xiaohong<span class="variable">@localhost</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>DELETE</code>语句删除普通用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> mysql.user <span class="keyword">WHERE</span> <span class="keyword">user</span><span class="operator">=</span><span class="string">&#x27;user_name&#x27;</span> <span class="keyword">AND</span> host<span class="operator">=</span><span class="string">&#x27;host_name&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="账户权限管理"><a href="#账户权限管理" class="headerlink" title="账户权限管理"></a>账户权限管理</h3><h4 id="权限授予"><a href="#权限授予" class="headerlink" title="权限授予"></a>权限授予</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> priv_type[(column_list)][,priv_type[(column_list)]]……</span><br><span class="line"><span class="keyword">ON</span>[object_type] priv_level</span><br><span class="line"><span class="keyword">TO</span> user_sepcification[,user_sepcification]……</span><br><span class="line">[<span class="keyword">WITH</span> with_option]</span><br><span class="line"><span class="comment">--授予用户lili在数据库studentinfo的表student上拥有对列sno和列sname的select权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">select</span>(sno,sname) <span class="keyword">ON</span> student <span class="keyword">TO</span> <span class="string">&#x27;lili&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span></span><br><span class="line"><span class="comment">--不存在用户liming和用户huang，要求创建两个用户同时授予在数据库studentinfo的表student上拥有select和update权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">select</span>，update <span class="keyword">ON</span> studentinfo.student <span class="keyword">TO</span> </span><br><span class="line"><span class="string">&#x27;liming&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123&#x27;</span></span><br><span class="line"><span class="string">&#x27;haung&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;789&#x27;</span>;</span><br><span class="line"><span class="comment">--授予用户lili可以在数据库studentinfo中执行所有操作的权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> studentinfo.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;lili&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>GRANT 权限级别：</p>
+<ul>
+<li>*：当前数据库中的所有表</li>
+<li>*.*：所有数据库的所有表</li>
+<li>db_name.*：某个数据库中的所有表</li>
+<li>db_name.tbl_name：某个数据库的某个表或视图</li>
+<li>tbl_name：某个表或视图</li>
+<li>db_name.routine_name：某个数据库中的某个存储过程或函数</li>
+</ul>
+<p>GRANT中priv_type值：</p>
+<ul>
+<li><code>select</code>：授予用户可以使用<code>SELECT</code>语句访问特定表的权限</li>
+<li><code>insert</code>：授予用户可以使用<code>INSERT</code>语句从一个特定表中添加数据行的权限</li>
+<li><code>delete</code>：授予用户可以使用<code>DELETE</code>语句从一个特定表中删除数据行的权限</li>
+<li><code>update</code>：授予用户可以使用<code>UPDATE</code>语句修改特定表中值的权限</li>
+<li><code>reference</code>：授予用户可以创建一个外键来参照特定数据表的权限</li>
+<li><code>create</code>：授予用户可以使用特定的名字创建一个数据表的权限</li>
+<li><code>alter</code>：授予用户可以使用<code>ALTER TABLE</code>语句修改数据表的权限</li>
+<li><code>index</code>：授予用户可以在表上定义索引的权限</li>
+<li><code>drop</code>：授予用户可以删除数据表的权限</li>
+<li><code>all</code>或<code>all privileges</code>：所有的权限</li>
+</ul>
+<p>授予列权限时，只能使用<code>select</code>、<code>insert</code>、<code>update</code>，权限还要加上列名列表<code>colimn_list</code></p>
+<h4 id="权限的转移和限制"><a href="#权限的转移和限制" class="headerlink" title="权限的转移和限制"></a>权限的转移和限制</h4><p>通过<code>GRANT</code>语句中使用<code>WITH</code>子句实现</p>
+<p>转移权限</p>
+<p>将<code>WITH</code>子句指定为<code>WITH GRANT OPTION</code>,表示<code>TO</code>子句中所指定的所有用户都具有把自己权限授予其他用户的权利</p>
+<p>限制权限</p>
+<p>若<code>WITH</code>子句中<code>WITH</code>关键字后为以下四项，即拥有限制权限</p>
+<ul>
+<li><code>max_queries_per_hour count</code>：限制每小时可以查询数据库的次数</li>
+<li><code>max_updates_per_hour count</code>：限制每小时可以修改数据库的次数</li>
+<li><code>max_ccconnections_per_hour count</code>：限制每小时可以连接数据库的次数</li>
+<li><code>max_user_connection count</code>：限制同时连接MySQL的最大用户数，<code>count</code>为用户数</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--授予系统中的用户huang在数据库studentinfo的表student上每小时只能处理一条delete语句的权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">delete</span> <span class="keyword">ON</span> studentinfo.student <span class="keyword">TO</span> <span class="string">&#x27;huang&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">WITH</span> max_queries_per_hour <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="权限的撤销"><a href="#权限的撤销" class="headerlink" title="权限的撤销"></a>权限的撤销</h4><p>使用<code>REVOKE</code>语句，要有MySQL数据库的全局<code>CREATE user</code>权限或<code>UPDATE</code>权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--回收某些特定的权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> priv_type[(column_list)][,priv_type[(column_list)]]……</span><br><span class="line"><span class="keyword">ON</span>[object_type] priv_level</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span>[,<span class="keyword">user</span>]……</span><br><span class="line"><span class="comment">--回收特定用户的所有权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">ALL</span> PRIVILECES,<span class="keyword">GRANT</span> OPTION</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span>[,<span class="keyword">user</span>]……</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B/" rel="tag"># 大学课程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A7%86%E5%9B%BE/" rel="prev" title="MySQL视图">
+                  <i class="fa fa-chevron-left"></i> MySQL视图
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/" rel="next" title="链路层和局域网">
+                  链路层和局域网 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

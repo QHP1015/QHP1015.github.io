@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="属性访问属性访问表达式求值为对象属性或数组元素的值，JavaScript 定义了两种访问属性的语法  expression.identifier  表达式后跟一个句点和一个标识符，表达式指定对象，标识符指定属性名   expression [expression]  表达式指定属性名或数组元素的索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS表达式与操作符">
+<meta property="og:url" content="http://note.qhp.us/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="属性访问属性访问表达式求值为对象属性或数组元素的值，JavaScript 定义了两种访问属性的语法  expression.identifier  表达式后跟一个句点和一个标识符，表达式指定对象，标识符指定属性名   expression [expression]  表达式指定属性名或数组元素的索引">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-10T00:37:28.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/","path":"2021/10/10/JS/JS表达式与操作符/","title":"JS表达式与操作符"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS表达式与操作符 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE"><span class="nav-text">属性访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-text">算数表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6-1"><span class="nav-text">+ 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E5%85%83%E7%AE%97%E6%9C%AF%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">一元算术操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">位操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-text">关系表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E7%AD%89%E5%92%8C%E4%B8%8D%E7%9B%B8%E7%AD%89%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">相等和不相等操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#in-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">in 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instanceof-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">instanceof 操作符</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS表达式与操作符
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-10 08:37:28" itemprop="dateCreated datePublished" datetime="2021-10-10T08:37:28+08:00">2021-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="属性访问"><a href="#属性访问" class="headerlink" title="属性访问"></a>属性访问</h2><p>属性访问表达式求值为对象属性或数组元素的值，JavaScript 定义了两种访问属性的语法</p>
+<ul>
+<li><p><code>expression.identifier</code></p>
+<blockquote>
+<p>表达式后跟一个句点和一个标识符，表达式指定对象，标识符指定属性名</p>
+</blockquote>
+</li>
+<li><p><code>expression [expression]</code></p>
+<blockquote>
+<p>表达式指定属性名或数组元素的索引</p>
+</blockquote>
+</li>
+</ul>
+<span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: &#123;<span class="attr">z</span>: <span class="number">3</span>&#125;&#125;;            <span class="comment">// 示例对象</span></span><br><span class="line"><span class="keyword">let</span> a = [o, <span class="number">4</span>, [<span class="number">5</span>, <span class="number">6</span>]];               <span class="comment">// 包含前面对象的示例数组</span></span><br><span class="line">o.x                                   <span class="comment">// =&gt; 1</span></span><br><span class="line">o.y.z                                 <span class="comment">// =&gt; 3</span></span><br><span class="line">o[<span class="string">&quot;x&quot;</span>]                                <span class="comment">// =&gt; 1</span></span><br><span class="line">a[<span class="number">1</span>]                                  <span class="comment">// =&gt; 4</span></span><br><span class="line">a[<span class="number">2</span>][<span class="string">&quot;1&quot;</span>]                             <span class="comment">// =&gt; 6</span></span><br><span class="line">a[<span class="number">0</span>].x                                <span class="comment">// =&gt; 1</span></span><br></pre></td></tr></table></figure>
+
+<p>若求值结果为 <code>null</code> 或 <code>undefined</code>，则表达式会抛出 <code>TypeError</code></p>
+<p>ES2020 新增条件式属性访问</p>
+<ul>
+<li><code>expression?.identifier</code></li>
+<li><code>expression?.[expression]</code></li>
+</ul>
+<p>使用条件式属性访问可以防止因结果为 <code>null</code> 或 <code>undefined</code> 而引起的 <code>TypeError</code></p>
+<p>若 <code>?.</code> 左侧的子表达式求值为 <code>null</code> 或 <code>undefined</code> ，整个表达式立即求值为 <code>undefined</code> ，不再进一步尝试访问属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a;                         <span class="comment">// 未初始化</span></span><br><span class="line"><span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    a[index++];                <span class="comment">// 抛出 TypeError</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    index                      <span class="comment">// 抛出 TypeError 之前发生了递增</span></span><br><span class="line">&#125;</span><br><span class="line">a?.[index++]                   <span class="comment">// =&gt; undefined</span></span><br><span class="line">index                          <span class="comment">// =&gt; 1：?.[] 短路所以没有发生递增</span></span><br><span class="line">a[index++]                     <span class="comment">// !TypeError：不能索引 undefined</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h2><p>JavaScript 操作符</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>操作</th>
+<th>结合性</th>
+<th>操作数</th>
+<th>类型</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>++</td>
+<td>先或后递增</td>
+<td>右</td>
+<td>1</td>
+<td>lval→num</td>
+<td>1</td>
+</tr>
+<tr>
+<td>–</td>
+<td>先或后递减</td>
+<td>右</td>
+<td>1</td>
+<td>lval→num</td>
+<td>1</td>
+</tr>
+<tr>
+<td>-</td>
+<td>负值</td>
+<td>右</td>
+<td>1</td>
+<td>num→num</td>
+<td>1</td>
+</tr>
+<tr>
+<td>+</td>
+<td>转换未数值</td>
+<td>右</td>
+<td>1</td>
+<td>any→num</td>
+<td>1</td>
+</tr>
+<tr>
+<td>~</td>
+<td>反转二进制位</td>
+<td>右</td>
+<td>1</td>
+<td>int→int</td>
+<td>1</td>
+</tr>
+<tr>
+<td>!</td>
+<td>反转布尔值</td>
+<td>右</td>
+<td>1</td>
+<td>bool→bool</td>
+<td>1</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除属性</td>
+<td>右</td>
+<td>1</td>
+<td>lval→bool</td>
+<td>1</td>
+</tr>
+<tr>
+<td>typeof</td>
+<td>确定操作数类型</td>
+<td>右</td>
+<td>1</td>
+<td>any→str</td>
+<td>1</td>
+</tr>
+<tr>
+<td>void</td>
+<td>返回 undefined</td>
+<td>右</td>
+<td>1</td>
+<td>any→undef</td>
+<td>1</td>
+</tr>
+<tr>
+<td>**</td>
+<td>幂</td>
+<td>右</td>
+<td>2</td>
+<td>num，num→num</td>
+<td>2</td>
+</tr>
+<tr>
+<td>*、/、%</td>
+<td>乘、除、取余</td>
+<td>左</td>
+<td>2</td>
+<td>num，num→num</td>
+<td>3</td>
+</tr>
+<tr>
+<td>+、-</td>
+<td>加、减</td>
+<td>左</td>
+<td>2</td>
+<td>num，num→num</td>
+<td>4</td>
+</tr>
+<tr>
+<td>+</td>
+<td>拼接字符串</td>
+<td>左</td>
+<td>2</td>
+<td>str，str→str</td>
+<td>4</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>左移位</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>5</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>右移位以符号填充</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>5</td>
+</tr>
+<tr>
+<td>&gt;&gt;&gt;</td>
+<td>右移位以零填充</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>5</td>
+</tr>
+<tr>
+<td>&lt;、&lt;=、&gt;、&gt;=</td>
+<td>按数值顺序比较</td>
+<td>左</td>
+<td>2</td>
+<td>num，num→bool</td>
+<td>6</td>
+</tr>
+<tr>
+<td>&lt;、&lt;=、&gt;、&gt;=</td>
+<td>按字母表顺序比较</td>
+<td>左</td>
+<td>2</td>
+<td>str，str→bool</td>
+<td>6</td>
+</tr>
+<tr>
+<td>instanceof</td>
+<td>测试对象类</td>
+<td>左</td>
+<td>2</td>
+<td>obj，func→bool</td>
+<td>6</td>
+</tr>
+<tr>
+<td>in</td>
+<td>测试属性是否存在</td>
+<td>左</td>
+<td>2</td>
+<td>any，obj→bool</td>
+<td>6</td>
+</tr>
+<tr>
+<td>==</td>
+<td>非严格相等测试</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→bool</td>
+<td>7</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>非严格不相等测试</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→bool</td>
+<td>7</td>
+</tr>
+<tr>
+<td>===</td>
+<td>严格相等测试</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→bool</td>
+<td>7</td>
+</tr>
+<tr>
+<td>!==</td>
+<td>严格不相等测试</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→bool</td>
+<td>8</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>计算按位与</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>9</td>
+</tr>
+<tr>
+<td>^</td>
+<td>计算按位异或</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>10</td>
+</tr>
+<tr>
+<td>|</td>
+<td>计算按位或</td>
+<td>左</td>
+<td>2</td>
+<td>int，int→int</td>
+<td>11</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>计算逻辑与</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→any</td>
+<td>12</td>
+</tr>
+<tr>
+<td>||</td>
+<td>计算逻辑或</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→any</td>
+<td>13</td>
+</tr>
+<tr>
+<td>? ?</td>
+<td>选择第一个有定义的操作数</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→any</td>
+<td>14</td>
+</tr>
+<tr>
+<td>? :</td>
+<td>选择第二或第三个操作数</td>
+<td>右</td>
+<td>3</td>
+<td>bool，any，any→any</td>
+<td>15</td>
+</tr>
+<tr>
+<td>=</td>
+<td>为变量或属性赋值</td>
+<td>右</td>
+<td>2</td>
+<td>lval，any→any</td>
+<td>16</td>
+</tr>
+<tr>
+<td>**=、/=、%= ……</td>
+<td>操作并赋值</td>
+<td>右</td>
+<td>2</td>
+<td>lval，any→any</td>
+<td>16</td>
+</tr>
+<tr>
+<td>,</td>
+<td>丢弃第一个操作数，返回第二个</td>
+<td>左</td>
+<td>2</td>
+<td>any，any→any</td>
+<td>17</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>结合性：规定相同优先级操作的执行顺序</p>
+</li>
+<li><p>操作数：操作符期待的操作数个数</p>
+</li>
+<li><p>类型：操作数期待的类型 → 结果类型</p>
+<blockquote>
+<p>lval：即 lvalue（左值），包括变量、对象属性和数组元素</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="算数表达式"><a href="#算数表达式" class="headerlink" title="算数表达式"></a>算数表达式</h3><p>基本的算术操作符：**（幂）、*（乘）、/（除）、%（模）、+（加）和 -（减）</p>
+<p>基本操作符会对操作数转换为数值进行求值，无法转换的转换为 <code>NaN</code>，操作结果为 <code>NaN</code></p>
+<p>在 JavaScript 中，所有数值都是浮点数，如 <code>5/2 = 2.5</code></p>
+<h4 id="操作符-1"><a href="#操作符-1" class="headerlink" title="+ 操作符"></a>+ 操作符</h4><p>二元 + 操作符用于计算数值操作数的和或拼接字符串</p>
+<p>严格讲，+ 操作符遵循以下行为</p>
+<ul>
+<li>若一个操作数为对象，则+ 操作符将对象转换为原始值。Date 对象用 <code>toString()</code> 方法转换，其他对象通过 <code>valueOf()</code> 转换（若此方法返回原始值），无此方法通过 <code>toString()</code> 方法转换</li>
+<li>完成对象转换到原始值，若操作数有字符串，另一个操作数也转成字符串拼接</li>
+<li>否则，两个操作数转超数值（或 <code>NaN</code>），计算加法</li>
+</ul>
+<h4 id="一元算术操作符"><a href="#一元算术操作符" class="headerlink" title="一元算术操作符"></a>一元算术操作符</h4><ul>
+<li>一元加（+）</li>
+<li>一元减（-）</li>
+<li>递增（++）</li>
+<li>递减（–）</li>
+</ul>
+<h4 id="位操作符"><a href="#位操作符" class="headerlink" title="位操作符"></a>位操作符</h4><p>位操作符将数值当成 32 位整数而不是 64 位浮点数，转换时会丢弃小数部分和 32 位以外的部分</p>
+<p><code>NaN</code>、<code>Infinity</code>、<code>-Infinity</code> 作为位操作符的操作数转换为 0</p>
+<p>除了 &gt;&gt;&gt; 的操作符都可用于 <code>BigInt</code> 操作数</p>
+<ul>
+<li><p>按位与（&amp;）</p>
+</li>
+<li><p>按位或（|）</p>
+</li>
+<li><p>按位异或（^）</p>
+</li>
+<li><p>按位非（~）</p>
+<blockquote>
+<p>因为 JavaScript表示用符号整数的方式，对一个值应用 ~ 操作符等于修改符号并减 1 </p>
+<p>如：~0x0f 求值为 0xFFFFFFF0，即 -16</p>
+</blockquote>
+</li>
+<li><p>左移（&lt;&lt;）</p>
+</li>
+<li><p>有符号右移（&gt;&gt;）</p>
+<blockquote>
+<p>若第一个操作数是正值，结果的高位填充 0</p>
+<p>若第一个操作数是负值，结果的高位填充 1</p>
+<p>右移 n 位等于这个值除以 $2^n$（丢弃余数）</p>
+</blockquote>
+</li>
+<li><p>零填充右移（&gt;&gt;&gt;）</p>
+<blockquote>
+<p>无论第一个操作数的符号是什么，始终填充 0 </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="关系表达式"><a href="#关系表达式" class="headerlink" title="关系表达式"></a>关系表达式</h3><p>关系操作符测试两个值之间的关系，并依据相应关系是否存在返回 <code>true</code> 或 <code>false</code></p>
+<h4 id="相等和不相等操作符"><a href="#相等和不相等操作符" class="headerlink" title="相等和不相等操作符"></a>相等和不相等操作符</h4><p>严格相等（===）</p>
+<ul>
+<li>若两个值类型不同，不相等</li>
+<li>两个值都是 <code>null</code> 或 <code>undefined</code>，相等</li>
+<li>两个值都是 <code>true</code> 或 <code>false</code>，相等</li>
+<li>一个值或两个值是 <code>NaN</code>，不相等</li>
+<li>两个值都是数值且值相同，相等</li>
+<li>两个值引用同一个对象、数组或函数，相等</li>
+</ul>
+<p>基于类型转换的相等（==）</p>
+<ul>
+<li>两个值类型相同，按严格相等测试</li>
+<li>两个值类型不同<ul>
+<li>一个值为 <code>null</code>，另一个值为 <code>undefined</code>，相等</li>
+<li>一个为数值，一个为字符串，将字符串转为数值，比较</li>
+<li>一个值为 <code>true</code>，转换为 1，比较；一个值为 <code>false</code>，转换为 0，比较</li>
+<li>一个值为对象，另一个值为数值或字符串，用对象转原始值，比较</li>
+</ul>
+</li>
+</ul>
+<h4 id="in-操作符"><a href="#in-操作符" class="headerlink" title="in 操作符"></a>in 操作符</h4><p>in 操作符期待左侧操作数是字符串、符号或可以转换为字符串的值，右侧操作数是对象</p>
+<p>若左侧的值是右侧的对象的属性名，则 in 返回 <code>true</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> point = &#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="string">&quot;x&quot;</span> <span class="keyword">in</span> point                    <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="string">&quot;z&quot;</span> <span class="keyword">in</span> point                    <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="string">&quot;toString&quot;</span> <span class="keyword">in</span> point             <span class="comment">// =&gt; true：对象继承了 toString方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> data = [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>];</span><br><span class="line"><span class="string">&quot;0&quot;</span> <span class="keyword">in</span> data                     <span class="comment">// =&gt; true：数组有元素 0</span></span><br><span class="line"><span class="number">1</span> <span class="keyword">in</span> data                       <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">in</span> data                       <span class="comment">// =&gt; false：没有元素 3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="instanceof-操作符"><a href="#instanceof-操作符" class="headerlink" title="instanceof 操作符"></a>instanceof 操作符</h4><p>instanceof 操作符期待左侧操作数是对象，右侧操作数是对象类的标识</p>
+<p>左侧对象是右侧类的实例时返回 <code>true</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();      <span class="comment">// 通过 Date() 构造函数创建一个对象</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Date</span>        <span class="comment">// =&gt; true：d 是通过 Date() 创建的</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// =&gt; true：所有对象都是 Object 的示例</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Number</span>      <span class="comment">// =&gt; false：d 不是 Number 对象</span></span><br><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];         <span class="comment">// 通过数组字面量语法创建一个数组</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Array</span>       <span class="comment">// =&gt; true：a 是个数组</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// =&gt; true：所有数组都是对象</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">RegExp</span>      <span class="comment">// =&gt; false：a 不是正则表达式</span></span><br></pre></td></tr></table></figure>
+
+<p>若左侧操作数不是对象，返回 <code>false</code></p>
+<p>若右侧操作数不是对象的类，抛出 <code>TypeError</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/09/JS/JS%E7%B1%BB%E5%9E%8B%E3%80%81%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/" rel="prev" title="JS类型、值和变量">
+                  <i class="fa fa-chevron-left"></i> JS类型、值和变量
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/10/JS/JS%E8%AF%AD%E5%8F%A5/" rel="next" title="JS语句">
+                  JS语句 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

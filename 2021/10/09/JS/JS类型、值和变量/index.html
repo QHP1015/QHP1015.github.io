@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言：编程语法的词法结构是一套基本规则，规定如何使用这门语言编写程序。同时本篇讲解JavaScript的类型、值和变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS类型、值和变量">
+<meta property="og:url" content="http://note.qhp.us/2021/10/09/JS/JS%E7%B1%BB%E5%9E%8B%E3%80%81%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="前言：编程语法的词法结构是一套基本规则，规定如何使用这门语言编写程序。同时本篇讲解JavaScript的类型、值和变量">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-09T12:03:53.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/09/JS/JS%E7%B1%BB%E5%9E%8B%E3%80%81%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/09/JS/JS%E7%B1%BB%E5%9E%8B%E3%80%81%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/","path":"2021/10/09/JS/JS类型、值和变量/","title":"JS类型、值和变量"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS类型、值和变量 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-text">字面量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E5%92%8C%E4%BF%9D%E7%95%99%E5%AD%97"><span class="nav-text">标识符和保留字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode"><span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC"><span class="nav-text">数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-text">数值字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%9C%AF"><span class="nav-text">数值算术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-text">二进制浮点数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BigInt"><span class="nav-text">BigInt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-text">日期和时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC"><span class="nav-text">文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-text">字符串字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97"><span class="nav-text">转义序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%BF%E7%94%A8"><span class="nav-text">字符串使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-text">模板字面量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null%E4%B8%8Eundefined"><span class="nav-text">null与undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7"><span class="nav-text">符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E5%80%BC%E4%B8%8E%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8"><span class="nav-text">原始值与对象引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E8%BD%AC%E6%8D%A2"><span class="nav-text">显示转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">数值到字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%B0%E6%95%B0%E5%80%BC"><span class="nav-text">字符串到数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%B0%E5%8E%9F%E5%A7%8B%E5%80%BC"><span class="nav-text">对象到原始值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-text">解构赋值</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/09/JS/JS%E7%B1%BB%E5%9E%8B%E3%80%81%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS类型、值和变量
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-09 20:03:53" itemprop="dateCreated datePublished" datetime="2021-10-09T20:03:53+08:00">2021-10-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>前言：编程语法的词法结构是一套基本规则，规定如何使用这门语言编写程序。同时本篇讲解JavaScript的类型、值和变量</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>JavaScript 支持两种注释</p>
+<ul>
+<li>单行注释以 // 开头到一行末尾的内容</li>
+<li>多行注释位于 /* 和 */ 之间，可以跨行，不能嵌套</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"><span class="comment">/* 注释 */</span> <span class="comment">// 另一个注释</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 多行注释</span></span><br><span class="line"><span class="comment"> * 每行开头的 * 字符非必需，仅为了美观</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h2><p>字面量（literal）是一种直接出现在程序中的数据值，后续解释数指和字符串字面量</p>
+<p>字面量示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span>			<span class="comment">// 数值 12</span></span><br><span class="line"><span class="number">1.2</span>			<span class="comment">// 数值 1.2</span></span><br><span class="line">“hello world”   	<span class="comment">// 字符串</span></span><br><span class="line"><span class="literal">true</span>			<span class="comment">// 布尔值</span></span><br><span class="line"><span class="literal">null</span>			<span class="comment">// 无对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="标识符和保留字"><a href="#标识符和保留字" class="headerlink" title="标识符和保留字"></a>标识符和保留字</h2><p>标识符用于在 JavaScript中 命名常量、变量、属性、函数和类，以及为某些循环提供标记（label）</p>
+<p>JavaScript 标识符必须以<strong>字母、下划线（_）、或美元符号（$）</strong>开头，后续字符可以是字母、数字、下划线、美元符号</p>
+<p>JavaScript 不能使用保留字作为常规标识符</p>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>JavaScript 程序使用 Unicode 字符集编写，因此在字符串和注释中可以使用任意 Unicode 字符</p>
+<ul>
+<li><p>Unicode 转义序列：以 \u 开头，后跟 4 位十六进制数字或包含在一对花括号内的 1~6 位十六进制数字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">caf\u&#123;E9&#125; ;</span><br><span class="line">cafe\u00e9;  </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;u&#123;1f600&#125;&quot;</span>)  <span class="comment">// 打印一个笑脸符号</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Unicode 归一化：Unicode 标准为所有字符定义了首选编码并规划了归一化例程，用于把文本转换为适合比较的规范形式</p>
+</li>
+</ul>
+<h2 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h2><p>JavaScript 的主要数值类型 Number 用于表示整数和近似实数</p>
+<p>JavaScript 使用 IEEE 754 标准定义的 64 位浮点格式表示数值</p>
+<h3 id="数值字面量"><a href="#数值字面量" class="headerlink" title="数值字面量"></a>数值字面量</h3><ul>
+<li><p>整数字面量</p>
+<ul>
+<li><p>基数为 10 的整数直接写成数字序列</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">100000000</span></span><br></pre></td></tr></table></figure></li>
+<li><p>十六进制字面量以 0x 或 0X 开头，后跟一个十六进制数字字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0xff</span>            <span class="comment">// =&gt; 255</span></span><br><span class="line"><span class="number">0xBADCAFE</span>       <span class="comment">// =&gt; 195939070</span></span><br></pre></td></tr></table></figure></li>
+<li><p>二进制或八进制，分别使用前缀 0b 和 0o（或 0B 和 0O）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0b10101</span>			<span class="comment">// =&gt; 21</span></span><br><span class="line"><span class="number">0o377</span>			<span class="comment">// =&gt; 255</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>浮点字面量</p>
+<ul>
+<li><p>浮点字面量实数值有数值整数部分、小数点和数值的小数部分组成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.14</span></span><br><span class="line"><span class="number">2345.6789</span></span><br><span class="line"><span class="number">.3333333333333</span></span><br></pre></td></tr></table></figure></li>
+<li><p>指数计数法，实数值后面跟 e（或 E），跟一个可选的加号或减号，在跟一个整数指数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.02e23</span></span><br><span class="line"><span class="number">1.4738223E-32</span>       </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>数值字面量的分隔符：可以用下划线将数值字面量分隔</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> billion = <span class="number">1_000_000_000</span>;	<span class="comment">// 以下划线作为千分位分隔符</span></span><br><span class="line"><span class="keyword">let</span> bytes = <span class="number">0x89_AB_CD_EF</span>;	<span class="comment">// 作为字节分隔符</span></span><br><span class="line"><span class="keyword">let</span> bits = <span class="number">0b0001_1101_0111</span>;	<span class="comment">// 作为半字节分隔符</span></span><br><span class="line"><span class="keyword">let</span> fraction = <span class="number">0.123_456_789</span>;	<span class="comment">// 用于小数分隔</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="数值算术"><a href="#数值算术" class="headerlink" title="数值算术"></a>数值算术</h3><p>JavaScript使用算术操作符来操作数值，如加法（+）、减法（-）、乘法（*）、取模（%），ES6新增取幂（**）</p>
+<p>Math对象属性提供一组函数和常量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.pow(<span class="number">2</span>,<span class="number">53</span>)				<span class="comment">// =&gt; 2 的 53 次方</span></span><br><span class="line"><span class="built_in">Math</span>.round(<span class="number">.6</span>)				<span class="comment">// =&gt; 1.0：舍入到最接近的整数</span></span><br><span class="line"><span class="built_in">Math</span>.ceil(<span class="number">.6</span>)				<span class="comment">// =&gt; 1.0：向上舍入到一个整数</span></span><br><span class="line"><span class="built_in">Math</span>.floor(<span class="number">.6</span>)				<span class="comment">// =&gt; 0.0：向下舍入到一个整数</span></span><br><span class="line"><span class="built_in">Math</span>.abs(-<span class="number">5</span>)				<span class="comment">// =&gt; 5：绝对值</span></span><br><span class="line"><span class="built_in">Math</span>.max(x,y,z)				<span class="comment">// 返回最大的参数</span></span><br><span class="line"><span class="built_in">Math</span>.min(x,y,z)				<span class="comment">// 返回最小的参数</span></span><br><span class="line"><span class="built_in">Math</span>.random				<span class="comment">// 伪随机数下，其中 0 ≤ x &lt; 1.0</span></span><br><span class="line"><span class="built_in">Math</span>.PI					<span class="comment">// Π：圆周率</span></span><br><span class="line"><span class="built_in">Math</span>.E					<span class="comment">// e：自然对数的底数</span></span><br><span class="line"><span class="built_in">Math</span>.sqrt(<span class="number">3</span>)				<span class="comment">// =&gt; 3 的平方根</span></span><br><span class="line"><span class="built_in">Math</span>.pow(<span class="number">3</span>,<span class="number">1</span>/<span class="number">3</span>)				<span class="comment">// =&gt; 3 的立方根</span></span><br><span class="line"><span class="built_in">Math</span>.sin(<span class="number">0</span>)				<span class="comment">// 三角函数：还有 Math.cos、Math.aten 等</span></span><br><span class="line"><span class="built_in">Math</span>.log(<span class="number">10</span>)				<span class="comment">// 10 的自然对数</span></span><br><span class="line"><span class="built_in">Math</span>.log(<span class="number">100</span>)/<span class="built_in">Math</span>.LN10			<span class="comment">// 以 10 为底 100 的对数</span></span><br><span class="line"><span class="built_in">Math</span>.log(<span class="number">512</span>)/<span class="built_in">Math</span>.LN2			<span class="comment">// 以 2 为底 512 的对数 </span></span><br><span class="line"><span class="built_in">Math</span>.exp(<span class="number">3</span>)				<span class="comment">// Math.E 的立方</span></span><br></pre></td></tr></table></figure>
+
+<p>ES6 新定义函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.cbrt(<span class="number">27</span>)				<span class="comment">// =&gt; 3：立方根</span></span><br><span class="line"><span class="built_in">Math</span>.hypot(<span class="number">3</span>,<span class="number">4</span>)				<span class="comment">// =&gt; 5：所有参数平方和的平方根</span></span><br><span class="line"><span class="built_in">Math</span>.log10(<span class="number">100</span>)				<span class="comment">// =&gt; 2：以 10 为底的对数</span></span><br><span class="line"><span class="built_in">Math</span>.log2(<span class="number">1024</span>)				<span class="comment">// =&gt; 10：以 2 为底的对数</span></span><br><span class="line"><span class="built_in">Math</span>.log1p(x)				<span class="comment">// (1+x) 的自然对数；精确到非常小的x</span></span><br><span class="line"><span class="built_in">Math</span>.expm1(x)				<span class="comment">// Math.exp(x)-1；Math.log1p() 的逆运算</span></span><br><span class="line"><span class="built_in">Math</span>.sign(x)				<span class="comment">// 对 &lt;、==或 &gt;0的参数返回 -1、0 或 1</span></span><br><span class="line"><span class="built_in">Math</span>.imul(<span class="number">2</span>,<span class="number">3</span>)				<span class="comment">// =&gt; 6：优化的 32 位整数乘法</span></span><br><span class="line"><span class="built_in">Math</span>.clz32(<span class="number">0xf</span>)				<span class="comment">// =&gt; 28：32 位整数中前导 0 的位数</span></span><br><span class="line"><span class="built_in">Math</span>.trunc(<span class="number">3.9</span>)				<span class="comment">// =&gt; 3：剪掉分数部分得到整数</span></span><br><span class="line"><span class="built_in">Math</span>.fround(x)				<span class="comment">// 舍入到最接近的 32 位浮点数</span></span><br><span class="line"><span class="built_in">Math</span>.sinh(x)				<span class="comment">// 双曲线正弦，还有 Math.cosh()、Math.tanh() </span></span><br><span class="line"><span class="built_in">Math</span>.asinh(x)				<span class="comment">// 双曲线反正弦，还有 Math.acosh()、Math.atanh() </span></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 算术中上溢出结果返回 <code>Infinity</code>，某个负数的绝对值超过最大可表示负数的绝对值，返回 <code>-Infinity</code></p>
+<p>下溢出发生在数值操作的结果比最小可表示数值更接近 0 的情况下，返回 0 ；若下溢来自负数，返回 -0</p>
+<p>被零除返回 <code>Infinity</code>或 <code>-Infinity</code>，0 除 0 返回非数值 <code>NaN（Not a Number）</code></p>
+<p>JavaScript预定义了全局常量 <code>Infinity</code> 和 <code>NaN</code>，这些值也可以通过 <code>Number</code> 对象属性获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">Infinity</span>			<span class="comment">// 因为太大而无法表示的整数</span></span><br><span class="line"><span class="number">1</span>/<span class="number">0</span>				<span class="comment">// =&gt; Infinity</span></span><br><span class="line">-<span class="literal">Infinity</span>			<span class="comment">// 因为太小而无法表示的负数</span></span><br><span class="line">-<span class="built_in">Number</span>.MAX_VALUE * <span class="number">2</span>		<span class="comment">// =&gt; -Infinity</span></span><br><span class="line"></span><br><span class="line"><span class="literal">NaN</span>				<span class="comment">// 非数值</span></span><br><span class="line"><span class="built_in">Number</span>.NaN			<span class="comment">// 同上</span></span><br><span class="line"><span class="literal">Infinity</span>/<span class="literal">Infinity</span>		<span class="comment">// =&gt; NaN</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Number</span>.MIN_VALUE/<span class="number">2</span>		<span class="comment">// =&gt; 0：下溢出</span></span><br><span class="line">-<span class="built_in">Number</span>.MIN_VALUE/<span class="number">2</span>		<span class="comment">// =&gt; -0：负零</span></span><br><span class="line">-<span class="number">1</span>/<span class="literal">Infinity</span>			<span class="comment">// =&gt; -0：负零</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6定义属性</span></span><br><span class="line"><span class="built_in">Number</span>.parseInt()		<span class="comment">// 同全局parseInt()函数</span></span><br><span class="line"><span class="built_in">Number</span>.parseFloat()		<span class="comment">// 同全局parseFloat()函数</span></span><br><span class="line"><span class="built_in">Number</span>.isNaN()			<span class="comment">// 判断 x 是不是 NaN</span></span><br><span class="line"><span class="built_in">Number</span>.isFinite()		<span class="comment">// 判断 x 是数值还是无穷</span></span><br><span class="line"><span class="built_in">Number</span>.isInteger()		<span class="comment">// 判断 x 是不是整数</span></span><br><span class="line"><span class="built_in">Number</span>.isSafeInteger()		<span class="comment">// </span></span><br><span class="line"><span class="built_in">Number</span>.MIN_SAFE_INTEGER		<span class="comment">// =&gt; -(2**53-1)</span></span><br><span class="line"><span class="built_in">Number</span>.MAX_SAFE_INTEGER         <span class="comment">// =&gt; 2**53-1</span></span><br><span class="line"><span class="built_in">Number</span>.EPSILON			<span class="comment">// =&gt; 2**52：数值与数值之间最小的差</span></span><br></pre></td></tr></table></figure>
+
+<p>非数值与任何值比较都不相等，也不等于自身，即不能通过 <code>x === NaN</code> 确定是不是非数值，只能通过 <code>x != x</code> 或 <code>Number.isNaN(x)</code></p>
+<p>负零值与正零值相等，几乎无法区别</p>
+<h3 id="二进制浮点数"><a href="#二进制浮点数" class="headerlink" title="二进制浮点数"></a>二进制浮点数</h3><p>JavaScript使用的 IEEE-754 浮点表示法是一种二进制表示法，可以精确地表示如 1/2、1/8 和 1/1024 等分数，但不能精确表示如0.1这样地数</p>
+<p>虽然JavaScript数值有足够大地精度，但仍然可能导致一些问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">.3</span> - <span class="number">.2</span>;			<span class="comment">// 30美分减20美分</span></span><br><span class="line"><span class="keyword">let</span> y = <span class="number">.2</span> - <span class="number">.1</span>;			<span class="comment">// 20美分减10美分</span></span><br><span class="line">x === y;				<span class="comment">// =&gt; false：这两个值不一样</span></span><br><span class="line">x === <span class="number">.1</span>;				<span class="comment">// =&gt; false：.3-.2 不等于 .1</span></span><br><span class="line">y === <span class="number">.1</span>;				<span class="comment">// =&gt; true：.2 -.1 等于 .1</span></span><br></pre></td></tr></table></figure>
+
+<p>若需要使用浮点近似值，可以考虑使用等量整数</p>
+<h3 id="BigInt"><a href="#BigInt" class="headerlink" title="BigInt"></a>BigInt</h3><p>ES2020为 JavaScript 定义了一种新的数值类型 BigInt（整数）</p>
+<p>BigInt 增加的目的是为了表示 64 位整数，可以兼容很多其他语言和 API。</p>
+<p>BigInt 可以满足对大数（可表示数千甚至数百万个数字）的需求，但是 BigInt 地实现不适合加密，没有考虑防止时序攻击</p>
+<p>BigInt 字面量写作一串数字后跟小写字母 n </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234n</span>							<span class="comment">// 基数为 10 的 BigInt</span></span><br><span class="line"><span class="number">0b111111n</span>						<span class="comment">// 二进制 BigInt</span></span><br><span class="line"><span class="number">0o7777n</span>							<span class="comment">// 八进制 BigInt</span></span><br><span class="line"><span class="number">0x8000000000000000n</span>					<span class="comment">// =&gt; 2n**63n：一个 64 位整数</span></span><br></pre></td></tr></table></figure>
+
+<p>可以用 BigInt() 函数把常规数值或字符串转换为 BigInt 值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BigInt</span>(<span class="built_in">Number</span>.MAX_SAFE_INTEGER)				<span class="comment">// =&gt; 9007199254740991n				</span></span><br><span class="line"><span class="keyword">let</span> string = <span class="string">&quot;1&quot;</span> + <span class="string">&quot;0&quot;</span>.repeat(<span class="number">100</span>);			<span class="comment">// 1 后跟 100 个零</span></span><br><span class="line"><span class="built_in">BigInt</span>(string)						<span class="comment">// =&gt; 10n**100n</span></span><br></pre></td></tr></table></figure>
+
+<p>BigInt 值的算术运算与常规 JavaScript 数值类似，只不过<strong>除法会丢弃余数并会向下（向零）舍入</strong></p>
+<p>常规运算操作符可以用于 BigInt ，但不能混用 BigInt 操作数和常规数值操作数</p>
+<p>比较操作符允许混合操作数类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> &lt; <span class="number">2n</span>					<span class="comment">// =&gt; true</span></span><br><span class="line"><span class="number">2</span> &gt; <span class="number">1n</span>					<span class="comment">// =&gt; true</span></span><br><span class="line"><span class="number">0</span> == <span class="number">0n</span>					<span class="comment">// =&gt; true</span></span><br><span class="line"><span class="number">0</span> === <span class="number">0n</span>				<span class="comment">// =&gt; false：=== 也检查类型是否相等</span></span><br></pre></td></tr></table></figure>
+
+<p>位操作符通常可以用于 BigInt 操作数，但 Math对象的任何函数不接收 BigInt 操作数</p>
+<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>JavaScript 为表示和操作与日期及时间相关的数据定义了 Date 类。Date 是对象，也可以用数值表示形式（自 1970.1.1 起的毫秒数，也叫时间戳）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> timestamp = <span class="built_in">Date</span>.now();			<span class="comment">// 当前时间的时间戳（数值）</span></span><br><span class="line"><span class="keyword">let</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();				<span class="comment">// 当前时间的日期对象</span></span><br><span class="line"><span class="keyword">let</span> ms = now.getTime();				<span class="comment">// 转换位毫秒时间戳</span></span><br><span class="line"><span class="keyword">let</span> iso = now.toISOString();		        <span class="comment">// 转换位标准格式的字符串</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><p>JavaScript 中表示文本的类型是 <code>String</code>，即字符串</p>
+<p>字符串是 16 位值的不可修改的有序序列，每个值表示一个 Unicode 字符</p>
+<h3 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h3><p>JavaScript 字符串可以用一对匹配的单引号、双引号或反引号来包含</p>
+<blockquote>
+<p>ES6新增可以使用反引号定界字符串</p>
+</blockquote>
+<p>单引号、双引号、反引号可以相互嵌套</p>
+<p>JavaScript 早期版本要求字符串字面量写在一行，ES5 可以在每行末尾加一个反斜杠（ \ ）写道多行上，ES6 的反引号支持跨行字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写在一行但表示两行的字符串：</span></span><br><span class="line"><span class="string">&#x27;two\nlines&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写在三行但只有一行的字符串：</span></span><br><span class="line"><span class="string">&quot;one\</span></span><br><span class="line"><span class="string"> long\</span></span><br><span class="line"><span class="string"> line&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写在两行实际也是两行的字符串：</span></span><br><span class="line"><span class="string">&#x27;two</span></span><br><span class="line"><span class="string"> nlines&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="转义序列"><a href="#转义序列" class="headerlink" title="转义序列"></a>转义序列</h3><table>
+<thead>
+<tr>
+<th>序列</th>
+<th>表示的字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\ 0</td>
+<td>NUL 字符</td>
+</tr>
+<tr>
+<td>\ b</td>
+<td>退格符</td>
+</tr>
+<tr>
+<td>\ t</td>
+<td>水平制表符</td>
+</tr>
+<tr>
+<td>\ n</td>
+<td>换行符</td>
+</tr>
+<tr>
+<td>\ v</td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td>\ f</td>
+<td>进纸符</td>
+</tr>
+<tr>
+<td>\ r</td>
+<td>回车符</td>
+</tr>
+<tr>
+<td>\ “</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>\ ‘</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>\ \</td>
+<td>反斜杠</td>
+</tr>
+<tr>
+<td>\ xnn</td>
+<td>由 2 为十六进制数字 nn 指定的 Unicode 字符</td>
+</tr>
+<tr>
+<td>\ unnnn</td>
+<td>由 4 为十六进制数字 nnnn 指定的 Unicode 字符</td>
+</tr>
+<tr>
+<td>\ u{n}</td>
+<td>由码点 n 指定的 Unicode 字符，其中 n 是介于 0 和 10FFFF 之间的 1 到 6 位十六进制数字（ES6）</td>
+</tr>
+</tbody></table>
+<h3 id="字符串使用"><a href="#字符串使用" class="headerlink" title="字符串使用"></a>字符串使用</h3><p>JavaScript 可以使用 + 操作符拼接字符串，可以使用 <code>===</code> 和 <code>!==</code> 操作符比较字符串，也可以使用其比较字符串如： &lt;、 &lt;=、&gt;和 &gt;=</p>
+<p>操作字符串的API</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="string">&quot;Hello, world&quot;</span>;</span><br><span class="line">s.length					<span class="comment">// =&gt; 12：返回字符串长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得字符串的一部分</span></span><br><span class="line">s.substring(<span class="number">1</span>,<span class="number">4</span>)				<span class="comment">// =&gt; &quot;ell&quot;：第 2~4 个字符</span></span><br><span class="line">s.slice(<span class="number">1</span>,<span class="number">4</span>)					<span class="comment">// =&gt; &quot;ell&quot;：同上</span></span><br><span class="line">s.slice(-<span class="number">3</span>)					<span class="comment">// =&gt; &quot;rld&quot;：最后 3 个字符</span></span><br><span class="line">s.split(<span class="string">&quot;, &quot;</span>)					<span class="comment">// =&gt; [&quot;Hello&quot;,&quot;world&quot;]：从定界处拆分</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 搜索字符串</span></span><br><span class="line">s.indexOf(<span class="string">&quot;l&quot;</span>)					<span class="comment">// =&gt; 2：第一个字母 l 的位置</span></span><br><span class="line">s.indexOf(<span class="string">&quot;l&quot;</span>,<span class="number">3</span>)				<span class="comment">// =&gt; 3：位置 3 后面第一个 l 的位置</span></span><br><span class="line">s.indexOf(<span class="string">&quot;zz&quot;</span>)					<span class="comment">// =&gt; -1：s 并不包含子串 zz</span></span><br><span class="line">s.lastIndexOf(<span class="string">&quot;l&quot;</span>)				<span class="comment">// =&gt; 10：最后一个字母 l 的位置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 及之后版本中的布尔值搜索函数</span></span><br><span class="line">s.startsWith(<span class="string">&quot;hell&quot;</span>) 				<span class="comment">// =&gt; true：字符串是以这些字符开头的</span></span><br><span class="line">s.endWith(<span class="string">&quot;!&quot;</span>)					<span class="comment">// =&gt; false：s 不是以它结尾的</span></span><br><span class="line">s.includes(<span class="string">&quot;or&quot;</span>)				<span class="comment">// =&gt; true：s包含子串 or</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建字符串的修改版本</span></span><br><span class="line">s.replace(<span class="string">&quot;llo&quot;</span>,<span class="string">&quot;ya&quot;</span>)				<span class="comment">// =&gt; &quot;Heya,world&quot;</span></span><br><span class="line">s.toLowerCase()					<span class="comment">// =&gt; &quot;hello, world&quot;</span></span><br><span class="line">s.toUpperCase()					<span class="comment">// =&gt; &quot;HELLO, WORLD&quot;</span></span><br><span class="line">s.normalize()					<span class="comment">// Unicode NFC 归一化：ES6 新增</span></span><br><span class="line">s.normalize(<span class="string">&quot;NFD&quot;</span>)				<span class="comment">// NFD 归一化。还有 NFKC 和 NFKD</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问字符串的个别（16位值）字符</span></span><br><span class="line">s.charAt(<span class="number">0</span>)					<span class="comment">// =&gt; &quot;H&quot;：第一个字符</span></span><br><span class="line">s.charAt(s.length-<span class="number">1</span>)				<span class="comment">// =&gt; &quot;d&quot;：最后一个字符</span></span><br><span class="line">s.charCodeAt(<span class="number">0</span>)					<span class="comment">// =&gt; 72：指定位置的16位数值</span></span><br><span class="line">s.codePointAt(<span class="number">0</span>)				<span class="comment">// =&gt; 72：ES6，适用于码点大于 16 位的情形</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES2017 新增字符串填充函数</span></span><br><span class="line"><span class="string">&quot;x&quot;</span>.padStart(<span class="number">3</span>)					<span class="comment">// =&gt; &quot;  x&quot;：在左侧添加空格，让字符串长度变成3</span></span><br><span class="line"><span class="string">&quot;x&quot;</span>.padEnd(<span class="number">3</span>)					<span class="comment">// =&gt; &quot;x  &quot;：在右侧添加空格，让字符串长度变成3</span></span><br><span class="line"><span class="string">&quot;x&quot;</span>.padStart(<span class="number">3</span>,<span class="string">&quot;*&quot;</span>)				<span class="comment">// =&gt; &quot;**x&quot;：在左侧添加星号，让字符串长度变成3</span></span><br><span class="line"><span class="string">&quot;x&quot;</span>.padEnd(<span class="number">3</span>,<span class="string">&quot;-&quot;</span>)				<span class="comment">// =&gt; &quot;x--&quot;：在右侧添加破折号，让字符串长度变成3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除空格函数</span></span><br><span class="line"><span class="string">&quot; test &quot;</span>.trim()					<span class="comment">// =&gt; &quot;test&quot;：删除开头和末尾的空格</span></span><br><span class="line"><span class="string">&quot; test &quot;</span>.trimStart()				<span class="comment">// =&gt; &quot;test &quot;：删除左侧的空格。也叫 trimLeft</span></span><br><span class="line"><span class="string">&quot; test &quot;</span>.trimEnd()				<span class="comment">// =&gt; &quot; test&quot;：删除右侧的空格。也叫 trimRight</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 未分类字符串方法</span></span><br><span class="line">s.concat(<span class="string">&quot;!&quot;</span>)					<span class="comment">// =&gt; &quot;Hello, world!&quot;：可以用 + 操作符代替</span></span><br><span class="line"><span class="string">&quot;&lt;&gt;&quot;</span>.repeat(<span class="number">5</span>)				        <span class="comment">// =&gt; &quot;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&quot;：拼接 n 次。ES6 新增</span></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript中的字符串是不可修改的。像 <code>replace()</code> 和 <code>toUpperCase()</code> 这些都返回新字符串</p>
+<p>字符串也可以被当成只读数组，用方括号访问</p>
+<h3 id="模板字面量"><a href="#模板字面量" class="headerlink" title="模板字面量"></a>模板字面量</h3><p>ES6 及之后的版本，字符串字面量可以用反引号定界，反引号中可以包含模板字面量，模板字面量可以包含任意JavaScript表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;Bill&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> greeting = <span class="string">&#x27;Hello $&#123; name &#125;.&#x27;</span>;		 <span class="comment">// =&gt; greeting == &quot;Hello Bill.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>标签化模板字面量</strong>：在开头的反引号前添加函数名（标签），则模板字面量中的文本和表达式的值作为参数传给这个函数</p>
+<p>”标签化模板字面量“的值即这个函数的返回值</p>
+<p>ES6 提供内置的标签函数：<code>String.raw()</code> ，用于返回反引号中未经处理的文本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;\n&#x27;</span>.length					<span class="comment">// =&gt; 1：字符串中只包含一个换行符</span></span><br><span class="line"><span class="built_in">String</span>.raw<span class="string">&#x27;\n&#x27;</span>.length				<span class="comment">// =&gt; 2：一个反斜杠字符和一个字母n</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h2><p>布尔值只有两个值：<code>true</code> 和 <code>false</code></p>
+<p>JavaScript 的任何值都可以转换为布尔值，以下的值转换为布尔值 <code>false</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">undefined</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">-<span class="number">0</span></span><br><span class="line"><span class="literal">NaN</span></span><br><span class="line"><span class="string">&quot;&quot;</span>		<span class="comment">// 空字符串</span></span><br></pre></td></tr></table></figure>
+
+<p>所有其他值转换为布尔值 <code>true</code></p>
+<p>布尔值的 <code>toString()</code> 方法，用于将自己转换为字符串 ”true“ 或 ”false“</p>
+<h2 id="null与undefined"><a href="#null与undefined" class="headerlink" title="null与undefined"></a>null与undefined</h2><p><code>null</code> 是关键字，通常用于表示某个值不存在</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span>(<span class="literal">null</span>)			<span class="comment">// =&gt; &quot;object&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>null</code> 可以看作一种特殊对象，表示 ”没对象“</p>
+<p><code>undefined</code> 也表示值不存在</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span>(<span class="literal">undefined</span>)			<span class="comment">// =&gt; &quot;undefined&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>undefined</code> 情形</p>
+<ul>
+<li>变量的值未初始化时</li>
+<li>查询不存在的对象属性或数组元素</li>
+<li>没用明确返回值的函数返回值</li>
+<li>没有传值的函数参数的值</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>			<span class="comment">// =&gt; true</span></span><br><span class="line"><span class="literal">null</span> === <span class="literal">undefined</span>			<span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h2><p>ES6 新增的一种原始类型，用作非字符串的属性名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strname = <span class="string">&quot;string name&quot;</span>;			<span class="comment">// 可以用作属性名的字符串</span></span><br><span class="line"><span class="keyword">let</span> symname = <span class="built_in">Symbol</span>(<span class="string">&quot;propname&quot;</span>);		<span class="comment">// 可以用作属性名的符号</span></span><br><span class="line"><span class="keyword">typeof</span> strname					<span class="comment">// =&gt; &quot;string&quot;：strname 是字符串</span></span><br><span class="line"><span class="keyword">typeof</span> symname					<span class="comment">// =&gt; &quot;symbol&quot;：symname 是符号</span></span><br><span class="line"><span class="keyword">let</span> o = &#123;&#125;;					<span class="comment">// 创建一个新对象</span></span><br><span class="line">o[strname] = <span class="number">1</span>;					<span class="comment">// 使用字符串名定义一个属性</span></span><br><span class="line">o[symname] = <span class="number">2</span>;					<span class="comment">// 使用符号名定义一个属性</span></span><br><span class="line">o[strname]					<span class="comment">// =&gt; 1：访问字符串名字的属性</span></span><br><span class="line">o[symname]					<span class="comment">// =&gt; 2：访问符号名字的属性</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Symbol</code> 类型的 “真实值” 无法获取，即<strong>Symbol类型没有对应的字面量</strong></p>
+<p><code>Symbol</code> 值只能通过调用 <code>Symbol()</code> 来获取，且返回的都是唯一的值，即使每次传入的参数相同 </p>
+<p>通过调用 <code>toString()</code> 方法可以返回包含参数的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>(<span class="string">&quot;sym_x&quot;</span>);</span><br><span class="line">s.toString						<span class="comment">// =&gt; &quot;Symbol(sym_x)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了可以与其他代码共享符号值，JavaScript 定义了一个全局符号注册表</p>
+<p><code>Symbol.for()</code> 函数接收一个字符串参数，返回一个与该字符串关联的符号值，若没有关联的符号值，创建返回新符号，可以通过 <code>Symbol.keyFor()</code> 得到字符串参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>.for(<span class="string">&quot;shared&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> t = <span class="built_in">Symbol</span>.for(<span class="string">&quot;shared&quot;</span>);</span><br><span class="line">s === t						<span class="comment">// =&gt; true</span></span><br><span class="line">s.toString()					<span class="comment">// =&gt; &quot;Symbol(shared);&quot;</span></span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(t)				<span class="comment">// =&gt; &quot;shared&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="原始值与对象引用"><a href="#原始值与对象引用" class="headerlink" title="原始值与对象引用"></a>原始值与对象引用</h2><p>JavaScript 中的原始值（undefined、null、布尔值、数值和字符串）是不可修改的，修改后都是返回新的值。比较两个不同的字符串时，当且仅当两个字符串长度相同且每个索引的字符也相同时，才相等</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">s.toUpperCase();</span><br><span class="line">s						<span class="comment">// =&gt; &quot;hello&quot;：原始字符串并未改变</span></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 中的对象和数组是可修改的，即其值是可变的。两个不同的对象和数组即使用完全相同的属性和值，也不是相等的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;, p = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;;				<span class="comment">// 两个对象，有相同的属性</span></span><br><span class="line">o === p							<span class="comment">// =&gt; false：不同的对象永远也不会相等</span></span><br><span class="line"><span class="keyword">let</span> a = [], b = [];					<span class="comment">// 两个不同数组</span></span><br><span class="line">a === b							<span class="comment">// =&gt; false：不同的数组永远也不会相等</span></span><br></pre></td></tr></table></figure>
+
+<p>当且仅当两个对象引用同一个底层对象时，才相等</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [];			<span class="comment">// 这个变量引用一个空数组</span></span><br><span class="line"><span class="keyword">let</span> b = a;			<span class="comment">// b 引用同一个数组</span></span><br><span class="line">b[<span class="number">0</span>] = <span class="number">1</span>;			<span class="comment">// 修改变量b引用的数组</span></span><br><span class="line">a[<span class="number">0</span>]				<span class="comment">// =&gt; 1：变化也能通过变量 a 看到</span></span><br><span class="line">a === b				<span class="comment">// =&gt; true：a 和 b 引用同一个对象，相等</span></span><br></pre></td></tr></table></figure>
+
+<p>创建对象或数组的副本，必须显示复制对象或数组的元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>];						</span><br><span class="line"><span class="keyword">let</span> b = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; a.length; i++)&#123;</span><br><span class="line">	b[i] = a[i];			<span class="comment">// 把 a 的元素复制到 b 中</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c = <span class="built_in">Array</span>.from(b);			<span class="comment">// ES6 可以使用 Array.from() 复制数组</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>JavaScript 的类型转换</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>转换为字符串</th>
+<th>转换为数值</th>
+<th>转换为布尔值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>undefined</td>
+<td>“undefined”</td>
+<td>NaN</td>
+<td>false</td>
+</tr>
+<tr>
+<td>null</td>
+<td>“null”</td>
+<td>0</td>
+<td>false</td>
+</tr>
+<tr>
+<td>true</td>
+<td>“true”</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>false</td>
+<td>“false”</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>“”（空字符串）</td>
+<td></td>
+<td>0</td>
+<td>false</td>
+</tr>
+<tr>
+<td>“1.2”（非空，数值）</td>
+<td></td>
+<td>1.2</td>
+<td>true</td>
+</tr>
+<tr>
+<td>“one”（非空，非数值）</td>
+<td></td>
+<td>NaN</td>
+<td>true</td>
+</tr>
+<tr>
+<td>0</td>
+<td>“0”</td>
+<td></td>
+<td>false</td>
+</tr>
+<tr>
+<td>-0</td>
+<td>“0”</td>
+<td></td>
+<td>false</td>
+</tr>
+<tr>
+<td>1（有限，非零）</td>
+<td>“1”</td>
+<td></td>
+<td>true</td>
+</tr>
+<tr>
+<td>Infinity</td>
+<td>“Infinity”</td>
+<td></td>
+<td>true</td>
+</tr>
+<tr>
+<td>-Infinity</td>
+<td>“-Infinity”</td>
+<td></td>
+<td>true</td>
+</tr>
+<tr>
+<td>NaN</td>
+<td>“NaN”</td>
+<td></td>
+<td>false</td>
+</tr>
+<tr>
+<td>{ }（任何对象）</td>
+<td></td>
+<td></td>
+<td>true</td>
+</tr>
+<tr>
+<td>[ ]（空数组）</td>
+<td>“”</td>
+<td>0</td>
+<td>true</td>
+</tr>
+<tr>
+<td>[9]（一个数值元素）</td>
+<td>“9”</td>
+<td>9</td>
+<td>true</td>
+</tr>
+<tr>
+<td>[‘a’]（任何其他数组）</td>
+<td>使用 join()方法</td>
+<td>NaN</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Function( )[ ]</td>
+<td></td>
+<td>NaN</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h3 id="显示转换"><a href="#显示转换" class="headerlink" title="显示转换"></a><strong>显示转换</strong></h3><ul>
+<li><code>Boolean()</code></li>
+<li><code>Number()</code></li>
+<li><code>String()</code></li>
+</ul>
+<p>除 <code>null</code> 和 <code>undefined</code> 之外的所有值都有 <code>toString()</code> 方法，返回的结果通常与 <code>String()</code> 相同</p>
+<p>某些 JavaScript 操作符会执行隐式类型转换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x + <span class="string">&quot;&quot;</span>				<span class="comment">// =&gt; String(x)</span></span><br><span class="line">+x				<span class="comment">// =&gt; Number(x)</span></span><br><span class="line">x-<span class="number">0</span>				<span class="comment">// =&gt; Number(x)</span></span><br><span class="line">!!x				<span class="comment">// =&gt; Boolean(x)：注意这里两次取反</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数值到字符串"><a href="#数值到字符串" class="headerlink" title="数值到字符串"></a>数值到字符串</h3><p>Number 类定义的  <code>toString()</code> 方法可以接收一个参数（ 2~36 ），用于指定一个基数或底数，默认为 10</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> n =<span class="number">17</span>;</span><br><span class="line"><span class="keyword">let</span> binary = <span class="string">&quot;0b&quot;</span> + n.toString(<span class="number">2</span>);		<span class="comment">// binary == &quot;0b10001&quot;</span></span><br><span class="line"><span class="keyword">let</span> octal = <span class="string">&quot;0o&quot;</span> + n.toString(<span class="number">8</span>);		<span class="comment">// binary == &quot;0o21&quot;</span></span><br><span class="line"><span class="keyword">let</span> hex = <span class="string">&quot;0x&quot;</span> + n.toString(<span class="number">16</span>);		<span class="comment">// hex == &quot;0x11&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Number 类定义了 3 种方法</p>
+<ul>
+<li><code>toFixed()</code> ：转换时可以指定小数点后面位数</li>
+<li><code>toExponential()</code> ：使用指数计数法转换，结果为小数点前 1 位，小数点后为指定位数</li>
+<li><code>toPrecision()</code> ：按照指定的有效数字转换，若有效数字个数不足以表示数值的整数部分，使用指数计数法</li>
+<li>三种方法必要时都会舍去末尾的数字或补 0</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> n = <span class="number">123456.789</span>;</span><br><span class="line">n.toFixed(<span class="number">0</span>)						<span class="comment">// =&gt; &quot;123457&quot;</span></span><br><span class="line">n.toFixed(<span class="number">5</span>)						<span class="comment">// =&gt; &quot;123456.79&quot;</span></span><br><span class="line">n.toExponential(<span class="number">1</span>)					<span class="comment">// =&gt; &quot;1.2e+5&quot;</span></span><br><span class="line">n.toExponential(<span class="number">3</span>)					<span class="comment">// =&gt; &quot;1.235e+5&quot;</span></span><br><span class="line">n.toPrecision(<span class="number">4</span>)					<span class="comment">// =&gt; &quot;1.235e+5&quot;</span></span><br><span class="line">n.toPrecision(<span class="number">7</span>)					<span class="comment">// =&gt; &quot;123456.8&quot;</span></span><br><span class="line">n.toPrecision(<span class="number">10</span>)					<span class="comment">// =&gt; &quot;123456.7890&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符串到数值"><a href="#字符串到数值" class="headerlink" title="字符串到数值"></a>字符串到数值</h3><p>把字符串传给 <code>Number()</code> 转换函数，会把字符串当成整数或浮点数字面量解析，只支持基础为 10 的整数，不允许末尾出现无关字符</p>
+<p><code>parseInt()</code> 只解析整数，接收可选的第二个参数，用于指定要解析数值的基数或底数（ 2~36 ）</p>
+<p><code>parseFloat()</code> 既解析整数也解析浮点数</p>
+<p><code>parseInt()</code> 和 <code>parseFloat()</code> 会跳过开头空格，尽量解析多的数字，忽略后面的无关字符。若第一个字符不是有效的数值字面量，返回 <code>NaN</code> </p>
+<h3 id="对象到原始值"><a href="#对象到原始值" class="headerlink" title="对象到原始值"></a>对象到原始值</h3><p>所有对象都会继承两个在对象到原始值转换时使用的方法</p>
+<ul>
+<li><code>toString()</code>：返回对象的字符串表示</li>
+<li><code>valueOf()</code>：把对象转换为代表对象的原始值（若存在一个这样的原始值）</li>
+</ul>
+<p>JavaScript 规范定义了对象到原始值转换的 3 种基本算法</p>
+<ul>
+<li><p>偏字符串：该算法返回原始值，而且只要可能就返回字符串</p>
+<blockquote>
+<p>偏字符串算法首先尝试 <code>toString()</code> 方法，若此方法有定义且返回原始值，则使用该原始值；若不存在，或存在但返回对象，尝试 <code>valueOf()</code> 方法，若此方法存在且返回原始值，则使用该原始值，否则，报 <code>TypeError()</code></p>
+</blockquote>
+</li>
+<li><p>偏数值：该算法返回原始值，而且只要可能就返回数值</p>
+<blockquote>
+<p>与偏字符串算法类似，但是先尝试 <code>valueOf()</code> 方法，再尝试 <code>toString()</code> 方法</p>
+</blockquote>
+</li>
+<li><p>无偏好：该算法不倾向于任何原始值类型，由类定义自己的转换规则</p>
+<blockquote>
+<p>取决于被转换对象的类</p>
+</blockquote>
+</li>
+</ul>
+<p>JavaScript 内置类除了 <code>Date()</code> 类都实现了偏数值算法，<code>Date()</code> 类实现偏字符串算法</p>
+<h2 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h2><p>ES6 实现了一种复合声明与赋值语法，叫做解构赋值（destructuring assignment）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [x,y] = [<span class="number">1</span>,<span class="number">2</span>];			<span class="comment">// 相当于 let x=1, y=2</span></span><br><span class="line">[x,y] = [x+<span class="number">1</span>,y+<span class="number">1</span>];			<span class="comment">// 相当于 x = x + 1, y =y + 1</span></span><br><span class="line">[x,y] = [y,x];				<span class="comment">// 交换两个变量的值</span></span><br><span class="line">[x,y]					<span class="comment">// =&gt; [3,2]</span></span><br></pre></td></tr></table></figure>
+
+<p>解构赋值左侧变量的个数不一定与右侧变量相同，左侧多余的会被设为 <code>undefined</code> ，右侧多余的会被忽略。左侧的变量列表可以包含额外的逗号，以跳过右侧的某些值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [x,y] = [<span class="number">1</span>];			<span class="comment">// x == 1; y == undefined</span></span><br><span class="line">[x,y] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];			<span class="comment">// x == 1; y == 2</span></span><br><span class="line">[,x,,y] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];			<span class="comment">// x == 2; y == 4</span></span><br></pre></td></tr></table></figure>
+
+<p>在解构赋值时，若想把所有未使用或剩余的值收集到一个变量中，可在左侧最后一个变量名前加 3 个点（ … ）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [x, ...y] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];		<span class="comment">// y == [2,3,4]</span></span><br></pre></td></tr></table></figure>
+
+<p>若变量名与对象属性名相同，可以直接赋值，若左侧包含一个不是右侧属性的变量名，该变量被赋值为 <code>undefined</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 相当于 const sin=Math.sin, cos=Math.cos, tan=Math.tan</span></span><br><span class="line"><span class="keyword">const</span> &#123;sin,cos,tan&#125; = <span class="built_in">Math</span>;</span><br></pre></td></tr></table></figure>
+
+<p>对象解构赋值左侧的每个标识符都可以是一个冒号分隔的标识符对，第一个为要解构其值的属性名，第二个为要把值赋给它的变量名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 相当于 const cosine=Math.cos, tangent=Math.tan</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">cos</span>:cosine,<span class="attr">tan</span>:tangent&#125; = <span class="built_in">Math</span>;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/" rel="prev" title="链路层和局域网">
+                  <i class="fa fa-chevron-left"></i> 链路层和局域网
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/" rel="next" title="JS表达式与操作符">
+                  JS表达式与操作符 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

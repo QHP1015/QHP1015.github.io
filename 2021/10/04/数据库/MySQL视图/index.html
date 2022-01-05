@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="视图视图是一个虚拟表，不占据存储空间，数据来源于数据库表或其他视图，当基本表发生变化时，视图的数据也会变化 当调用视图时，才会执行视图中的SQL语句，进行取数据操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL视图">
+<meta property="og:url" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A7%86%E5%9B%BE/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="视图视图是一个虚拟表，不占据存储空间，数据来源于数据库表或其他视图，当基本表发生变化时，视图的数据也会变化 当调用视图时，才会执行视图中的SQL语句，进行取数据操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-04T10:38:27.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="大学课程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A7%86%E5%9B%BE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A7%86%E5%9B%BE/","path":"2021/10/04/数据库/MySQL视图/","title":"MySQL视图"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL视图 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">视图的优势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%AE%9A%E4%B9%89%E5%92%8C%E7%AE%A1%E7%90%86"><span class="nav-text">视图定义和管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-text">创建与使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-text">查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-text">修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-text">更新</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A7%86%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL视图
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-04 18:38:27" itemprop="dateCreated datePublished" datetime="2021-10-04T18:38:27+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是一个虚拟表，<strong>不占据存储空间</strong>，数据来源于数据库表或其他视图，当基本表发生变化时，视图的数据也会变化</p>
+<p>当调用视图时，才会执行视图中的SQL语句，进行取数据操作</p>
+<span id="more"></span>
+
+<h4 id="视图的优势"><a href="#视图的优势" class="headerlink" title="视图的优势"></a>视图的优势</h4><ul>
+<li><p>增强数据安全性（不同的用户分配不同的视图）</p>
+</li>
+<li><p>提高灵活性，操作简单</p>
+</li>
+<li><p>提高数据的逻辑独立性</p>
+<blockquote>
+<p>使用视图可以向应用程序屏蔽表结构</p>
+<p>使用视图可以向数据库表屏蔽应用程序</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="视图定义和管理"><a href="#视图定义和管理" class="headerlink" title="视图定义和管理"></a>视图定义和管理</h3><h4 id="创建与使用："><a href="#创建与使用：" class="headerlink" title="创建与使用："></a>创建与使用：</h4><p>创建视图需要<code>CREATE VIEW</code> 的权限以及<code>SELECT</code> 权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [ALGORITHM <span class="operator">=</span> &#123;UNDEFINED <span class="operator">|</span> <span class="keyword">MERGE</span> <span class="operator">|</span> TEMPTABLE&#125;]</span><br><span class="line"><span class="keyword">VIEW</span> 视图名 [(视图列表)]						<span class="comment">--视图名唯一</span></span><br><span class="line"><span class="keyword">AS</span> 查询语句									  </span><br><span class="line">[<span class="keyword">WITH</span> [<span class="keyword">CASCADED</span> <span class="operator">|</span> <span class="keyword">LOCAL</span>] <span class="keyword">CHECK</span> OPTION] 		<span class="comment">--CASCADED表示更新视图时要满足所有相关视图和表的条件，为默认值</span></span><br><span class="line">											<span class="comment">--LOCAL表示更新视图时，满足该视图本身的定义条件即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--例：在表1上创建一个名为表1_view的视图，包含字段1，字段2，字段3</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 表<span class="number">1</span>_view(字段<span class="number">1</span>,字段<span class="number">2</span>,字段<span class="number">3</span>) <span class="keyword">AS</span> <span class="keyword">SELECT</span> 字段<span class="number">1</span>,字段<span class="number">2</span>,字段<span class="number">3</span>  <span class="keyword">FROM</span> 表<span class="number">2</span>，表<span class="number">3</span>，表<span class="number">4</span> <span class="keyword">WHERE</span> (条件)</span><br><span class="line"><span class="comment">--例：查询给定值的信息</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表<span class="number">1</span>_view <span class="keyword">WHERE</span> 字段<span class="number">1</span><span class="operator">=</span><span class="string">&#x27;给定值&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>当向与视图关联的表中添加新字段，查询时该视图不包括新字段；若与视图关联的表或视图被删除，该视图不能使用</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>删除视图时，只能删除视图的定义，不会删除数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> [IF <span class="keyword">EXISTS</span>]</span><br><span class="line">view_name[,view_name2]……</span><br><span class="line">[RESTRICT <span class="operator">|</span> CASCADE]</span><br></pre></td></tr></table></figure>
+
+<p>一次可以删除多个视图</p>
+<h4 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h4><p>查看视图要有<code>SHOW VIEW</code> 的权限</p>
+<p>查看方法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DESCRIBE</span> 视图名称;      或者<span class="keyword">DESC</span> 视图名称;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;视图名&#x27;</span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">VIEW</span> <span class="string">&#x27;视图名&#x27;</span></span><br><span class="line"><span class="comment">--查询某数据库下的视图表</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> db_name.views <span class="keyword">WHERE</span> table_name <span class="operator">=</span><span class="string">&#x27;视图名&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> REPLACE <span class="keyword">VIEW</span> 视图名[&#123;属性清单&#125;] <span class="keyword">AS</span> <span class="keyword">SELECT</span> 语句 </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">VIEW</span> 视图名[&#123;属性清单&#125;] <span class="keyword">AS</span> <span class="keyword">SELECT</span> 语句</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h4><p>通过视图进行插入(<code>INSERT</code>)、更新(<code>UPDATE</code>)、删除(<code>DELETE</code>)表中的数据</p>
+<p>更新视图的语法与<code>UPDATE</code>语法一致</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B/" rel="tag"># 大学课程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E7%B4%A2%E5%BC%95/" rel="prev" title="MySQL索引">
+                  <i class="fa fa-chevron-left"></i> MySQL索引
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="next" title="MySQL权限管理">
+                  MySQL权限管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

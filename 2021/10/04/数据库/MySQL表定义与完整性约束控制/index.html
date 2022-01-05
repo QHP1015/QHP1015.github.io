@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="表数据库由各种数据表组成，数据表是用来存储和操作数据的逻辑结构  每个表应该只包含关于一个主题的信息 表中不应包含重复信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL表定义与完整性约束控制">
+<meta property="og:url" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A1%A8%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="表数据库由各种数据表组成，数据表是用来存储和操作数据的逻辑结构  每个表应该只包含关于一个主题的信息 表中不应包含重复信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-04T08:41:39.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="大学课程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A1%A8%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A1%A8%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6/","path":"2021/10/04/数据库/MySQL表定义与完整性约束控制/","title":"MySQL表定义与完整性约束控制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL表定义与完整性约束控制 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8"><span class="nav-text">表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="nav-text">数值数据类型：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="nav-text">日期&#x2F;时间类型：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="nav-text">字符串类型：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="nav-text">二进制类型：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%EF%BC%9A"><span class="nav-text">选择：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A"><span class="nav-text">算术运算符：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A"><span class="nav-text">比较运算符：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%EF%BC%9A"><span class="nav-text">正则匹配：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A"><span class="nav-text">位运算符：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-text">数据表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-text">创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-text">查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-text">修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6"><span class="nav-text">复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6"><span class="nav-text">约束控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="nav-text">数据完整性约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E7%BA%A6%E6%9D%9F"><span class="nav-text">字段约束</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">主键约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">外键约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">非空约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">唯一约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">默认约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%A2%9E%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">自增约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%BA%A6%E6%9D%9F%EF%BC%9A"><span class="nav-text">检查约束：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BA%A6%E6%9D%9F"><span class="nav-text">删除约束</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A1%A8%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL表定义与完整性约束控制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-04 16:41:39" itemprop="dateCreated datePublished" datetime="2021-10-04T16:41:39+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><p>数据库由各种数据表组成，数据表是用来存储和操作数据的逻辑结构</p>
+<ul>
+<li>每个表应该只包含关于一个主题的信息</li>
+<li>表中不应包含重复信息</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h5 id="数值数据类型："><a href="#数值数据类型：" class="headerlink" title="数值数据类型："></a>数值数据类型：</h5><ul>
+<li><p>整数类型：<code>TINYINT</code>、<code>SMALLINT</code>、<code>MEDIUMINT</code>、<code>INT</code>、<code>BIGINT</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th><strong>含义（有符号）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT(m)</td>
+<td>1个字节 范围(-128~127)                         小整数值</td>
+</tr>
+<tr>
+<td>SMALLINT(m)</td>
+<td>2个字节 范围(-32768~32767)                大整数值</td>
+</tr>
+<tr>
+<td>MEDIUMINT(m)</td>
+<td>3个字节 范围(-8388608~8388607)       大整数值</td>
+</tr>
+<tr>
+<td>INT(m)</td>
+<td>4个字节 范围(-2147483648~2147483647)               大整数值</td>
+</tr>
+<tr>
+<td>BIGINT(m)</td>
+<td>8个字节 范围(+-9.22*10的18次方)          极大整数值</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>浮点数类型：<code>FLOAT</code>、<code>DOUBLE</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FLOAT(m,d)</td>
+<td>单精度浮点型 8位精度(4字节) m总个数，d小数位</td>
+</tr>
+<tr>
+<td>DOUBLE(m,d)</td>
+<td>双精度浮点型 16位精度(8字节) m总个数，d小数位</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>定点小数类型：<code>DECIMAL</code></p>
+<p>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值。</p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DECIMAL(m,d)</td>
+<td>参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h5 id="日期-时间类型："><a href="#日期-时间类型：" class="headerlink" title="日期/时间类型："></a>日期/时间类型：</h5><ul>
+<li><p><code>YEAR</code>、<code>TIME</code>、<code>DATE</code>、<code>DATETIME</code>、<code>TIMESTAMP</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th align="left"><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DATE</td>
+<td align="left">日期 ‘2008-12-2’</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td align="left">时间 ‘12:25:36’</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td align="left">日期时间 ‘2008-12-2 22:06:44’</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td align="left">自动存储记录修改时间</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td align="left">年份值</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h5 id="字符串类型："><a href="#字符串类型：" class="headerlink" title="字符串类型："></a>字符串类型：</h5><ul>
+<li><p><code>CHAR</code>、<code>VARCHAR</code>、<code>BINARY</code>、<code>VARBINARY</code>、<code>BLOB</code>、<code>TEXT</code>、<code>ENUM</code>、<code>SET</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th>大小</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHAR</td>
+<td>0-255字节</td>
+<td>定长字符串</td>
+</tr>
+<tr>
+<td>VARCHAR</td>
+<td>0-255字节</td>
+<td>变长字符串</td>
+</tr>
+<tr>
+<td>TINYTEXT</td>
+<td>0-255字节</td>
+<td>短文本字符串</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>0-65 535字节</td>
+<td>长文本数据</td>
+</tr>
+<tr>
+<td>MEDIUMTEXT</td>
+<td>0-16 777 215字节</td>
+<td>中等长度文本数据</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>0-4 294 967 295字节</td>
+<td>极大文本数据</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h5 id="二进制类型："><a href="#二进制类型：" class="headerlink" title="二进制类型："></a>二进制类型：</h5><ul>
+<li><p><code>BIT</code>、<code>BINARY</code>、<code>VARBINARY</code>、<code>TINYBLOB</code>、<code>BLOB</code>、<code>MEDIUMBLOB</code>、<code>LONGBLOB</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>MySQL数据类型</strong></th>
+<th>大小</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYBLOB</td>
+<td>0-255字节</td>
+<td>不超过 255 个字符的二进制字符串</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>0-65 535字节</td>
+<td>二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td>MEDIUMBLOB</td>
+<td>0-16 777 215字节</td>
+<td>二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td>LOGNGBLOB</td>
+<td>0-4 294 967 295字节</td>
+<td>二进制形式的极大文本数据</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h5 id="选择："><a href="#选择：" class="headerlink" title="选择："></a>选择：</h5><ul>
+<li>在符合应用要求（取值范围、精度）的前提下，尽量使用“短”数据类型</li>
+<li>数据类型越简单越好</li>
+<li>尽量采用精确小数类型，而不采用浮点数类型</li>
+<li>使用内置的日期和时间数据类型，而不是使用字符串来存储</li>
+<li>尽量避免<code>NULL</code>字段，建议将字段指定为<code>NOT NULL</code> 约束</li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><h5 id="算术运算符："><a href="#算术运算符：" class="headerlink" title="算术运算符："></a>算术运算符：</h5><table>
+<thead>
+<tr>
+<th>算术运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法运算</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法运算</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法运算</td>
+</tr>
+<tr>
+<td>/</td>
+<td>除法运算，返回商</td>
+</tr>
+<tr>
+<td>%</td>
+<td>求余运算，返回余数</td>
+</tr>
+</tbody></table>
+<h5 id="比较运算符："><a href="#比较运算符：" class="headerlink" title="比较运算符："></a>比较运算符：</h5><table>
+<thead>
+<tr>
+<th>比较运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;=&gt;</td>
+<td>安全的等于，不会返回 UNKNOWN</td>
+</tr>
+<tr>
+<td>&lt;&gt; 或!=</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>IS NULL 或 ISNULL</td>
+<td>判断一个值是否为 NULL</td>
+</tr>
+<tr>
+<td>IS NOT NULL</td>
+<td>判断一个值是否不为 NULL</td>
+</tr>
+<tr>
+<td>LEAST</td>
+<td>当有两个或多个参数时，返回最小值</td>
+</tr>
+<tr>
+<td>GREATEST</td>
+<td>当有两个或多个参数时，返回最大值</td>
+</tr>
+<tr>
+<td>BETWEEN AND</td>
+<td>判断一个值是否落在两个值之间</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>判断一个值是IN列表中的任意一个值</td>
+</tr>
+<tr>
+<td>NOT IN</td>
+<td>判断一个值不是IN列表中的任意一个值</td>
+</tr>
+<tr>
+<td>LIKE</td>
+<td>通配符匹配</td>
+</tr>
+<tr>
+<td>REGEXP</td>
+<td>正则表达式匹配</td>
+</tr>
+</tbody></table>
+<h6 id="正则匹配："><a href="#正则匹配：" class="headerlink" title="正则匹配："></a>正则匹配：</h6><ul>
+<li>’ ^ ’  匹配以该字符后面的字符开头的字符串</li>
+<li>‘ $ ’  匹配以该字符前面的字符结尾的字符串</li>
+<li>‘ . ‘   匹配任何一个单字符</li>
+<li>“ [ … ] ”  匹配在方括号内的任何字符        如” [ abc ] “ 表示匹配a、b或c        范围可用’ - ‘ 表示        如“ [ a-z ] “  表示匹配任意字母</li>
+<li>’ * ’  匹配零个或多个在其前面的字符       如” x* “ 表示匹配任意数量的” x ” 字符</li>
+</ul>
+<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><table>
+<thead>
+<tr>
+<th>逻辑运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NOT 或者 !</td>
+<td>逻辑非</td>
+</tr>
+<tr>
+<td>AND 或者 &amp;&amp;</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>OR 或者 ||</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>逻辑异或（相同为零，相异为一）</td>
+</tr>
+</tbody></table>
+<h5 id="位运算符："><a href="#位运算符：" class="headerlink" title="位运算符："></a>位运算符：</h5><table>
+<thead>
+<tr>
+<th>位运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>|</td>
+<td>按位或</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>按位与</td>
+</tr>
+<tr>
+<td>^</td>
+<td>按位异或</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>按位左移</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>按位右移</td>
+</tr>
+<tr>
+<td>~</td>
+<td>按位取反，反转所有比特</td>
+</tr>
+</tbody></table>
+<h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">USE<span class="operator">&lt;</span>数据库名<span class="operator">&gt;</span>											<span class="comment">--使用数据库</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] table_name(			   <span class="comment">--创建表</span></span><br><span class="line">	属性名 属性值</span><br><span class="line">	id <span class="type">int</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">UNIQUE</span> COMMENT <span class="string">&#x27;编号&#x27;</span>，</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span>  TABLES					<span class="comment">--查看数据库所有表名</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--查看表的结构</span></span><br><span class="line"><span class="keyword">DESCRIBE</span> 表名</span><br><span class="line"><span class="keyword">DESC</span>  表名	</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名           <span class="comment">--不仅可以查看表创建时的详细语句，还可以查看存储引擎和字符编码</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--修改表名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>旧表名<span class="operator">&gt;</span> RENAME [<span class="keyword">TO</span>] <span class="operator">&lt;</span>新表名<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--修改字段数据类型</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> MODIFY <span class="operator">&lt;</span>字段名<span class="operator">&gt;</span> <span class="operator">&lt;</span>数据类型<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--修改字段名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> CHANGE <span class="operator">&lt;</span>旧字段名<span class="operator">&gt;</span> <span class="operator">&lt;</span>新字段名<span class="operator">&gt;</span> <span class="operator">&lt;</span>新数据类型<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--添加数据表字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> <span class="keyword">ADD</span> <span class="operator">&lt;</span>新字段名<span class="operator">&gt;</span> <span class="operator">&lt;</span>数据类型<span class="operator">&gt;</span> [约束条件] [<span class="keyword">FIRST</span><span class="operator">|</span>AFTER 已经存在的字段名]</span><br><span class="line"><span class="comment">--删除字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> <span class="keyword">DROP</span> <span class="operator">&lt;</span>字段名<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--修改字段排序</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> MODIFY <span class="operator">&lt;</span>字段<span class="number">1</span><span class="operator">&gt;</span> <span class="operator">&lt;</span>数据类型<span class="operator">&gt;</span> <span class="keyword">FIRST</span><span class="operator">|</span>AFTER <span class="operator">&lt;</span>字段<span class="number">2</span><span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--更改表的存储引擎</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> ENGINE <span class="operator">=</span><span class="operator">&lt;</span>更改后的存储引擎名<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">--删除表的外键约束</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span><span class="operator">&lt;</span>表名<span class="operator">&gt;</span> <span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> KEY <span class="operator">&lt;</span>外键约束名<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--复制表的结构和数据</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] table_name</span><br><span class="line">[ () <span class="keyword">LIKE</span> old_table_name[] ]							<span class="comment">--选择表</span></span><br><span class="line"><span class="operator">|</span> [<span class="keyword">AS</span> (select_statement)]                               <span class="comment">--选择字段</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span>[IF <span class="keyword">EXISTS</span>] 表<span class="number">1</span>，表<span class="number">2</span>……						  <span class="comment">--删除表</span></span><br><span class="line"><span class="keyword">SHOW</span> TABLES 											<span class="comment">--查看全部表</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="约束控制"><a href="#约束控制" class="headerlink" title="约束控制"></a>约束控制</h3><h4 id="数据完整性约束"><a href="#数据完整性约束" class="headerlink" title="数据完整性约束"></a>数据完整性约束</h4><ul>
+<li>实体完整性：强制表的标识符列或主键的完整性</li>
+<li>参照完整性：在删除和输入记录是，引用完整性保持表之间已定义的关系，确保键值在所有表中一致（不能引用不存在的值）</li>
+<li>域完整性：限制类型、格式、可能值范围（外键约束、检查约束、默认值约束、非空约束和规则）</li>
+<li>用户自定义完整性：用户自己定义的业务规则</li>
+</ul>
+<h4 id="字段约束"><a href="#字段约束" class="headerlink" title="字段约束"></a>字段约束</h4><h5 id="主键约束："><a href="#主键约束：" class="headerlink" title="主键约束："></a>主键约束：</h5><p>主键分为：单字段主键和多字段联合主键</p>
+<p>任何主键字段的值不允许为<code>NULL</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PRIMARY</span> KEY(字段名) 							<span class="comment">--设置单字段主键</span></span><br><span class="line"><span class="keyword">PRIMARY</span> KEY(字段名<span class="number">1</span>，字段名<span class="number">2</span>)					 <span class="comment">--设置多字段联合主键</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> <span class="keyword">PRIMARY</span> KEY , <span class="keyword">ADD</span> <span class="keyword">PRIMARY</span> KEY(字段名)			<span class="comment">--修改主键（先删除原来的主键，增加新主键）</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="外键约束："><a href="#外键约束：" class="headerlink" title="外键约束："></a>外键约束：</h5><p>外键取值 <code>NULL</code> 或者为关联表对应字段的值</p>
+<p>主表（父表）与从表（子表）之间，以关联值为关键字，建立相关表的联系</p>
+<p>子表的记录“参照”父表的记录，则父表的该记录不能删除（<code>DELETE</code>）或修改（<code>UPDATE</code>）</p>
+<p>插入（<code>INSERT</code>）或者修改（<code>UPDATE</code>）子表的“外键值”，子表的“外键值”必须为父表的“主键值”或 <code>NULL</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--表级完整性</span></span><br><span class="line"><span class="keyword">FOREIGN</span> KEY(表A的字段名列表) <span class="keyword">REFERENCES</span> 表B(字段名列表)        </span><br><span class="line">[ <span class="keyword">ON</span> <span class="keyword">DELETE</span> &#123; CASCADE<span class="operator">|</span>RESTRICT<span class="operator">|</span><span class="keyword">SET</span> <span class="keyword">NULL</span><span class="operator">|</span><span class="keyword">NO</span> ACTION &#125; ]</span><br><span class="line">[ <span class="keyword">ON</span> UPDATE &#123; CASCADE<span class="operator">|</span>RESTRICT<span class="operator">|</span><span class="keyword">SET</span> <span class="keyword">NULL</span><span class="operator">|</span><span class="keyword">NO</span> ACTION &#125; ]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">CASCADE：父表记录的删除或修改会自动删除或修改子表中对应的记录</span></span><br><span class="line"><span class="comment">RESTRICT:与NO ACTION 功能相同，为级联默认选项</span></span><br><span class="line"><span class="comment">SET NULL:父表记录的删除或修改会将子表中对应的外键值设置为NULL</span></span><br><span class="line"><span class="comment">NO ACTION:父表执行记录的删除或修改时，若子表存在对应记录，操作失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">	<span class="comment">--若表已创建</span></span><br><span class="line">	<span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name   </span><br><span class="line">	<span class="keyword">ADD</span> [<span class="keyword">CONSTRAINT</span> 外键名] <span class="keyword">FOREIGN</span> KEY [id] (index_col_name,……)</span><br><span class="line">	<span class="keyword">REFERENCES</span> table_name(index_col_name,……)</span><br><span class="line">	[ <span class="keyword">ON</span> <span class="keyword">DELETE</span> &#123; CASCADE<span class="operator">|</span>RESTRICT<span class="operator">|</span><span class="keyword">SET</span> <span class="keyword">NULL</span><span class="operator">|</span><span class="keyword">NO</span> ACTION &#125; ]</span><br><span class="line">	[ <span class="keyword">ON</span> UPDATE &#123; CASCADE<span class="operator">|</span>RESTRICT<span class="operator">|</span><span class="keyword">SET</span> <span class="keyword">NULL</span><span class="operator">|</span><span class="keyword">NO</span> ACTION &#125; ]</span><br><span class="line">	<span class="comment">--若表未创建</span></span><br><span class="line">	<span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名(</span><br><span class="line">	index_col_name  数据类型  约束,</span><br><span class="line">	……,</span><br><span class="line">	<span class="keyword">FOREIGN</span> KEY(index_col_name) <span class="keyword">REFERENCES</span> 表名(index_col_name)</span><br><span class="line">	)</span><br><span class="line"><span class="comment">--列级完整性</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名(</span><br><span class="line">	index_col_name  数据类型 约束 <span class="keyword">REFERENCES</span> 表名(index_col_name),     <span class="comment">--直接在字段后添加REFERENCES命令</span></span><br><span class="line">	……,</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="非空约束："><a href="#非空约束：" class="headerlink" title="非空约束："></a>非空约束：</h5><p>设置某个字段的非空约束，即该字段不能为<code>NULL</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名 数据类型 <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="唯一约束："><a href="#唯一约束：" class="headerlink" title="唯一约束："></a>唯一约束：</h5><p>要求该列唯一，允许为空，但只能出现一个空值</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名 数据类型 <span class="keyword">UNIQUE</span> </span><br></pre></td></tr></table></figure>
+
+<p><code>UNIQUE</code> 和<code>PRIMARY KEY</code> 的区别：一个表中可以有多个字段声明为<code>UNIQUE</code>且允许空值，只能有一个<code>PRIMARY KEY</code> 声明且不允许空值</p>
+<h5 id="默认约束："><a href="#默认约束：" class="headerlink" title="默认约束："></a>默认约束：</h5><p>若某字段满足默认值约束要求，可以向该字段添加默认值约束</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名 数据类型 [其他约束条件] <span class="keyword">DEFAULT</span> 默认值</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="自增约束："><a href="#自增约束：" class="headerlink" title="自增约束："></a>自增约束：</h5><p>希望在每次插入新记录时，系统自动生成字段的主键值</p>
+<p>一个表中只能有一个字段使用<code>AUTO_INCREMENT</code>约束，且该字段必须为主键的一部分</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名 数据类型 [其他约束条件] AUTO_INCREMENT</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="检查约束："><a href="#检查约束：" class="headerlink" title="检查约束："></a>检查约束：</h5><p>设置检查约束直接在数据类型后加约束</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名 数据类型 [其他约束条件] <span class="keyword">CHECK</span>(检查条件)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除约束"><a href="#删除约束" class="headerlink" title="删除约束"></a>删除约束</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> 约束条件  字段名 </span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B/" rel="tag"># 大学课程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/" rel="prev" title="MySQL存储引擎与数据库操作管理">
+                  <i class="fa fa-chevron-left"></i> MySQL存储引擎与数据库操作管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/" rel="next" title="MySQL数据操作管理">
+                  MySQL数据操作管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

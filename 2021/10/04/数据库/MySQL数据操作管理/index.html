@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="对MySQL的数据进行操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据操作管理">
+<meta property="og:url" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="对MySQL的数据进行操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/image-20201223190010045.png">
+<meta property="article:published_time" content="2021-10-04T08:43:07.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="大学课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/image-20201223190010045.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/","path":"2021/10/04/数据库/MySQL数据操作管理/","title":"MySQL数据操作管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL数据操作管理 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-text">单表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SELECT%E8%AF%AD%E6%B3%95"><span class="nav-text">SELECT语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-text">条件查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="nav-text">高级查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="nav-text">分组查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="nav-text">对查询结果排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%95%B0%E9%87%8F"><span class="nav-text">限制查询结果数量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-text">聚合函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="nav-text">合并查询结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-text">多表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-text">内连接查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-text">外连接查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-text">子查询</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL数据操作管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-04 16:43:07" itemprop="dateCreated datePublished" datetime="2021-10-04T16:43:07+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>对MySQL的数据进行操作</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--为表的所有字段插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 <span class="keyword">VALUES</span>(值<span class="number">1</span>，值<span class="number">2</span>，……，值n)              <span class="comment">--不指定具体的字段名</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名(字段名<span class="number">1</span>，字段名<span class="number">2</span>，……，字段名n) <span class="keyword">VALUES</span>(值<span class="number">1</span>，值<span class="number">2</span>，……，值n)        <span class="comment">--列出所有字段，每个值必须与相应字段对应</span></span><br><span class="line"><span class="comment">--为表的指定字段插入字段</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名(字段名<span class="number">1</span>，字段名<span class="number">2</span>，……，字段名m) <span class="keyword">VALUES</span>(值<span class="number">1</span>，值<span class="number">2</span>，……，值n)</span><br><span class="line"><span class="comment">--同时插入多条记录</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名[(字段名列表)] <span class="keyword">VALUES</span>(取值列表<span class="number">1</span>)，(取值列表<span class="number">2</span>)，……，(取值列表n)   </span><br><span class="line"><span class="comment">--从目标表中插入值</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名[列名列表] <span class="keyword">SELECT</span> 列名列表 <span class="keyword">FROM</span> 表名 </span><br><span class="line"><span class="comment">--REPLACE语句</span></span><br><span class="line">REPLACE [<span class="keyword">INTO</span>] 表名 <span class="keyword">VALUES</span>(值列表)     <span class="comment">--若新纪录的主键值或唯一性约束字段值已有记录相同，则已有记录被删除后再添加新纪录</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 表名 <span class="keyword">SET</span> 字段名<span class="number">1</span><span class="operator">=</span>取值<span class="number">1</span>，字段名<span class="number">2</span><span class="operator">=</span>取值<span class="number">2</span>，……，字段名n<span class="operator">=</span>取值n  <span class="keyword">where</span> 条件表达式</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--使用DELETE删除表数据</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 [<span class="keyword">WHERE</span> 条件表达式]      <span class="comment">--DELETE 语句不加上“WHERE 条件表达式” ，数据库系统会删除指定表中的所有数据</span></span><br><span class="line"><span class="comment">--使用TRUNCATE清空表数据</span></span><br><span class="line"><span class="keyword">TRUNCATE</span> [<span class="keyword">TABLE</span>] 表名                  <span class="comment">--TRUNCATE TABLE不带WHERE子句与DELETE语句相同</span></span><br><span class="line"><span class="comment">--TRUNCATE TABLE清空表记录后会重新设置自增型字段的计数起始值为1，DELETE会依次递增</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>TRUNCATE TABLE</code>：删除内容、释放空间但不删除定义</li>
+<li><code>DELETE TABLE</code>：删除内容不删除定义，不释放空间</li>
+<li><code>DROP TABLE</code>：删除内容和定义，释放空间</li>
+</ul>
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><h4 id="SELECT语法"><a href="#SELECT语法" class="headerlink" title="SELECT语法"></a>SELECT语法</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列  		<span class="comment">--指定要查询的列名称，列与列之间用逗号隔开。 ALL显示所有行包括重复行，DISTINCT显示所有行(无重复)</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="operator">&lt;</span>表名或视图名<span class="operator">&gt;</span>	  <span class="comment">--指定表，表与表之间用逗号隔开			</span></span><br><span class="line">[<span class="keyword">WHERE</span> <span class="operator">&lt;</span>条件表达式<span class="operator">&gt;</span>]    <span class="comment">--指定查询条件，无WHERE子句，查询所有记录</span></span><br><span class="line">[<span class="keyword">GROUP</span> <span class="keyword">BY</span><span class="operator">&lt;</span>列名<span class="number">1</span><span class="operator">&gt;</span>]      <span class="comment">--对查询结构进行分组</span></span><br><span class="line">[<span class="keyword">HAVING</span> <span class="operator">&lt;</span>条件表达式<span class="operator">&gt;</span>]   <span class="comment">--指定分组条件</span></span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span><span class="operator">&lt;</span>列名<span class="number">2</span><span class="operator">&gt;</span>[ <span class="keyword">ASC</span><span class="operator">|</span><span class="keyword">DESC</span>]]         <span class="comment">--对查询结果排序。ASC升序，DESC降序，默认为ASC</span></span><br><span class="line">[LIMIT 子句]           <span class="comment">--限制查询输出结果的行数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--查询所有记录</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="comment">--避免重复数据查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> 字段列 <span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="comment">--为表和字段取别名</span></span><br><span class="line"><span class="keyword">SELECT</span> 字段名 [<span class="keyword">AS</span>] 别名，字段名 [<span class="keyword">AS</span>] 别名…… <span class="keyword">FROM</span> 表名</span><br></pre></td></tr></table></figure>
+
+<h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件;	</span><br><span class="line"><span class="comment">--带IN关键字的查询</span></span><br><span class="line">[<span class="keyword">NOT</span>] <span class="keyword">IN</span> (元素<span class="number">1</span>，元素<span class="number">2</span>，……)			<span class="comment">--判断字段的值是否在集合内</span></span><br><span class="line"><span class="comment">--带BETWEEN AND关键字的查询</span></span><br><span class="line">[<span class="keyword">NOT</span>] <span class="keyword">BETWEEN</span> 取值<span class="number">1</span> <span class="keyword">AND</span> 取值<span class="number">2</span>         <span class="comment">--判断字段的值是否在指定范围内         范围包含两端    NOT范围小于取值1，大于取值2</span></span><br><span class="line"><span class="comment">--带IS NULL关键字的查询</span></span><br><span class="line"><span class="keyword">IS</span> [<span class="keyword">NOT</span>] <span class="keyword">NULL</span> 						<span class="comment">--判断字段的值是否为空值</span></span><br><span class="line"><span class="comment">--带LIKE关键字的查询</span></span><br><span class="line">[<span class="keyword">NOT</span>] <span class="keyword">LIKE</span> <span class="string">&#x27;字符串&#x27;</span>                  <span class="comment">--匹配字符串是否相等      &#x27;字符串&#x27;可以是一个完整的字符串，也可以是通配符</span></span><br><span class="line">									<span class="comment">--% 代表任意长度的字符串，长度可以为0</span></span><br><span class="line">									<span class="comment">--_ 只能表示单个字符</span></span><br><span class="line">									<span class="comment">--正则匹配  REGEXP关键字    属性名 REGEXP &#x27;匹配方式&#x27;</span></span><br><span class="line">	<span class="comment">--LIKE与REGEXP的区别：</span></span><br><span class="line">			<span class="keyword">LIKE</span>匹配整个列，如果被匹配的文本仅在列值中出现，<span class="keyword">LIKE</span>并不会找到它，相应的行也不会返回</span><br><span class="line">			REGEXP 在列值内进行匹配，如果被匹配的匹配的文本在列值中出现，REGEXP将会找到它，相应的行将被返回</span><br><span class="line">			<span class="keyword">Like</span>必须这个字段的所有内容满足条件，而REGEXP只需要有任何一个片段满足即可</span><br></pre></td></tr></table></figure>
+
+<h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h5 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> 字段名				<span class="comment">--将查询结果按字段分组，字段值相等的为一组，单独使用只显示一个分组的一个记录  </span></span><br><span class="line">[<span class="keyword">HAVING</span> 条件表达式]			   <span class="comment">--限制分组后的显示，满足条件表达式的结果显示			 </span></span><br><span class="line">[<span class="keyword">WITH</span> <span class="keyword">ROLLUP</span>] 				  <span class="comment">--在所有记录最后加上一条记录，为上面所有记录的总和</span></span><br></pre></td></tr></table></figure>
+
+<p><code>HAVING</code>，<code>WHERE</code>都是用来限制显示的</p>
+<ul>
+<li><code>WHERE</code>：作用于表或者视图，是表和视图的查询条件</li>
+<li><code>HAVING</code>：作用于分组后的记录，用于选择满足条件的组</li>
+</ul>
+<h5 id="对查询结果排序"><a href="#对查询结果排序" class="headerlink" title="对查询结果排序"></a>对查询结果排序</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> 字段名[<span class="keyword">ASC</span><span class="operator">|</span><span class="keyword">DESC</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="限制查询结果数量"><a href="#限制查询结果数量" class="headerlink" title="限制查询结果数量"></a>限制查询结果数量</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LIMIT &#123;[<span class="keyword">OFFSET</span>,] row_count<span class="operator">|</span>row_count <span class="keyword">OFFSET</span> <span class="keyword">OFFSET</span>&#125;   <span class="comment">--OFFSET默认为0</span></span><br><span class="line">例：返回第<span class="number">3</span>条记录后<span class="number">3</span>条记录</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表名 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 字段名 LIMIT <span class="number">2</span>,<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h5><p>聚合函数与<code>GROUP BY</code> 联合使用</p>
+<ul>
+<li><code>COUNT</code>：统计记录的条数</li>
+<li><code>SUM</code>：计算字段值的总和</li>
+<li><code>AVG</code>：计算字段值的平均值</li>
+<li><code>MAX</code>：查询字段的最大值</li>
+<li><code>MIN</code>：查询字段的最小值</li>
+</ul>
+<p><code>SUM</code>、<code>AVG</code>、<code>MAX</code>、<code>MIN</code>规则</p>
+<blockquote>
+<p>列只有<code>NULL</code>，函数值为<code>NULL</code></p>
+<p>列某些值为NULL，则函数值为非<code>NULL</code>值得平均值除以非<code>NULL</code>值的数量</p>
+</blockquote>
+<p><code>COUNT</code></p>
+<blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">COUNT</span> (&#123;[<span class="keyword">ALL</span> <span class="operator">|</span> <span class="keyword">DISTINCT</span>] <span class="operator">&lt;</span>表达式<span class="operator">&gt;</span>&#125; <span class="operator">|</span> <span class="operator">*</span>)     <span class="comment">--统计列中非NULL的数量</span></span><br><span class="line">例：统计表中不同字段值的记录数</span><br><span class="line"><span class="keyword">SELECT</span> 字段名,<span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> <span class="string">&#x27;别名&#x27;</span>  <span class="keyword">FROM</span>  表名  <span class="keyword">GROUP</span> <span class="keyword">BY</span>  字段名</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><code>SUM</code></p>
+<blockquote>
+<p><code>SUM</code>函数只能计算数值类型的字段</p>
+<p>使用<code>SUM</code>函数计算字符类型字段时，计算结果都为0</p>
+</blockquote>
+<h5 id="合并查询结果"><a href="#合并查询结果" class="headerlink" title="合并查询结果"></a>合并查询结果</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ……</span><br><span class="line"><span class="keyword">UNION</span> [ <span class="keyword">ALL</span> <span class="operator">|</span> <span class="keyword">DISTINCT</span>]</span><br><span class="line"><span class="keyword">SELECT</span> ……</span><br><span class="line">[<span class="keyword">UNION</span> [ <span class="keyword">ALL</span> <span class="operator">|</span> <span class="keyword">DISTINCT</span>]</span><br><span class="line"><span class="keyword">SELECT</span> ……</span><br></pre></td></tr></table></figure>
+
+<p>不使用ALL关键字，则返回所有行都是唯一的</p>
+<h3 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h3><ul>
+<li><code>INNER JOIN</code>操作：用于组合两个表中的记录。只要公共字段有相符的值，内部链接组合两个表的记录</li>
+<li><code>LEFT JOIN</code>操作：用于在任何<code>FROM</code>子句中组合来源表的记录。左边外部连接包含从第一个开始的两个表中的全部记录，即使第二个表中并没有相符的值</li>
+<li><code>RIGHT JOIN</code>操作：用于在任何<code>FROM</code>子句中组合来源表的记录。右边外部连接包含从第二个开始的两个表中的全部记录，即使第一个表中并没有相符的值</li>
+</ul>
+<p>多表查询使用连接查询，操作效率较低</p>
+<h4 id="内连接查询"><a href="#内连接查询" class="headerlink" title="内连接查询"></a>内连接查询</h4><p>两表关系的笛卡尔积数据记录中，保留匹配数据，删除不匹配数据</p>
+<ol>
+<li><p>等值连接(INNER JOIN)：连接条件的连接运算符为=时，为等值连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">INNER</span> <span class="keyword">JOIN</span> 表<span class="number">2</span>  <span class="keyword">ON</span> 表<span class="number">1.</span>字段<span class="operator">=</span>表<span class="number">2.</span>字段   LIMIT 显示行数</span><br></pre></td></tr></table></figure></li>
+<li><p>自然连接(NATURAL JOIN)：在等值连接中把重复列删去</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> 表<span class="number">2</span>  LIMIT 显示行数</span><br></pre></td></tr></table></figure></li>
+<li><p>不等值连接(INNER JOIN)：连接条件的连接运算符不为=时，为不等值连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">INNER</span> <span class="keyword">JOIN</span> 表<span class="number">2</span>  <span class="keyword">ON</span> 表<span class="number">1.</span>字段<span class="operator">!=</span>表<span class="number">2.</span>字段   LIMIT 显示行数</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="外连接查询"><a href="#外连接查询" class="headerlink" title="外连接查询"></a>外连接查询</h4><p>外连接查询可以查询<strong>两个或两个以上</strong>的表</p>
+<ol>
+<li>左外连接(LEFT JOIN)：左表记录中按照条件与右表进行连接，右表无响应数据返回<code>NULL</code></li>
+<li>右外连接(RIGHT JOIN)：右表记录中按照条件与左表进行连接，左表无响应数据返回<code>NULL</code></li>
+</ol>
+<p><img src="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%AE%A1%E7%90%86/image-20201223190010045.png" alt="image-20201223190010045"></p>
+<blockquote>
+<p>左外连接：其运算方式为：A左连接B的记录=图公共部分记录集C＋表A记录集A1。</p>
+<p>右外连接：其运算方式为：A右连接B的记录=图公共部分记录集C＋表B记录集B1 。</p>
+</blockquote>
+<h4 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--带IN关键字的子查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">WHERE</span> 字段<span class="number">1</span> [<span class="keyword">NOT</span>] <span class="keyword">IN</span> (<span class="keyword">SELECT</span> 字段<span class="number">1</span> <span class="keyword">FROM</span> 表<span class="number">2</span>)</span><br><span class="line"><span class="comment">--带EXISTS关键字的子查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (<span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> 表<span class="number">2</span> <span class="keyword">WHERE</span> 字段<span class="operator">=</span><span class="string">&#x27;给定值&#x27;</span>)</span><br><span class="line">		<span class="comment">--EXISTS内循环返回一个真假值，真执行外查询，假不执行</span></span><br><span class="line"><span class="comment">--带ANY关键字的子查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">WHERE</span> 字段<span class="number">1</span> 运算符 <span class="keyword">ANY</span>(条件)    <span class="comment">--满足任何一个条件</span></span><br><span class="line"><span class="comment">--带ALL关键字的子查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">WHERE</span> 字段<span class="number">1</span> 运算符 <span class="keyword">ALL</span>(条件)     <span class="comment">--满足所有条件</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>ALL</code>、<code>ANY</code>：</p>
+<p>大于<code>ALL</code>表示大于条件内最大值</p>
+<p>小于<code>ALL</code>表示小于条件内最小值</p>
+<p>大于<code>ANY</code>表示大于条件内最小值</p>
+<p>小于<code>ALL</code>表示小于条件内最大值</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B/" rel="tag"># 大学课程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%A1%A8%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%8E%A7%E5%88%B6/" rel="prev" title="MySQL表定义与完整性约束控制">
+                  <i class="fa fa-chevron-left"></i> MySQL表定义与完整性约束控制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/04/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E7%B4%A2%E5%BC%95/" rel="next" title="MySQL索引">
+                  MySQL索引 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

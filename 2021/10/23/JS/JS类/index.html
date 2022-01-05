@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="当多个对象经常需要共享一个属性时，可以为这些对象定义一个类，这个类的成员或实例，各自拥有属性来保存或定义自己的状态 JavaScript 中，类使用基于原型的继承 若两个对象继承同一个原型，通常（但不必定）意味着它们是通过同一个构造函数或工厂函数创建和初始化的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS类">
+<meta property="og:url" content="http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="当多个对象经常需要共享一个属性时，可以为这些对象定义一个类，这个类的成员或实例，各自拥有属性来保存或定义自己的状态 JavaScript 中，类使用基于原型的继承 若两个对象继承同一个原型，通常（但不必定）意味着它们是通过同一个构造函数或工厂函数创建和初始化的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/image-20211023134201115.png">
+<meta property="article:published_time" content="2021-10-23T03:50:21.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/image-20211023134201115.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/","path":"2021/10/23/JS/JS类/","title":"JS类"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS类 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%92%8C%E5%8E%9F%E5%9E%8B"><span class="nav-text">类和原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%92%8C%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">类和构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-%E5%85%B3%E9%94%AE%E5%AD%97%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-text">Class 关键字定义类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-text">静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%A4%8D%E6%95%B0%E7%B1%BB"><span class="nav-text">示例：复数类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%B7%B2%E6%9C%89%E7%B1%BB%E6%B7%BB%E5%8A%A0%E6%96%B9%E6%B3%95"><span class="nav-text">为已有类添加方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E7%B1%BB"><span class="nav-text">子类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E7%B1%BB%E4%B8%8E%E5%8E%9F%E5%9E%8B"><span class="nav-text">子类与原型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6-%E5%AE%9A%E4%B9%89%E5%AD%90%E7%B1%BB"><span class="nav-text">ES6 定义子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%94%E6%89%98%E9%9D%9E%E7%BB%A7%E6%89%BF"><span class="nav-text">委托非继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%B1%82%E6%AC%A1%E4%B8%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-text">类层次与抽象类</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/23/JS/JS%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS类
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-23 11:50:21" itemprop="dateCreated datePublished" datetime="2021-10-23T11:50:21+08:00">2021-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>当多个对象经常需要共享一个属性时，可以为这些对象定义一个类，这个类的成员或实例，各自拥有属性来保存或定义自己的状态</p>
+<p>JavaScript 中，类使用基于原型的继承</p>
+<p>若两个对象继承同一个原型，通常（但不必定）意味着它们是通过同一个构造函数或工厂函数创建和初始化的</p>
+<span id="more"></span>
+
+
+
+<h2 id="类和原型"><a href="#类和原型" class="headerlink" title="类和原型"></a>类和原型</h2><p>JavaScript 中，类意味着一组对象从同一个原型对象继承属性，即原型对象是类的核心特征</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个简单的 JavaScript 类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个工厂函数返回一个新范围对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">range</span>(<span class="params"><span class="keyword">from</span>, to</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 使用Object,create()创建一个对象，继承下面定义的原型对象</span></span><br><span class="line">    <span class="comment">// 这个原型对象保存为这个函数的一个属性，为所有范围对象定义共享方法（行为）</span></span><br><span class="line">    <span class="keyword">let</span> r = <span class="built_in">Object</span>.create(range.methods);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 保存新范围对象的起点和终点（状态）</span></span><br><span class="line">    <span class="comment">// 这些属性不是继承的，是当前对象独有的</span></span><br><span class="line">    r.from = <span class="keyword">from</span>;</span><br><span class="line">    r.to = to;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 最后返回新对象</span></span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个原型对象定义由所有范围对象继承的方法</span></span><br><span class="line">range.methods = &#123;</span><br><span class="line">    <span class="comment">// 若x在范围内则返回true，否则返回false</span></span><br><span class="line">    <span class="comment">// 这个方法适用于文本、日期和数值范围</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">includes</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.from &lt;= x &amp;&amp; x &lt;= <span class="built_in">this</span>.to;&#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这个生成器函数让这个类的实例可迭代</span></span><br><span class="line">    <span class="comment">// 只适用于数值范围</span></span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> x = <span class="built_in">Math</span>.ceil(<span class="built_in">this</span>.from); x &lt;= <span class="built_in">this</span>.to; x++) <span class="keyword">yield</span> x;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回范围的字符串表示</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="string">&quot;(&quot;</span> + <span class="built_in">this</span>.from + <span class="string">&quot;...&quot;</span> + <span class="built_in">this</span>.to + <span class="string">&quot;)&quot;</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用范围对象的实例</span></span><br><span class="line"><span class="keyword">let</span> r = range(<span class="number">1</span>,<span class="number">3</span>);    <span class="comment">// 创建一个范围对象</span></span><br><span class="line">r.includes(<span class="number">2</span>);         <span class="comment">// =&gt; true：2在范围内</span></span><br><span class="line">r.toString();          <span class="comment">// =&gt; &quot;(1...3)&quot;</span></span><br><span class="line">[...r];                <span class="comment">// =&gt; [1, 2, 3];通过迭代器转换为数组</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这段代码定义了一个工厂函数 <code>range()</code>，用于创建新的 <code>Range</code> 对象</li>
+<li>使用 <code>range()</code> 函数的 <code>methods</code> 属性保存定义这个类的原型对象</li>
+<li><code>range()</code> 函数为每个 <code>Range</code> 对象定义 <code>from</code> 和 <code>to</code> 属性，这两个属性是非共享、非继承属性，定义每个范围对象独有的状态</li>
+<li>原型的方法中有一个是计算的名字 <code>Symbol.iterator</code>，即为 <code>Range</code> 对象定义一个迭代器。方法前有一个星号 * ，表示是一个生成器函数</li>
+<li>定义在 <code>range.methods()</code> 中的共享方法都会用到在 <code>range()</code> 工厂函数中初始化的 <code>from</code> 和 <code>to</code> 属性，通过 <code>this</code> 关键字引用调用它们的对象</li>
+</ul>
+<h2 id="类和构造函数"><a href="#类和构造函数" class="headerlink" title="类和构造函数"></a>类和构造函数</h2><p>构造函数是一种专门用于初始化新对象的函数</p>
+<p>构造函数要使用 <code>new</code> 关键字调用，使用 <code>new</code> 调用构造函数会自动创建新对象，因此构造函数本身只需初始化新对象的状态</p>
+<p>构造函数调用的关键在于构造函数的 <code>prototype</code> 属性将被用作新对象的原型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用构造函数的Range类（ES6之前的老代码）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化新Range对象的构造函数</span></span><br><span class="line"><span class="comment">// 不创建或返回对象，只初始化this</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Range</span>(<span class="params"><span class="keyword">from</span>, to</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 保存新范围对象的起点和终点（状态）</span></span><br><span class="line">    <span class="comment">// 这些属性不是继承的，是当前对象独有的</span></span><br><span class="line">    <span class="built_in">this</span>.from = <span class="keyword">from</span>;</span><br><span class="line">    <span class="built_in">this</span>.to = to;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所有Range对象都继承这个对象</span></span><br><span class="line"><span class="comment">// 注意这个属性必须命名为prototype</span></span><br><span class="line">Range.prototype = &#123;</span><br><span class="line">    <span class="comment">// 若x在范围内则返回true，否则返回false</span></span><br><span class="line">    <span class="comment">// 这个方法适用于文本、日期和数值范围</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">includes</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.from &lt;= x &amp;&amp; x &lt;= <span class="built_in">this</span>.to;&#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这个生成器函数让这个类的实例可迭代</span></span><br><span class="line">    <span class="comment">// 只适用于数值范围</span></span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> x = <span class="built_in">Math</span>.ceil(<span class="built_in">this</span>.from); x &lt;= <span class="built_in">this</span>.to; x++) <span class="keyword">yield</span> x;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回范围的字符串表示</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="string">&quot;(&quot;</span> + <span class="built_in">this</span>.from + <span class="string">&quot;...&quot;</span> + <span class="built_in">this</span>.to + <span class="string">&quot;)&quot;</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用这个新Range类的实例</span></span><br><span class="line"><span class="keyword">let</span> r = <span class="keyword">new</span> Range(<span class="number">1</span>,<span class="number">3</span>);    <span class="comment">// 创建一个Range对象</span></span><br><span class="line">r.includes(<span class="number">2</span>);             <span class="comment">// =&gt; true：2在范围内</span></span><br><span class="line">r.toString();              <span class="comment">// =&gt; &quot;(1...3)&quot;</span></span><br><span class="line">[...r];                    <span class="comment">// =&gt; [1, 2, 3];通过迭代器转换为数组</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>new.target</code> 表达式用于判断函数是否作为构造函数被调用</p>
+<p>若 <code>new.target</code> 是 <code>undefined</code>，那么包含函数就是作为普通函数调用的，没有使用 <code>new</code> 关键字</p>
+<p>只适用于以老方式定义的构造函数，使用 <code>class</code> 关键字创建的类不允许不适用 <code>new</code> 调用它们的构造函数</p>
+</blockquote>
+<p>当且仅当两个对象继承同一个原型对象是，它们才是同一个类的实例</p>
+<p>使用 <code>instanceof</code> 操作符测试类的成员关系</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r <span class="keyword">instanceof</span> Range         <span class="comment">// =&gt; true：r继承了 Range.prototype</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>isPrototypeOf()</code> 方法测试某个对象原型链中是否包含指定原型（用于定义类时未定义构造函数）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">range.methods.isPrototypeOf(r);     <span class="comment">// range.methods 是r的原型对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>constructor</code> 属性</strong></p>
+<p>每个普通 JavaScript 函数自动拥有一个 <code>prototype</code> 属性，这个属性的值是一个对象，有一个不可枚举的 <code>constructor</code> 属性</p>
+<p>这个 <code>constructor</code> 属性的值就是该函数对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;      <span class="comment">// 一个函数对象</span></span><br><span class="line"><span class="keyword">let</span> p = F.prototype;       <span class="comment">// 一个与F关联的原型对象</span></span><br><span class="line"><span class="keyword">let</span> c = p.constructor;     <span class="comment">// 与原型关联的函数</span></span><br><span class="line">c === F                    <span class="comment">// =&gt; true：对任何F，F.prototype.constructor === F</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如下图，构造函数、其原型对象、原型对构造函数的反向引用，以及通过该构造函数创建的实例之间的关系</p>
+<p><img src="/2021/10/23/JS/JS%E7%B1%BB/image-20211023134201115.png" alt="image-20211023134201115"></p>
+<p>上图使用 Range() 构造函数，没有 <code>constructor</code> 属性，可以显示为原型添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Range.prototype = &#123;</span><br><span class="line">    <span class="attr">constructor</span>: Range,     <span class="comment">// 显示设置反向引用constructor</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 方法定义 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="Class-关键字定义类"><a href="#Class-关键字定义类" class="headerlink" title="Class 关键字定义类"></a>Class 关键字定义类</h2><p>ES6 引入 <code>class</code> 关键字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用class重写的Range类</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Range</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">from</span>, to</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 保存新范围对象的起点和终点（状态）</span></span><br><span class="line">        <span class="comment">// 这些属性不是继承的，是当前对象独有的</span></span><br><span class="line">        <span class="built_in">this</span>.from = <span class="keyword">from</span>;</span><br><span class="line">        <span class="built_in">this</span>.to = to;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 若x在范围内则返回true，否则返回false</span></span><br><span class="line">    <span class="comment">// 这个方法适用于文本、日期和数值范围</span></span><br><span class="line">    <span class="function"><span class="title">includes</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.from &lt;= x &amp;&amp; x &lt;= <span class="built_in">this</span>.to;&#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这个生成器函数让这个类的实例可迭代</span></span><br><span class="line">    <span class="comment">// 只适用于数值范围</span></span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> x = <span class="built_in">Math</span>.ceil(<span class="built_in">this</span>.from); x &lt;= <span class="built_in">this</span>.to; x++) <span class="keyword">yield</span> x;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回范围的字符串表示</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="string">`(<span class="subst">$&#123;<span class="built_in">this</span>.<span class="keyword">from</span>&#125;</span>...<span class="subst">$&#123;<span class="built_in">this</span>.to&#125;</span>)`</span>;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用这个新Range类的实例</span></span><br><span class="line"><span class="keyword">let</span> r = <span class="keyword">new</span> Range(<span class="number">1</span>,<span class="number">3</span>);    <span class="comment">// 创建一个Range对象</span></span><br><span class="line">r.includes(<span class="number">2</span>);             <span class="comment">// =&gt; true：2在范围内</span></span><br><span class="line">r.toString();              <span class="comment">// =&gt; &quot;(1...3)&quot;</span></span><br><span class="line">[...r];                    <span class="comment">// =&gt; [1, 2, 3];通过迭代器转换为数组</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h3><p>在 <code>class</code> 体中，把 <code>static</code> 关键字放在方法声明前可定义静态方法</p>
+<p>静态方法是作为构造函数而非原型对象的属性定义的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在上述代码中添加</span></span><br><span class="line"><span class="keyword">static</span> <span class="function"><span class="title">parse</span>(<span class="params">s</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> matches = s.match(<span class="regexp">/^\((\d+)\.\.\.(\d+)\)$/</span>);</span><br><span class="line">    <span class="keyword">if</span>(!matches)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">`Cannot parse Range from &quot;<span class="subst">$&#123;s&#125;</span>&quot;.`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Range(<span class="built_in">parseInt</span>(matches[<span class="number">1</span>]), <span class="built_in">parseInt</span>(matches[<span class="number">2</span>]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上代码定义的方法是 <code>Range.parse()</code>，而非 <code>Range.prototype.parse()</code>，必须通过构造函数而非实例调用它</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let r = Range.parse(<span class="string">&#x27;(1...10)&#x27;</span>);    <span class="regexp">//</span> 返回一个新Range对象</span><br><span class="line">r.prase(<span class="string">&#x27;(1...10)&#x27;</span>);                <span class="regexp">//</span> TypeError：r.parse不是一个函数</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="示例：复数类"><a href="#示例：复数类" class="headerlink" title="示例：复数类"></a>示例：复数类</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这个Complex类的实例代表复数</span></span><br><span class="line"><span class="comment"> * 复数是一个实数和一个虚数之和</span></span><br><span class="line"><span class="comment"> * 虚数是-1的平方根</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 在这种类字段声明标准化后，可以使用</span></span><br><span class="line">    <span class="comment">// 如下方式声明私有字段保存变量</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// #r = 0;</span></span><br><span class="line">    <span class="comment">// #i = 0;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这个构造函数定义了它需要在每个实力上创建的实例属性</span></span><br><span class="line">    <span class="comment">// 这两个字段保存复数的实数和虚数部分，即对象的状态</span></span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">real, imaginary</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.r = real;            <span class="comment">// 实数部分</span></span><br><span class="line">        <span class="built_in">this</span>.i = imaginary;       <span class="comment">// 虚数部分</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 两个实例方法，用于复数的加法和乘法</span></span><br><span class="line">    <span class="comment">// 若c和d是这个类两个实例，可以写c.plus(d)或d.times(c)</span></span><br><span class="line">    <span class="function"><span class="title">plus</span>(<span class="params">that</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Complex(<span class="built_in">this</span>.r + that.r, <span class="built_in">this</span>.i + that.i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">times</span>(<span class="params">that</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Complex(<span class="built_in">this</span>.r * that.r - <span class="built_in">this</span>.i * that.i,</span><br><span class="line">                           <span class="built_in">this</span>.r * that.i + <span class="built_in">this</span>.i * that.r);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 两个复数计算方法的静态版本</span></span><br><span class="line">    <span class="comment">// Complex.sum(c,d)和Complex.product(c,d)</span></span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="title">sum</span>(<span class="params">c, d</span>)</span> &#123; <span class="keyword">return</span> c.plus(d); &#125;;</span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="title">product</span>(<span class="params">c, d</span>)</span> &#123; <span class="keyword">return</span> c.times(d); &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 使用获取函数定义的实例方法，因此可以像使用字段一样使用</span></span><br><span class="line">    <span class="comment">// 若使用是私有字段this.#r和this.#i，那下面的获取方法可以使用</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title">real</span>() &#123; <span class="keyword">return</span> <span class="built_in">this</span>.r; &#125;;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">imaginary</span>() &#123; <span class="keyword">return</span> <span class="built_in">this</span>,i; &#125;;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">magintude</span>() &#123; <span class="keyword">return</span> <span class="built_in">Math</span>.hypot(<span class="built_in">this</span>.r, <span class="built_in">this</span>,i); &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 每个类都应有一个toString()方法</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">`&#123;<span class="subst">$&#123;<span class="built_in">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="built_in">this</span>.i&#125;</span>&#125;`</span>; &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 测试类的两个实例是否表示相同的值</span></span><br><span class="line">    <span class="function"><span class="title">equals</span>(<span class="params">that</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> that <span class="keyword">instanceof</span> Complex &amp;&amp;</span><br><span class="line">            <span class="built_in">this</span>.r === that.r &amp;&amp;</span><br><span class="line">            <span class="built_in">this</span>.i === that.i;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 若类使用静态字段，则可以如下定义一个常量Complex.ZERO</span></span><br><span class="line">    <span class="comment">// static ZERO = new Complex(0,0);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义几个保存预定义复数的类字段</span></span><br><span class="line">Complex.ZERO = <span class="keyword">new</span> Complex(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">Complex.ONE = <span class="keyword">new</span> Complex(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">Complex.I = <span class="keyword">new</span> Complex(<span class="number">0</span>,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用上述的构造函数、实例字段、实例方法、类字段和类方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Complex(<span class="number">2</span>, <span class="number">3</span>);      <span class="comment">// 通过构造函数创建一个新对象</span></span><br><span class="line"><span class="keyword">let</span> d = <span class="keyword">new</span> Complex(c.i, c.r);  <span class="comment">// 使用c的实例字段</span></span><br><span class="line">c.plus(d).toString()            <span class="comment">// =&gt; &quot;&#123;5,5&#125;&quot;;使用实例方法</span></span><br><span class="line">c.magnitude                     <span class="comment">// =&gt; Math.hypot(2,3);使用获取函数</span></span><br><span class="line">Complex.product(c, d)           <span class="comment">// =&gt; new Complex(0, 13);使用静态方法</span></span><br><span class="line">Complex.ZERO.toString()         <span class="comment">// =&gt; &quot;&#123;0,0&#125;&quot;;使用静态属性</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="为已有类添加方法"><a href="#为已有类添加方法" class="headerlink" title="为已有类添加方法"></a>为已有类添加方法</h3><p>JavaScript 基于原型的继承机制是动态的，即对象从原型继承属性，修改原型属性，已创建的对象继承修改后的原型属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 给复数类添加计算共轭复数的方法</span></span><br><span class="line">Complex.prototype.conj = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> Complex(<span class="built_in">this</span>.r, -<span class="built_in">this</span>.i); &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>内置 JavaScript 类的原型对象也可以添加新属性，在旧版中添加新语言特性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果字符串上没有定义startsWith()方法</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.startsWith)&#123;</span><br><span class="line">    <span class="comment">// ...使用已有的indexOf()方法实现一个</span></span><br><span class="line">    <span class="built_in">String</span>.prototype.startsWith = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.indexOf(s) === <span class="number">0</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给内置类型的原型添加方法通常被认为是不好的做法，若 JavaScript 以后的新版本定义了同名方法，会导致兼容性和困惑问题</p>
+<h2 id="子类"><a href="#子类" class="headerlink" title="子类"></a>子类</h2><p>面向对象编程中，类可以继承另一个类</p>
+<h3 id="子类与原型"><a href="#子类与原型" class="headerlink" title="子类与原型"></a>子类与原型</h3><p>ES6 之前的旧方式定义子类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Range类的子类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Span</span>(<span class="params">start, span</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(span &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">this</span>.from = start;</span><br><span class="line">        <span class="built_in">this</span>.to = start + span;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.to = start;</span><br><span class="line">        <span class="built_in">this</span>.from = start +span;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 确保Span的原型继承Range的原型</span></span><br><span class="line">Span.prototype = <span class="built_in">Object</span>.create(Range.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 若不想继承Range.prototype.constructor，定义自己的constructor属性</span></span><br><span class="line">Span.prototype.constructor = Span;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过定义自己的toString()方法，Span覆盖从Range继承的toString()方法</span></span><br><span class="line">Span.prototype.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`(<span class="subst">$&#123;<span class="built_in">this</span>.<span class="keyword">from</span>&#125;</span>...+<span class="subst">$&#123;<span class="built_in">this</span>.to = <span class="built_in">this</span>.<span class="keyword">from</span>&#125;</span>)`</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ES6-定义子类"><a href="#ES6-定义子类" class="headerlink" title="ES6 定义子类"></a>ES6 定义子类</h3><p>在 ES6 及之后，继承父类可以通过在类声明中加上一个 <code>extends</code> 子句，对内置类也可以</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Map检查键和值类型的子类</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypedMap</span> <span class="keyword">extends</span> <span class="title">Map</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">keyType, valueType, entries</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 若指定了条目，检查类型</span></span><br><span class="line">        <span class="keyword">if</span>(entries)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> [k, v] <span class="keyword">of</span> entries)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">typeof</span> k !== keyType || <span class="keyword">typeof</span> v !== valueType)&#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">`Wrong type for entry [<span class="subst">$&#123;k&#125;</span>, <span class="subst">$&#123;v&#125;</span>]`</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用（通过类型检查的）初始化条目初始化父类</span></span><br><span class="line">        <span class="built_in">super</span>(entries);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化子类，保存键和值的类型，后面set()方法要使用</span></span><br><span class="line">        <span class="built_in">this</span>.keyType = keyType;</span><br><span class="line">        <span class="built_in">this</span>.valueType = valueType;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 重定义set()方法，为所有新增映射条目 添加类型检查逻辑</span></span><br><span class="line">    <span class="function"><span class="title">set</span>(<span class="params">key, value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 若键或值得类型不对抛出错误</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.keyType &amp;&amp; <span class="keyword">typeof</span> key !== <span class="built_in">this</span>.keyType)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">`<span class="subst">$&#123;key&#125;</span> is not of type <span class="subst">$&#123;<span class="built_in">this</span>.keyType&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.valueType &amp;&amp; <span class="keyword">typeof</span> value !== <span class="built_in">this</span>.valueType)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">`<span class="subst">$&#123;value&#125;</span> is not of type <span class="subst">$&#123;<span class="built_in">this</span>.valueType&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 若类型正确，调用超类的set()方法为映射添加条目，同时返回父类方法返回的值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.set(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上这个类可以使用私有字段，防止用户修改 <code>keyType</code> 和 <code>valueType</code> 属性，绕过类型检查，可以改为 <code>#keyType</code> 和 <code>#valueType</code> </p>
+<p>在构造函数中使用 <code>super()</code>，需了解</p>
+<ul>
+<li>使用 <code>extends</code> 关键字定义类，这个类的构造函数必须使用 <code>super()</code> 调用父类构造函数</li>
+<li>没有在子类中定义构造函数，解释器会自动创建，这个隐式定义的构造函数会获取传给他的值，再将这些值传给 <code>super()</code></li>
+<li>在通过 <code>super()</code> 调用父类构造函数之前，不能在构造函数中使用 <code>this</code> ，确保父类先于子类初始化</li>
+</ul>
+<h3 id="委托非继承"><a href="#委托非继承" class="headerlink" title="委托非继承"></a>委托非继承</h3><p>在 OOP 中，在类中创建另一个类的实例，并在需要时委托该实例去达到要求更加方便、灵活。</p>
+<p>这种委托策略通常称为“组合”（composition），OOP 的一个准则：能组合不继承（favor composition over inheritance）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过委托实现的类似Set的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 一个类似Set的类，但会记录值被添加的次数，可以像使用Set一样</span></span><br><span class="line"><span class="comment"> * 调用add()和remove()，调用count()获取某个值已经被添加多少次</span></span><br><span class="line"><span class="comment"> * 默认迭代器回送至少被添加过1次的值，若想迭代[value, count]对，使用entries()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Histogram</span></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化只涉及创建一个要委托的Map对象</span></span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; <span class="built_in">this</span>.map = <span class="keyword">new</span> <span class="built_in">Map</span>(); &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 对给定的键，次数就是映射中的值，若映射中不存在这个键，则为0</span></span><br><span class="line">    <span class="function"><span class="title">count</span>(<span class="params">key</span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.get(key) || <span class="number">0</span>; &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这个类似Set的方法has()在次数大于0时返回true</span></span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">key</span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.count(key) &lt; <span class="number">0</span>; &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 直方图的大小就是映射中条目的数量</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title">size</span>() &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.size; &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 若要添加一个键，只需递增其在映射中的次数</span></span><br><span class="line">    <span class="function"><span class="title">add</span>(<span class="params">key</span>)</span> &#123; <span class="built_in">this</span>.map.set(key, <span class="built_in">this</span>.count(key) + <span class="number">1</span>); &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 删除键需在次数为0时从映射中删除相应键</span></span><br><span class="line">    <span class="function"><span class="title">delete</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="built_in">this</span>.count(key);</span><br><span class="line">        <span class="keyword">if</span>(count === <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">this</span>.map.delete(key);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(count &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">this</span>.map.set(key, count -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 迭代直方图就是返回映射中存储的键</span></span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]() &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.keys(); &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 其他迭代器方法直接委托给映射对象</span></span><br><span class="line">    <span class="function"><span class="title">keys</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.keys(); &#125;;</span><br><span class="line">    <span class="function"><span class="title">values</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.values(); &#125;;</span><br><span class="line">    <span class="function"><span class="title">entries</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.map.entries(); &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Histogram()</code> 构造函数只创建了一个 Map 对象，这个类的方法都委托给了相应的映射方法，实现起来简单</p>
+<h3 id="类层次与抽象类"><a href="#类层次与抽象类" class="headerlink" title="类层次与抽象类"></a>类层次与抽象类</h3><p>当存在多级子类的情况，使用继承而不是组合</p>
+<p>JavaScript 可以定义抽象类，作为一组相关子类的公共父类，JavaScript 官方没有正式定义抽象方法或抽象类的语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抽象与具体的集合类层次</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * AbstractSet类只定义一个抽象方法has()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractSet</span></span>&#123;</span><br><span class="line">    <span class="comment">// 抛出错误，强制子类必须定义这个方法的可用版本</span></span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Abstract method&quot;</span>); &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * NotSet是AbstractSet的一个具体子类，这个集合的成员是不属于其他集合的任何值</span></span><br><span class="line"><span class="comment"> * 因为使用另一个集合定义，所以它不可写；因为有无限个成员，所以不可枚举</span></span><br><span class="line"><span class="comment"> * 这个类只支持检测成员关系和使用数学符号把集合转换为字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotSet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">set</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.set = set;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 实现继承的抽象方法</span></span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">return</span> !<span class="built_in">this</span>.set.has(x); &#125;</span><br><span class="line">    <span class="comment">// 同时覆盖Object方法</span></span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">`x | x \u2209 <span class="subst">$&#123;<span class="built_in">this</span>.set.toString()&#125;</span> &#125;`</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * RangeSet是AbstractSet的一个具体子类</span></span><br><span class="line"><span class="comment"> * 这个集合的成员是介于from和to（含二者）之间的所有z</span></span><br><span class="line"><span class="comment"> * 因为使用另一个集合定义，所以它不可写；因为有无限个成员，所以不可枚举</span></span><br><span class="line"><span class="comment"> * 这个类只支持检测成员关系和使用数学符号把集合转换为字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RangeSet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">from</span>, to</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.from = <span class="keyword">from</span>;</span><br><span class="line">        <span class="built_in">this</span>.to = to;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">return</span> x &gt;= <span class="built_in">this</span>.from &amp;&amp; x &lt;= <span class="built_in">this</span>.to; &#125;</span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">`&#123; x | <span class="subst">$&#123;<span class="built_in">this</span>.<span class="keyword">from</span>&#125;</span> ≤ x ≤ <span class="subst">$&#123;<span class="built_in">this</span>.to&#125;</span> &#125;`</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * AbstractEnumerableSet是AbstractSet的一个抽象子类</span></span><br><span class="line"><span class="comment"> * 这个抽象类定义了一个抽象的获取方法，返回集合的大小，并且定义了一个抽象迭代器</span></span><br><span class="line"><span class="comment"> * 在此基础上实现了具体的isEmpty()、toString()和equals()方法</span></span><br><span class="line"><span class="comment"> * 实现这个迭代器、大小获取方法以及（继承的）has()方法的子类无偿获得这些具体方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractEnumerableSet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span></span>&#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">size</span>() &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Abstract method&quot;</span>); &#125;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]()&#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Abstract method&quot;</span>); &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">isEmpty</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">this</span>.size === <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">`&#123;<span class="subst">$&#123;<span class="built_in">Array</span>.<span class="keyword">from</span>(<span class="built_in">this</span>).join(<span class="string">&quot;, &quot;</span>)&#125;</span>&#125;`</span>; &#125;</span><br><span class="line">    <span class="function"><span class="title">equals</span>(<span class="params">set</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 若另一个集合不是AbstractEnumerableSet，那肯定不等于当前集合</span></span><br><span class="line">        <span class="keyword">if</span>(!(set <span class="keyword">instanceof</span> AbstractEnumerableSet)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 若两个集合大小不一样，则它们也不相等</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.size !== set.size) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 循环检查集合的元素</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> element <span class="keyword">of</span> <span class="built_in">this</span>)&#123;</span><br><span class="line">            <span class="comment">// 只要有一个元素不在另一个集合中，就不相等</span></span><br><span class="line">            <span class="keyword">if</span>(!set.has(element)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 元素匹配，两个集合相等</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * SingletonSet是AbstractEnumerableSet的一个具体子类</span></span><br><span class="line"><span class="comment"> * 单体集合是只有一个成员的只读集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingletonSet</span> <span class="keyword">extends</span> <span class="title">AbstractEnumerableSet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">member</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.member = member;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 实现3个抽象方法，同时继承基于这3个方法实现的isEmpty()、toString()和equals()</span></span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">return</span> x === <span class="built_in">this</span>.member; &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">size</span>() &#123;<span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]() &#123; <span class="keyword">yield</span> <span class="built_in">this</span>.member; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * AbstractWritableSet是AbstractEnumerableSet的一个抽象子类</span></span><br><span class="line"><span class="comment"> * 这个抽象类定义了抽象方法insert()和remove()，分别用于插入和删除个别集合元素</span></span><br><span class="line"><span class="comment"> * 在此基础上实现了具体的add()、subtract()和intersect()方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractWritableSet</span> <span class="keyword">extends</span> <span class="title">AbstractEnumerableSet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">insert</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Abstract method&quot;</span>); &#125;</span><br><span class="line">    <span class="function"><span class="title">remove</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;Abstract method&quot;</span>); &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">add</span>(<span class="params">set</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> element <span class="keyword">of</span> set)&#123;</span><br><span class="line">            <span class="built_in">this</span>.insert(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">subtract</span>(<span class="params">set</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> element <span class="keyword">of</span> set)&#123;</span><br><span class="line">            <span class="built_in">this</span>.remove(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">intersect</span>(<span class="params">set</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> element <span class="keyword">of</span> set)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!set.has(element))&#123;</span><br><span class="line">                <span class="built_in">this</span>.remove(element);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * BitSet是AbstractWritableSet的一个具体子类</span></span><br><span class="line"><span class="comment"> * 这个类是高效的固定大小集合的实现，用于元素为小于某个最大值的非负整数集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BitSet</span> <span class="keyword">extends</span> <span class="title">AbstractWritableSet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">max</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.max = max;    <span class="comment">// 可存储的最大整数</span></span><br><span class="line">        <span class="built_in">this</span>.n = <span class="number">0</span>;        <span class="comment">// 集合中整数的个数</span></span><br><span class="line">        <span class="built_in">this</span>.numBytes = <span class="built_in">Math</span>.floor(max / <span class="number">8</span>) + <span class="number">1</span>;     <span class="comment">// 需要多少字节</span></span><br><span class="line">        <span class="built_in">this</span>.data = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(<span class="built_in">this</span>.numBytes); <span class="comment">// 实际的字节</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 内部方法，检测一个值是否为当前集合的合法成员</span></span><br><span class="line">    <span class="function"><span class="title">_valid</span>(<span class="params">x</span>)</span> &#123; <span class="keyword">return</span> <span class="built_in">Number</span>.isInteger(x) &amp;&amp; x &gt;= <span class="number">0</span> &amp;&amp; x &lt;= <span class="built_in">this</span>.max; &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 测试数据数组中指定字节的指定位是否有值，返回true或false</span></span><br><span class="line">    <span class="function"><span class="title">_has</span>(<span class="params">byte, bit</span>)</span> &#123; <span class="keyword">return</span> (<span class="built_in">this</span>.data[byte] &amp; BitSet.bits[bit]) !== <span class="number">0</span>; &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 判断x是否在BitSet中</span></span><br><span class="line">    <span class="function"><span class="title">has</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>._valid(x))&#123;</span><br><span class="line">            <span class="keyword">let</span> byte = <span class="built_in">Math</span>.floor(x / <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">let</span> bit = x % <span class="number">8</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>._has(byte, bit);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将x插入当前BitSet</span></span><br><span class="line">    <span class="function"><span class="title">insert</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>._valid(x))&#123;                   <span class="comment">// 若这个值有效</span></span><br><span class="line">            <span class="keyword">let</span> byte = <span class="built_in">Math</span>.floor(x / <span class="number">8</span>);     <span class="comment">// 转换为字节和位</span></span><br><span class="line">            <span class="keyword">let</span> bit = x % <span class="number">8</span>;</span><br><span class="line">            <span class="keyword">if</span>(!<span class="built_in">this</span>._has(byte, bit))&#123;                  <span class="comment">// 若对应的位没有值</span></span><br><span class="line">                <span class="built_in">this</span>.data[byte] |= BitSet.bits[bit];    <span class="comment">// 则设置该位的值</span></span><br><span class="line">                <span class="built_in">this</span>.n++;                               <span class="comment">// 递增集合大小</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&quot;Invalid set element:&quot;</span> + x );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">remove</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>._valid(x))&#123;                   <span class="comment">// 若这个值有效</span></span><br><span class="line">            <span class="keyword">let</span> byte = <span class="built_in">Math</span>.floor(x / <span class="number">8</span>);     <span class="comment">// 转换为字节和位</span></span><br><span class="line">            <span class="keyword">let</span> bit = x % <span class="number">8</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">this</span>._has(byte, bit))&#123;                    <span class="comment">// 若对应的位已经设置了值</span></span><br><span class="line">                <span class="built_in">this</span>.data[byte] &amp;= BitSet.masks[bit];    <span class="comment">// 则取消设置的值</span></span><br><span class="line">                <span class="built_in">this</span>.n--;                                <span class="comment">// 递减集合大小</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&quot;Invalid set element:&quot;</span> + x );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取方法，返回集合大小</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title">size</span>() &#123; <span class="keyword">return</span> <span class="built_in">this</span>.n; &#125;</span><br><span class="line">    <span class="comment">// 迭代集合，只依次检查每一位（可以大幅优化）</span></span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= <span class="built_in">this</span>.max; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">this</span>.has(x))&#123;</span><br><span class="line">                <span class="keyword">yield</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// has()、insert()和remove()方法会用的几个预定义值</span></span><br><span class="line">BitSet.bits = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>, <span class="number">64</span>, <span class="number">128</span>]);</span><br><span class="line">BitSet.nasks = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([~<span class="number">1</span>, ~<span class="number">2</span>, ~<span class="number">4</span>, ~<span class="number">8</span>, ~<span class="number">16</span>, ~<span class="number">32</span>, ~<span class="number">64</span>, ~<span class="number">128</span>]);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>\u2209</code> ==$\notin$</p>
+</blockquote>
+<p>JavaScript 类的主要特性</p>
+<ul>
+<li><p>若对象同一个类的成员，则它们都会从同一个原型对象继承属性</p>
+</li>
+<li><p>ES6 之前，使用 <code>function</code> 关键字创建的函数有 <code>prototype</code> 属性，这个属性的值是一个对象，该对象会用作以 <code>new</code> 调用构造函数而创建的所有对象的原型，通过初始化这个原型对象，可以为类定义共享方法</p>
+<blockquote>
+<p>原型对象是类的关键属性，构造函数是类的公共标识</p>
+</blockquote>
+</li>
+<li><p>ES6 新增 <code>class</code> 关键字，在底层依然是构造函数和原型机制</p>
+</li>
+<li><p>子类在类声明中通过 <code>extends</code> 关键字定义</p>
+</li>
+<li><p>子类可以通过 <code>super</code> 关键字调用父类构造函数或父类中被覆盖的方法</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/18/JS/JS%E5%87%BD%E6%95%B0/" rel="prev" title="JS函数">
+                  <i class="fa fa-chevron-left"></i> JS函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/" rel="next" title="JS模块">
+                  JS模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

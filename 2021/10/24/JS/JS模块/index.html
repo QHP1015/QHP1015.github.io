@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="模块化编程的目标是能够使用不同作者和来源的代码模块组装成大型程序 实践中，模块化的作用主要体现在封装和隐藏私有实现细节，以及保证全局命名空间清结上，因而模块之间不会意外修改各自定义的变量、函数和类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS模块">
+<meta property="og:url" content="http://note.qhp.us/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="模块化编程的目标是能够使用不同作者和来源的代码模块组装成大型程序 实践中，模块化的作用主要体现在封装和隐藏私有实现细节，以及保证全局命名空间清结上，因而模块之间不会意外修改各自定义的变量、函数和类">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-24T16:00:42.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/","path":"2021/10/24/JS/JS模块/","title":"JS模块"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS模块 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%B1%BB%E3%80%81%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-text">基于类、对象的模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%97%AD%E5%8C%85%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A8%A1%E5%9D%97"><span class="nav-text">基于闭包的自动化模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-text">Node中的模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-%E7%9A%84%E5%AF%BC%E5%87%BA"><span class="nav-text">Node 的导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-text">Node 的导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-text">ES6 中的模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6-%E7%9A%84%E5%AF%BC%E5%87%BA"><span class="nav-text">ES6 的导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6-%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-text">ES6 的导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA%E6%97%B6%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-text">导入和导出时重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E5%AF%BC%E5%87%BA"><span class="nav-text">再导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-%E4%BD%BF%E7%94%A8-JavaScript-%E6%A8%A1%E5%9D%97"><span class="nav-text">Web 使用 JavaScript 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-import-%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5"><span class="nav-text">通过 import() 动态导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import-meta-url"><span class="nav-text">import.meta.url</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/24/JS/JS%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS模块
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-25 00:00:42" itemprop="dateCreated datePublished" datetime="2021-10-25T00:00:42+08:00">2021-10-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>模块化编程的目标是能够使用不同作者和来源的代码模块组装成大型程序</p>
+<p>实践中，模块化的作用主要体现在封装和隐藏私有实现细节，以及保证全局命名空间清结上，因而模块之间不会意外修改各自定义的变量、函数和类</p>
+<span id="more"></span>
+
+<h2 id="基于类、对象的模块"><a href="#基于类、对象的模块" class="headerlink" title="基于类、对象的模块"></a>基于类、对象的模块</h2><p>类有一个重要特性，即类充当自己方法的模块。</p>
+<p>不相关的类的方法都被定义为独立原型对象的属性，因此这些方法相互独立</p>
+<p>在函数中声明的局部变量和嵌套函数是函数私有的，即可以使用立即调用的函数表达式来实现某种模块化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个小型统计模块，暴露mean()和stddev()函数，隐藏实现细节</span></span><br><span class="line"><span class="keyword">const</span> stats = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 模块私有的辅助函数</span></span><br><span class="line">    <span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y;</span><br><span class="line">    <span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x * x;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 要导出的两个公有函数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">mean</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data.reduce(sum)/data.length;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">stddev</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> m = mean(data);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.sqrt(</span><br><span class="line">        	data.map(<span class="function"><span class="params">x</span> =&gt;</span> x - m).map(square).reduce(sum)/(data.length-<span class="number">1</span>);</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将公有函数作为一个对象的属性导出</span></span><br><span class="line">    <span class="keyword">return</span> &#123;mean, stddev&#125;;</span><br><span class="line">&#125;());</span><br><span class="line"></span><br><span class="line">stats.mean([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])      <span class="comment">// =&gt; 5</span></span><br><span class="line">stats.stddev([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])    <span class="comment">// =&gt; Math.sqrt(10)</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="基于闭包的自动化模块"><a href="#基于闭包的自动化模块" class="headerlink" title="基于闭包的自动化模块"></a>基于闭包的自动化模块</h2><p>若存在一个工具，能解析代码文件，将每个文件的内容包装在一个立即调用的函数表达式中，还可以跟踪每个函数的返回值，并将所有内容拼接为一个大文件，即针对浏览器的代码打包工具（如 Webpack 和 Parcel）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> modules = &#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">require</span>(<span class="params">moduleName</span>) </span>&#123; <span class="keyword">return</span> modules[moduleName]; &#125;</span><br><span class="line"></span><br><span class="line">modules[<span class="string">&quot;sets.js&quot;</span>] = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">exports</span> = &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// sets.js文件的内容在这里</span></span><br><span class="line">    <span class="built_in">exports</span>.BitSet = <span class="class"><span class="keyword">class</span> <span class="title">BitSet</span> </span>&#123; ... &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">exports</span>;</span><br><span class="line">&#125;());</span><br><span class="line"></span><br><span class="line">modules[<span class="string">&quot;stats.js&quot;</span>] = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">exports</span> = &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// stats.js文件的内容在这里</span></span><br><span class="line">    <span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y;</span><br><span class="line">    <span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x * x;</span><br><span class="line">    <span class="built_in">exports</span>.mean = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; ... &#125;;</span><br><span class="line">    <span class="built_in">exports</span>.stddev = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; ... &#125;;</span><br><span class="line">                                     </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">exports</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+
+<p>将所有模块打包到类似上面的单个文件之中，即可如下操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得对所需模块（或模块内容）的引用</span></span><br><span class="line"><span class="keyword">const</span> stats = <span class="built_in">require</span>(<span class="string">&quot;stats.js&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> BitSet = <span class="built_in">require</span>(<span class="string">&quot;sets.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用这些模块</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> BitSet(<span class="number">100</span>);</span><br><span class="line">s.insert(<span class="number">10</span>);</span><br><span class="line">s.insert(<span class="number">20</span>);</span><br><span class="line">s.insert(<span class="number">30</span>);</span><br><span class="line"><span class="keyword">let</span> average = stats.mean([...s]);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="Node中的模块"><a href="#Node中的模块" class="headerlink" title="Node中的模块"></a>Node中的模块</h2><p>编写 Node 程序时，可以随意将程序拆分到任意多个文件中</p>
+<p>在 Node 中，每个文件都是一个拥有私有命名空间的独立模块，在一个文件中定义的常量、变量、函数和类对该文件是私有的，除非文件导出它们，被该模块导出的值只有被另一个模块显式导入后才会在此模块可见</p>
+<p>Node 使用 <code>require()</code> 函数导入其他模块，通过设置 <code>Exports</code> 对象的属性或完全替换 <code>module.exports</code> 对象来导出公共 API</p>
+<p><code>module.exports</code> 的默认值与 <code>exports</code> 引用同一个对象</p>
+<h3 id="Node-的导出"><a href="#Node-的导出" class="headerlink" title="Node 的导出"></a>Node 的导出</h3><p>Node定义一个全局 exports 对象，这个对象始终有定义</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若要导出多个值的 Node 模块，可以直接将这些值设为此对象的属性</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y;</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x * x;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.mean = <span class="function"><span class="params">data</span> =&gt;</span> data.reduce(sum)/data.length;</span><br><span class="line"><span class="built_in">exports</span>.stddev = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> m = <span class="built_in">exports</span>.mean(d);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.sqrt(</span><br><span class="line">        	data.map(<span class="function"><span class="params">x</span> =&gt;</span> x - m).map(square).reduce(sum)/(data.length-<span class="number">1</span>);</span><br><span class="line">        );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 让模块导出一个函数或类,直接将想导出的值赋给module.exports</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">BitSet</span> <span class="keyword">extends</span> <span class="title">AbstractWritableSet</span></span>&#123;</span><br><span class="line">    <span class="comment">// .......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 还可以在模块末尾导出一个对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义所有公有函数和私有函数</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y;</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x * x;</span><br><span class="line"><span class="keyword">const</span> mean = <span class="function"><span class="params">data</span> =&gt;</span> data.reduce(sum)/data.length;</span><br><span class="line"><span class="keyword">const</span> stddev = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> m = <span class="built_in">exports</span>.mean(d);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.sqrt(</span><br><span class="line">        	data.map(<span class="function"><span class="params">x</span> =&gt;</span> x - m).map(square).reduce(sum)/(data.length-<span class="number">1</span>);</span><br><span class="line">        );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后只导出公有函数</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;mean, stddev&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Node-的导入"><a href="#Node-的导入" class="headerlink" title="Node 的导入"></a>Node 的导入</h3><p>Node 模块通过调用 <code>require()</code> 函数导入其他模块，这个函数的参数时要导入模块的名字，返回值是该模块导出的值（通常是一个函数、类或对象）</p>
+<p>若要导入 Node 内置的系统模块或通过包管理器安装在系统上的模块，可以使用模块的非限定名（不带会被解析为文本系统路径的”/“字符的模块名）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Node内置的模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);       <span class="comment">// 内置的文件系统模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);   <span class="comment">// 内置的HTTP模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Express HTTP 服务器框架是第三方模块</span></span><br><span class="line"><span class="comment">// 不属于Node，但已安装在本地</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>若要导入自己代码的模块，利用文件路径导入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> stats = <span class="built_in">require</span>(<span class="string">&#x27;./stats.js&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> BitSet = <span class="built_in">require</span>(<span class="string">&#x27;./utils/bitset.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>若模块只导出一个函数或类，只要调用 <code>require()</code> 取得返回值即可</p>
+<p>若模块导出一个带多个属性的对象，则可以有以下两种选择</p>
+<ul>
+<li>导入整个对象</li>
+<li>通过解构赋值只导入打算使用的特点属性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入整个对象，包含所有函数</span></span><br><span class="line"><span class="keyword">const</span> stats = <span class="built_in">require</span>(<span class="string">&#x27;./stats.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虽然导入用不到的函数，但这些函数都隐藏在命名空间之后</span></span><br><span class="line"><span class="keyword">let</span> average = stats.mean(data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以使用解构赋值直接向本地命名空间导入想用的函数</span></span><br><span class="line"><span class="keyword">const</span> &#123; stddev &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./stats.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样简洁，只是stddev()函数没有‘stats’前缀作为命名空间，少了上下文信息</span></span><br><span class="line"><span class="keyword">let</span> sd = stddev(data);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="ES6-中的模块"><a href="#ES6-中的模块" class="headerlink" title="ES6 中的模块"></a>ES6 中的模块</h2><p>ES6 为 JavaScript 添加了 <code>import</code> 和 <code>export</code> 关键字，用于支持模块作为核心语法</p>
+<h3 id="ES6-的导出"><a href="#ES6-的导出" class="headerlink" title="ES6 的导出"></a>ES6 的导出</h3><p>要从 ES6 模块导出常量、变量、函数和类，在声明前加上 <code>export</code> 关键字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> PI = <span class="built_in">Math</span>.PI;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">degreesToRadians</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d * PI / <span class="number">180</span>; &#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">r</span>)</span> &#123; <span class="built_in">this</span>.r = r; &#125;;</span><br><span class="line">    <span class="function"><span class="title">area</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> PI * <span class="built_in">this</span>.r * <span class="built_in">this</span>.r; &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以先正常定义常量、变量、函数和类，再通过export导出想要的值</span></span><br><span class="line"><span class="keyword">export</span> &#123;Circle, degressToRadians, PI &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>若一个模块只导出一个值（通常是一个函数或类），通常使用默认导出（export default）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">BitSet</span> </span>&#123;</span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认导出在导入时稍微简单些，在只要一个导出值的情况，使用 <code>export default</code> 可以简化使用导出值的模块代码</p>
+<p>使用 <code>export</code> 的常规导出只对有名字的声明有效，使用 <code>export default</code> 则可以导出任意表达式，包括匿名函数表达式和匿名表达式</p>
+<p><code>export</code> 关键字只能出现在 JavaScript 代码的顶层，不能在类、函数、循环或条件内部导出值</p>
+<h3 id="ES6-的导入"><a href="#ES6-的导入" class="headerlink" title="ES6 的导入"></a>ES6 的导入</h3><p>导入其他模块导出的值使用 <code>import</code> 关键字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入定义默认导出的模块</span></span><br><span class="line"><span class="keyword">import</span> BitSet <span class="keyword">from</span> <span class="string">&#x27;./bitset.js&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>import</code> 关键字只能出现在 JavaScript 代码的顶层，不能在类、函数、循环或条件内部导出值，非强制性，导入与函数声明类型，会被提升到顶部</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从导出多个值的模块导入想要的值</span></span><br><span class="line"><span class="keyword">import</span> &#123;mean, stddev&#125; <span class="keyword">from</span> <span class="string">&quot;./stats.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入所有值</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> stats <span class="keyword">from</span> <span class="string">&quot;./stats.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>导入所有值会将模块里的每个非默认导出都变为这个 <code>stats</code> 对象的属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入没有任何导出的模块</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./analytics.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="导入和导出时重命名"><a href="#导入和导出时重命名" class="headerlink" title="导入和导出时重命名"></a>导入和导出时重命名</h3><p>若两个模块使用相同的名字导入两个不同的值，且希望同时导入这两个值，那必须在导入时对其中至少一个进行重命名</p>
+<p>若导入某个值时发现已有同名，也需要重命名这个导入值</p>
+<p>在命名导入时使用 <code>as</code> 关键字对导入值重命名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; render <span class="keyword">as</span> renderImage &#125; <span class="keyword">from</span> <span class="string">&quot;./imageutils.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; render <span class="keyword">as</span> renderUI&#125; <span class="keyword">from</span> <span class="string">&quot;./ui.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>同时导入默认导出和命名导出的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> Histogram, mean, stddev &#125; <span class="keyword">from</span> <span class="string">&quot;./histogram-stats.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>导出值也可以进行重命名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">    layout <span class="keyword">as</span> calculateLayout,</span><br><span class="line">    render <span class="keyword">as</span> renderLayout</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>export</code> 关键字需要 <code>as</code> 前面是一个标识符，而非表达式，即不能如下重命名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; <span class="built_in">Math</span>.sin <span class="keyword">as</span> sin, <span class="built_in">Math</span>.cos <span class="keyword">as</span> cos &#125;;       <span class="comment">// SyntaxError</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="再导出"><a href="#再导出" class="headerlink" title="再导出"></a>再导出</h3><p>ES6 模块通过组合 <code>expor</code>t 和 <code>from</code> 关键字构造一个“再导出”语句</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; mean &#125; <span class="keyword">from</span> <span class="string">&quot;./stats/mean.js&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; stddev &#125; <span class="keyword">from</span> <span class="string">&quot;./stats/stddev.js&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>若不需要选择性地再导出，而是希望到处另一个模块地所有命名值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&quot;./stats/mean.js&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&quot;./stats/stddev.js&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>若要将另一个模块的命名符号再导出为当前模块地默认导出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; mean <span class="keyword">as</span> <span class="keyword">default</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./stats.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>若要将另一个模块的默认导出再导出为当前模块地默认导出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./stats/mean.js&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Web-使用-JavaScript-模块"><a href="#Web-使用-JavaScript-模块" class="headerlink" title="Web 使用 JavaScript 模块"></a>Web 使用 JavaScript 模块</h3><p>在浏览器中以原生方式使用 <code>import</code> 指令，必须通过 <code>&lt;scripe type=&quot;module&quot;&gt;</code> 标签告诉浏览器这是一个模块</p>
+<p>ES6 模块的重要特性是每个模块的导入都是静态的，即只要有一个起始模块，浏览器就可以加载它导入的所有模块</p>
+<p>添加 <code>async</code> 属性可以改变执行模块代码的时机</p>
+<p>支持 <code>&lt;scripe type=&quot;module&quot;&gt;</code> 的浏览器必须也支持 <code>&lt;scripe nomodule&gt;</code></p>
+<p>支持模块的浏览器会忽略 <code>nomodule</code> 属性的脚本，不支持模块的浏览器不认识 <code>nomodule</code> 属性，会忽略这个属性运行其脚本，可以兼容旧版本浏览器</p>
+<p>常规脚本和模块脚本的另一个重要区别涉及跨源加载</p>
+<h3 id="通过-import-动态导入"><a href="#通过-import-动态导入" class="headerlink" title="通过 import() 动态导入"></a>通过 import() 动态导入</h3><p>ES6 的 <code>import</code> 和 <code>export</code> 指令都是静态的，静态导入的模块可以保证导入的值在任何模块代码运行之前就可以使用</p>
+<p>若代码在 CPU 相对较慢的移动设备上执行，不适用于静态模块导入的场景，静态模块导入需要先加载完全部程序再执行，通过动态导入可以解决</p>
+<p>传给 <code>import()</code>  一个模块标识符，会返回一个期约对象，表示加载和运行指定模块的异步过程，动态导入完成后，这个期约会“兑现”并产生一个对象，与使用静态导入语句 <code>import * as</code> 得到的对象类似</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态导入</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> stats <span class="keyword">from</span> <span class="string">&quot;./stats.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态导入</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">&quot;./stats.js&quot;</span>).then(<span class="function"><span class="params">stats</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> average = stats.mean(data);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 或在一个async函数中</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">analyzeData</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> stats = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&quot;./stats.js&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="attr">average</span>: stats.mean(data),</span><br><span class="line">        <span class="attr">stddev</span>: stats.stddev(data)</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="import-meta-url"><a href="#import-meta-url" class="headerlink" title="import.meta.url"></a>import.meta.url</h3><p>在 ES6 模块中，<code>import.meta</code> 引用一个对象，这个对象包含当前正在执行模块的元数据，这个对象的 url 属性是加载模块时使用的 url（在 Node 中是 <code>file://URL</code>）</p>
+<p><code>import.meta.url</code> 的主要使用场景是引用与模块位于同一（或相对）目录下的图片、数据文件或其他资源</p>
+<p>使用 <code>URL()</code> 构造函数可以非常方便地相对于 <code>import.meta.url</code> 这样地绝对 URL 来解析相对 URL</p>
+<p>示例：若要写一个模块，其中包含需要本地化的字符串，而相关地本地化文件保存在 l10n/ 目录下，这个目录也保存着模块本身，则你的模块可以通过使用如下的函数创建的 URL 来加载字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">localStringURL</span>(<span class="params">locale</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> URL(<span class="string">`l10n/<span class="subst">$&#123;local&#125;</span>.json`</span>, <span class="keyword">import</span>.meta.url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/23/JS/JS%E7%B1%BB/" rel="prev" title="JS类">
+                  <i class="fa fa-chevron-left"></i> JS类
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/" rel="next" title="中小型网络系统总体规划与设计">
+                  中小型网络系统总体规划与设计 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

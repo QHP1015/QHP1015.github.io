@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="网络总体设计基本方法 网络结构与拓扑构型设计方法 是否需要分成3层（核心层，汇聚层，接入层）组建的经验数据是：如果结点数为250 ~ 5000个，一般需要按3层结构来设计；如果结点为100~500个，可以不必设计接入层网络，结点直接通过汇聚层的路由器或交换机接入；如果结点数为5~250个，也可以不设计接入层网络与汇聚层网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中小型网络系统总体规划与设计">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%8C%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="网络总体设计基本方法 网络结构与拓扑构型设计方法 是否需要分成3层（核心层，汇聚层，接入层）组建的经验数据是：如果结点数为250 ~ 5000个，一般需要按3层结构来设计；如果结点为100~500个，可以不必设计接入层网络，结点直接通过汇聚层的路由器或交换机接入；如果结点数为5~250个，也可以不设计接入层网络与汇聚层网络">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-28T12:08:38.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.889Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%8C%E7%AB%A0/","path":"2021/10/28/计算机三级/第二章/","title":"中小型网络系统总体规划与设计"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>中小型网络系统总体规划与设计 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-text">网络总体设计基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%85%B3%E9%94%AE%E8%AE%BE%E5%A4%87%E9%80%89%E5%9E%8B"><span class="nav-text">路由器关键设备选型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">路由器的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E6%8C%87%E6%A0%87"><span class="nav-text">路由器关键技术指标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%AE%BE%E5%A4%87%E9%80%89%E5%9E%8B"><span class="nav-text">交换机设备选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E5%A4%87%E9%80%89%E5%9E%8B"><span class="nav-text">网络服务器设备选型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">网络服务器的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%80%A7%E8%83%BD"><span class="nav-text">网络服务器的性能</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          中小型网络系统总体规划与设计
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:08:38" itemprop="dateCreated datePublished" datetime="2021-10-28T20:08:38+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="网络总体设计基本方法"><a href="#网络总体设计基本方法" class="headerlink" title="网络总体设计基本方法"></a>网络总体设计基本方法</h2><ul>
+<li><p>网络结构与拓扑构型设计方法</p>
+<p>是否需要分成3层（核心层，汇聚层，接入层）组建的经验数据是：如果结点数为<strong>250 ~ 5000个</strong>，<strong>一般需要按3层结构来设计</strong>；如果结点为<strong>100~500个</strong>，<strong>可以不必设计接入层网络</strong>，结点直接通过汇聚层的路由器或交换机接入；如果结点数为<strong>5~250个</strong>，也<strong>可以不设计接入层网络与汇聚层网络</strong></p>
+</li>
+</ul>
+<span id="more"></span>
+
+<ul>
+<li><p>核心层网络设计</p>
+<ul>
+<li>整个网络系统的主干部分是核心层，它是设计与建设的重点。目前应用于核心层网络的技术标准主要是 <strong>GE/10GE</strong>，核心设备是<strong>高性能交换路由器</strong>，连接核心路由器的是<strong>具有冗余链路的光纤</strong>。整个网络流量的 <strong>40%~60%</strong> 都需要由核心层网络承载</li>
+<li>直接接入核心路由器：采取链路冗余的办法直接连接两台核心路由器，<strong>其特点是直接利用了核心路由器的宽带，但是占用的核心路由器端口较多，而高端路由器的端口价格很高，所以设备成本会上升</strong></li>
+<li>通过专用交换机接入核心路由器：在两台核心路由器之上增加一台连接服务器集群的交换机，同时采用 <strong>链路冗余</strong> 的办法，间接的连接到两台核心路由器，<strong>其优点是可以分担核心路由器的带宽，缺点是会形成带宽瓶颈，存在单点故障的潜在危险</strong></li>
+</ul>
+</li>
+<li><p>汇聚层网络与接入层网络结构设计</p>
+<p>汇聚层网络可以将位于不同位置的子网连接到核心层网络，实现路由汇聚的功能。对网络系统进行分层设计可便于规划与分配带宽，有利于均衡负荷，提高网络效率。实际情况验证：<strong>层次之间的上联带宽与下一级带宽之间比一般控制在 1:20</strong></p>
+</li>
+</ul>
+<h2 id="路由器关键设备选型"><a href="#路由器关键设备选型" class="headerlink" title="路由器关键设备选型"></a>路由器关键设备选型</h2><blockquote>
+<p>网络关键设备选型的基本原则：厂商与产品系列的选择、网络的可扩展性考虑、网络技术先进性考虑。</p>
+</blockquote>
+<h4 id="路由器的分类"><a href="#路由器的分类" class="headerlink" title="路由器的分类"></a>路由器的分类</h4><p>一般按路由器的性能进行分类，即可分为</p>
+<ul>
+<li>高端路由器（高端核心路由器）</li>
+<li>中端路由器（或企业级路由器）</li>
+<li>低端路由器</li>
+</ul>
+<p><strong>路由器性能主要指路由器背板交换能力，背板交换能力大于 40Gbit/s 的称作高端路由器；背板交换能力低于 40Gbit/s 的称为中低端路由器</strong></p>
+<h4 id="路由器关键技术指标"><a href="#路由器关键技术指标" class="headerlink" title="路由器关键技术指标"></a>路由器关键技术指标</h4><ul>
+<li><p>吞吐量</p>
+<p><strong>路由器的吞吐量是指它的包转发能力</strong>，涉及两个方面的内容：端口吞吐量与整机吞吐量</p>
+<ul>
+<li>端口吞吐量是值路由器的某个端口的包转发能力</li>
+<li>整机吞吐量是指路由器整机的包转发能力</li>
+<li><strong>路由器的吞吐量与路由器的端口数量和速率、包类型、包长度关系密切</strong></li>
+</ul>
+</li>
+<li><p>背板能力</p>
+<p>背板是路由器输入端与输出端之间的物理通道，<strong>它决定了路由器的吞吐量</strong></p>
+<ul>
+<li><strong>高性能路由器一般采用交换式结构</strong></li>
+<li><strong>传统的路由器采用的是共享背板的结构</strong></li>
+</ul>
+</li>
+<li><p>延时与延时抖动</p>
+<ul>
+<li>从数据包的第一个字节进入路由，到该帧的最后一个字节离开路由器期间所经历的时间就是所谓的延时。延时与<strong>包长度</strong>、<strong>链路传输速率</strong>有关。高速路由器一般要求为1518 B的IP包，延时要小于1 ms</li>
+<li>延时的变化量就是延时抖动。<strong>由于数据包对延时抖动要求不高，所以一般不把延时抖动作为衡量高速路由器的主要指标，但是语音、视频业务对延时抖动要求比较高</strong>。</li>
+</ul>
+</li>
+<li><p>丢包率</p>
+<ul>
+<li>丢包率是指在<strong>持续的、稳定的</strong>负荷情况下，由于包转发能力的限制而造成的丢失的概率</li>
+<li><strong>丢包率常被用做路由器超负荷工作是的性能衡量指标</strong></li>
+</ul>
+</li>
+<li><p>突发处理能力</p>
+<p>常以 <strong>最小帧间隔发送数据包而不引起丢失的最大发送速率来衡量突发处理能力</strong>。</p>
+</li>
+<li><p>服务质量</p>
+<p>路由器的服务质量主要表现在<strong>队列管理机制</strong>、<strong>端口硬件队列管理</strong>和<strong>支持 QoS 协议</strong>上。<strong>队列管理机制是指路由器的队列调度算法与拥塞管理机制</strong>。</p>
+</li>
+<li><p>路由表容量</p>
+<ul>
+<li><strong>路由表是路由器用来决定包转发路径的主要依据</strong>。建立和维护与当前网络链路状态与节点状态相适应的路由表是路由器的主要任务之一</li>
+</ul>
+</li>
+<li><p>路由表容量是指路由器可以存储的最多的路由表的数量。</p>
+<ul>
+<li>BGP协议的路由器一般要存储数万条路由表项。</li>
+</ul>
+</li>
+<li><p>典型的高端路由器的可靠性与可用性指标应该达到以下几点</p>
+<ul>
+<li>无故障连续工作时间（MTBF）<strong>大于 10 万个小时</strong>，且系统故障恢复时间 <strong>小于 30min</strong>。</li>
+<li><strong>系统具有自动保护切换功能，主备用切换时间小于 50ms</strong>。</li>
+<li><strong>SDH 与 ATM 接口自动保护切换功能，切换时间小于 50ms</strong>。</li>
+<li>路由器系统内部<strong>不存在单故障点</strong>。</li>
+<li>主路由器、主存储器、交换矩阵、电流、总线管理器与网络管理接口等主要部件需要由热插拔冗余备份，线卡要求有备份，并提供远程测试诊断能力。</li>
+</ul>
+</li>
+<li><p>网管能力</p>
+<p><strong>路由器的网络管理能力表现在网络管理员可以通过网络管理程序和通用的网络管理协议 SNMPv2</strong>，对网络资源进行集中管理与操作。</p>
+</li>
+</ul>
+<h2 id="交换机设备选型"><a href="#交换机设备选型" class="headerlink" title="交换机设备选型"></a>交换机设备选型</h2><p><strong>交换机的分类</strong></p>
+<ul>
+<li>按所支持的技术类型，可以将交换机分为<ul>
+<li>10Mbit/s Ethernet 交换机</li>
+<li>Fast Ethernet 交换机</li>
+<li>速率达到 1Gbit/s 的 GE 交换机</li>
+</ul>
+</li>
+<li>按内部结构，可以将交换机分为<ul>
+<li>模块式交换机</li>
+<li>固定端口交换机</li>
+</ul>
+</li>
+<li>按应用规模，可以将交换机分为<ul>
+<li>企业级交换机</li>
+<li>部门级交换机</li>
+<li>工作组交换机</li>
+</ul>
+</li>
+</ul>
+<p><strong>交换机的主要技术指标</strong></p>
+<ul>
+<li><p>背板带宽</p>
+</li>
+<li><p><strong>全双工端口带宽</strong></p>
+<blockquote>
+<p><strong>全双工端口带宽：计算方法 = 端口数 x 端口速率 x 2</strong></p>
+</blockquote>
+</li>
+<li><p>交换方式</p>
+</li>
+<li><p>帧转发速率</p>
+</li>
+<li><p>延时</p>
+</li>
+<li><p>模块式或固定端口配置</p>
+</li>
+<li><p>支持 VLAN 能力等</p>
+</li>
+</ul>
+<h2 id="网络服务器设备选型"><a href="#网络服务器设备选型" class="headerlink" title="网络服务器设备选型"></a>网络服务器设备选型</h2><h4 id="网络服务器的分类"><a href="#网络服务器的分类" class="headerlink" title="网络服务器的分类"></a>网络服务器的分类</h4><ol>
+<li><p>按照应用领域不同，可以将网络服务器分为： </p>
+<ul>
+<li>Internet 通用服务器</li>
+<li>数据库服务器</li>
+<li>文件服务器</li>
+<li>应用服务器</li>
+</ul>
+</li>
+<li><p>按照网络应用规模不同，网络服务器可以分为：</p>
+<ul>
+<li>基础级服务器：1个CPU</li>
+<li>工作组级服务器：1~2个CPU</li>
+<li>部门级服务器：2~4个CPU，采用SMP技术</li>
+<li><strong>企业级服务器：4~8个CPU，采用SMP技术</strong></li>
+</ul>
+</li>
+<li><p>按照网络服务器主机的硬件体系结构可以分为：</p>
+<ul>
+<li>基于 CISC 处理器 Inter 机构（IA）的 PC 服务器</li>
+<li>基于 RISC 结构处理器的服务器</li>
+<li>小型服务器</li>
+<li>基于精简指令集（RISC）结构处理器的服务器与相应的 PC 服务器相比，CPU 处理能力提高了 50%-75%。<strong>各种大型、中型计算机和超级服务器都采用 RISC 结构处理器，操作系统采用 UNIX</strong>，所以通常将此类服务器作为 <strong>UNIX 服务器</strong></li>
+</ul>
+</li>
+<li><p>服务器采用的相关技术</p>
+<p><strong>热插拔技术</strong>、<strong>集群（Cluster）技术</strong>、高性能存储与智能 I/O 技术、对称多处理（Symmetric Multi-Processing, SMP）技术、应急管理端口（Emergence Management Port, EMP）技术、非一致内存访问（Non-Uniform Memory Access, NUMA）技术、服务器处理与 Intel 服务器控制（Intel Server Control, ISC）技术</p>
+<ul>
+<li><p>热拔插技术</p>
+<p><strong>可以实现用户在不断电的情况下进行故障硬盘、板卡等部件的更换</strong>，所以使得系统应对突发事件能力大大提高。另外，高端应用的磁盘镜像系统提高了磁盘的热插拔功能，大大缩减了系统故障修复时间</p>
+<p><strong>注意</strong>：如果系统式两个电源，则热插拔功能可以实现在用户不断电的情况下进行故障电源的更换</p>
+</li>
+<li><p>集群技术</p>
+<p><strong>集群（Cluster）技术大大提高了系统的数据处理能力</strong>。它式向一组独立的计算机提供高速通信线路，并使其组成一个共享数据存储空间的服务器系统。<strong>如果其中某台主机出现故障，该主机所运行的程序将立即转移到其他主机运行，可见集群计算技术可以使服务器的可用性、可靠性与容灾额能力得到大大提高</strong></p>
+</li>
+<li><p>高性能存储与智能 I/O 技术</p>
+<p><strong>存储能力使衡量服务器性能与选型的重要指标之一。评价高性能存储技术的主要指标使磁盘容量和存取 I/O 熟读</strong>。在提高磁盘容量的基础上，通过改善并行读写能力，提高磁盘的存取速度和吞吐量；通过磁盘容错处理来解决系统的可靠性</p>
+</li>
+<li><p>对称多处理技术</p>
+<p>对称多处理（SMP）技术可以实现多 CPU 结构的服务器中的均衡负荷，从而提高系统效率。是否在多 CPU 结构的服务器中采用了对称多处理技术使一个重要指标</p>
+</li>
+<li><p>非一致内存访问（Non-Uniform Memory Access, NUMA）技术</p>
+<p>非一直内存访问（NUMA）技术实在多大 64 个或更多 CPU 的服务器之中，将集群技术与对称多处理技术结合起来应用，以求得较高的性价比</p>
+</li>
+<li><p>高性能服务器一般利用专用的服务处理器，对服务器系统的运行状况进行监控</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="网络服务器的性能"><a href="#网络服务器的性能" class="headerlink" title="网络服务器的性能"></a>网络服务器的性能</h4><p>服务器的性能主要表现在</p>
+<ul>
+<li>磁盘存储能力</li>
+<li>运算处理能力</li>
+<li>高可用性</li>
+<li>可扩展性</li>
+<li>可管理性等。</li>
+</ul>
+<p>**系统高可用性可以用如下公式： 系统可用性 = MTBF / ( MTBF + MTBR )**。</p>
+<blockquote>
+<p>MTBF 为平均无故障时间； MTBR 为平均修复时间。</p>
+</blockquote>
+<p><strong>如果系统高可用性达到 99.9%，那么每年的停机时间 &lt;8.8 小时；系统高可用性达到 99.99%，每年的停机时间 &lt;53 分钟；系统高可用性达到 99.999%，每年的停机时间 &lt;5 分钟</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%80%E7%AB%A0/" rel="prev" title="中小型网络系统总体规划与设计">
+                  <i class="fa fa-chevron-left"></i> 中小型网络系统总体规划与设计
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%89%E7%AB%A0/" rel="next" title="IP地址规划技术">
+                  IP地址规划技术 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

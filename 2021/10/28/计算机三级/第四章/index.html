@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="路由相关术语分组转发  分组的传送采用存储-转发方式，即网络节点根据分组控制信息，分组送到下一节点，下一节点接收到分组后，暂时保存下来并排队等候传输，然后根据分组控制信息把该分组传送到下一节点，直至到达最终目的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路由器设计基础">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%9B%9B%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="路由相关术语分组转发  分组的传送采用存储-转发方式，即网络节点根据分组控制信息，分组送到下一节点，下一节点接收到分组后，暂时保存下来并排队等候传输，然后根据分组控制信息把该分组传送到下一节点，直至到达最终目的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bluexiaowei.github.io/NCRE3/static/images/04-01.png">
+<meta property="og:image" content="https://bluexiaowei.github.io/NCRE3/static/images/04-02.png">
+<meta property="article:published_time" content="2021-10-28T12:14:09.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.897Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bluexiaowei.github.io/NCRE3/static/images/04-01.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%9B%9B%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%9B%9B%E7%AB%A0/","path":"2021/10/28/计算机三级/第四章/","title":"路由器设计基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>路由器设计基础 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD"><span class="nav-text">路由相关术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP-%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E5%92%8C%E8%B7%AF%E7%94%B1%E6%B1%87%E8%81%9A"><span class="nav-text">IP 路由选择和路由汇聚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF%E5%8D%8F%E8%AE%AE%EF%BC%88RIP%EF%BC%89"><span class="nav-text">路由信息协议（RIP）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%E5%8D%8F%E8%AE%AE%EF%BC%88OSPF%EF%BC%89"><span class="nav-text">最短路径优先协议（OSPF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%88BGP%EF%BC%89"><span class="nav-text">外部网关协议（BGP）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%9B%9B%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          路由器设计基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:14:09" itemprop="dateCreated datePublished" datetime="2021-10-28T20:14:09+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="路由相关术语"><a href="#路由相关术语" class="headerlink" title="路由相关术语"></a>路由相关术语</h2><p>分组转发</p>
+<ul>
+<li>分组的传送采用存储-转发方式，即网络节点根据分组控制信息，分组送到下一节点，下一节点接收到分组后，暂时保存下来并排队等候传输，然后根据分组控制信息把该分组传送到下一节点，直至到达最终目的</li>
+</ul>
+<span id="more"></span>
+
+<p>路由算法分类</p>
+<ul>
+<li><strong>静态路由选择算法</strong> 也称为非自适应路由选择，其路由信息是由<strong>网络管理人员手工配置</strong>的，且需要网络管理人员手动修改路由表中的路由表项，以适应网络拓扑结构变化或网络链路状态的变化</li>
+<li><strong>动态路由选择算法</strong> 也叫做自适应路由选择，其路由信息是通过相互连接的路由器彼此之间 <strong>交换路由信息</strong>，然后按照一定的算法 <strong>计算并优化</strong> 而得出的，同时为适应不断变化的网络，还需要在一定时间间隙对这些路由信息不断更新，以即使获得最有的路径选择效果</li>
+</ul>
+<p>路由的度量标准</p>
+<ul>
+<li>跳数：分组从源节点到目的即节点所经过路由器的个数</li>
+<li>带宽：链路的传输速率，用来表示通信线路所能传送数据的能力</li>
+<li>延时：分组从源节点到达目的节点所花费的时间</li>
+<li>负载：单位时间内通过路由器或线路的通信量</li>
+<li>可靠性：传输过程中的误码率，域网络的质量和性能有密切的关系</li>
+<li>代价：传输过程中的耗费，通常域所使用的链路带宽相关，一般来说，网络的速率越高，其代价也越高。</li>
+</ul>
+<h2 id="IP-路由选择和路由汇聚"><a href="#IP-路由选择和路由汇聚" class="headerlink" title="IP 路由选择和路由汇聚"></a>IP 路由选择和路由汇聚</h2><ul>
+<li>无类域间路由协议（CIDR）<strong>支持通过子网划分的相反过程</strong> 来汇聚路由表项</li>
+<li>无类域间路由协议使用 <strong>网络前缀法表示路由表的表现</strong>，具体路由表的项目表示由 <strong>“网络前缀”和“下一跳地址”</strong> 两项内容组成</li>
+<li>路由选择变为从匹配结果中选择具有最长网络前缀的路由的过程，这就是 <strong>最长前缀匹配</strong></li>
+</ul>
+<h2 id="路由信息协议（RIP）"><a href="#路由信息协议（RIP）" class="headerlink" title="路由信息协议（RIP）"></a>路由信息协议（RIP）</h2><p>RIP（路由信息协议）是一种<strong>分布式、基于距离向量</strong> 的内部网关协议，适用于小型同类网络的一个自治系统内的路由细心的传递，是使用 <strong>跳数</strong> 来衡量到达目的地址的路由距离</p>
+<p>RIP 的原理</p>
+<ul>
+<li>路由刷新报文主要内容由若干个<strong>（V, D）</strong>组成的表<ul>
+<li><strong>V 表示“矢量</strong>，标识该路由器可以到达的目的网络或者目的主机</li>
+<li><strong>距离 D 对应路由上的“跳数”</strong></li>
+</ul>
+</li>
+<li>RIP 规定，路由器<strong>每 30 秒向外广播一个（V, D）报文（周期性）</strong>，报文信息来自本地路由器表</li>
+<li>RIP 规定，一条有限的 <strong>路径长度不得超过 15</strong>，超过 15 则以为路径无限长，即路径不存在</li>
+</ul>
+<p>RIP 的运行过程</p>
+<p><img src="https://bluexiaowei.github.io/NCRE3/static/images/04-01.png" alt="RIP 的运行过程"></p>
+<h2 id="最短路径优先协议（OSPF）"><a href="#最短路径优先协议（OSPF）" class="headerlink" title="最短路径优先协议（OSPF）"></a>最短路径优先协议（OSPF）</h2><p>OSPF 协议概述</p>
+<ul>
+<li>开放最短路径优先（OSPF）协议，也是 <strong>内部网关协议</strong> 的一种，克服 RIP 的缺点开发出来的</li>
+<li>开放式最短路径优先协议 <strong>组要用于在自治系统内部路由器之间传输路由信息</strong></li>
+<li>开放式最短路径优先协议不采用距离矢量的路由算法，而是 <strong>基于 Dijkstra 提出的最短路径算法规则计算路径</strong></li>
+<li>开放式最短路径优先协议还 <strong>支持分层网络</strong>，这使得它的应用更加具有广泛性和灵活性</li>
+</ul>
+<p>OSPE 协议的特征</p>
+<ul>
+<li>OSPE 主要的特征是使用 <strong>分布式链路状态协议</strong>，而 RIP 使用的是距离向量协议</li>
+<li>OSPE 协议要求路由器发送的信息是本路由器与那些相邻路由器，以及链路状态的质量。<strong>链路状态“度量”组要是指费用、距离、延时、带宽等</strong></li>
+<li>OSPF 协议要求当链路状态发生变化时用 <strong>“洪泛法”</strong> 向所有路由器发送此信息，而 RIP 仅向自己相邻的几个路由器发送交换路由信息</li>
+<li>OSPF 协议的路由器之间频繁的交换链路状态信息，<strong>区域内部路由器只知道本区域的完整网络拓扑，而不知道其他区域的网络拓扑情况</strong></li>
+<li>为了适应规模很大的网络，并使更新过程收敛的更快，OSPE 协议将一个自治系统再划分为若干个更小的范围，叫做 <strong>区域</strong></li>
+<li>每个区域有个 <strong>32 位区域标识符</strong>（用点分十进制表示），再一个区域内的路由器数 <strong>不超过 200 个</strong></li>
+<li>所有的OSPF路由器交换链路状态信息，最终建立一个<strong>链路状态数据库</strong>， 这个数据库实际上就是该区域全网的拓扑结构图</li>
+</ul>
+<h2 id="外部网关协议（BGP）"><a href="#外部网关协议（BGP）" class="headerlink" title="外部网关协议（BGP）"></a>外部网关协议（BGP）</h2><p>自治系统 AS 的定义：在单一的技术管理下的一组路由器，而这些路由器使用一种 AS 内部的路由选择协议和共同的度量以确定分组在 AS 内的路由，同时还使用一种 AS 之间的路由选择协议用以确定分组在 AS 之间的路由。</p>
+<p><img src="https://bluexiaowei.github.io/NCRE3/static/images/04-02.png" alt="外部网关协议(BGP-4)"></p>
+<p>BGP 的主要特点</p>
+<ul>
+<li>是一种外部网关协议，是在 AS 之间传递路由信息以及控制优化路由信息</li>
+<li>是一种“<strong>路径矢量</strong>”路由协议，其路由信息中携带了所经过的全部自治系统的路由列表</li>
+<li>为了保证 BGP 的可靠传输，其使用 TCP 来承载协议报文</li>
+</ul>
+<p>BGP边界路由器的初始化过程：BGP刚刚运行时，交换整个路由表，以后只需要在发生变化时更新有变化的部分</p>
+<p>BGP 路由协议四种分组</p>
+<ul>
+<li><strong>打开（OPEN）报文</strong>：采用与相邻的另一个 BGP 发言人建立关系</li>
+<li><strong>更新（UPDATE）报文</strong>：用来发送某一路由的信息，以及列出要撤销的多条路由</li>
+<li><strong>保活（KEEPALIVE）报文</strong>：用来确认打开报文和周期性（30 秒）的证实邻站关系</li>
+<li><strong>通知（NOTIFICATION）报文</strong>：用来发送检测到的差错。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%89%E7%AB%A0/" rel="prev" title="IP地址规划技术">
+                  <i class="fa fa-chevron-left"></i> IP地址规划技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%94%E7%AB%A0/" rel="next" title="局域网技术基础及应用">
+                  局域网技术基础及应用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="函数是 JavaScript 程序的一个基本组成部分 JavaScript 函数是参数化的，即函数定义可以包含一组标识符，称为参数或形参，函数调用会为这些形参提供值或实参 JavaScript 函数可以嵌套函数，内嵌的函数可以访问定义在函数作用域的任何变量。即 JavaScript 函数是闭包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS函数">
+<meta property="og:url" content="http://note.qhp.us/2021/10/18/JS/JS%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="函数是 JavaScript 程序的一个基本组成部分 JavaScript 函数是参数化的，即函数定义可以包含一组标识符，称为参数或形参，函数调用会为这些形参提供值或实参 JavaScript 函数可以嵌套函数，内嵌的函数可以访问定义在函数作用域的任何变量。即 JavaScript 函数是闭包">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-18T13:19:55.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.881Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/18/JS/JS%E5%87%BD%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/18/JS/JS%E5%87%BD%E6%95%B0/","path":"2021/10/18/JS/JS函数/","title":"JS函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS函数 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="nav-text">定义函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-text">函数表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-text">箭头函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-text">调用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-text">函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="nav-text">方法调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-text">构造函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-text">隐式函数调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9E%E5%8F%82%E4%B8%8E%E5%BD%A2%E5%8F%82"><span class="nav-text">函数实参与形参</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%BD%A2%E5%8F%82%E4%B8%8E%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-text">可选形参与默认值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%A9%E4%BD%99%E5%AE%9E%E5%8F%82%E4%B8%8E%E5%8F%AF%E5%8F%98%E9%95%BF%E5%BA%A6%E5%AE%9E%E5%8F%82%E5%88%97%E8%A1%A8"><span class="nav-text">剩余实参与可变长度实参列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9E%E5%8F%82%E8%A7%A3%E6%9E%84%E4%B8%BA%E5%BD%A2%E5%8F%82"><span class="nav-text">函数实参解构为形参</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%80%BC"><span class="nav-text">函数作为值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-text">函数作为命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-text">函数属性和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-text">函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E5%A4%84%E7%90%86%E6%95%B0%E7%BB%84"><span class="nav-text">使用函数处理数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96"><span class="nav-text">函数柯里化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%AE%B0%E5%BF%86"><span class="nav-text">函数记忆</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/18/JS/JS%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-18 21:19:55" itemprop="dateCreated datePublished" datetime="2021-10-18T21:19:55+08:00">2021-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>函数是 JavaScript 程序的一个基本组成部分</p>
+<p>JavaScript 函数是参数化的，即函数定义可以包含一组标识符，称为参数或形参，函数调用会为这些形参提供值或实参</p>
+<p>JavaScript 函数可以嵌套函数，内嵌的函数可以访问定义在函数作用域的任何变量。即 JavaScript 函数是闭包</p>
+<span id="more"></span>
+
+<h2 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h2><p>定义函数有以下方法</p>
+<ul>
+<li>function 关键字</li>
+<li>箭头函数</li>
+</ul>
+<h3 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h3><p>函数声明由 function 关键字和函数体组成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算阶乘的递归函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x * factorial(x-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数声明语句会被“提升”到包含脚本、函数或代码块的顶部，因此调用代码可以出现在函数定义代码之前</p>
+<p>在一个 JavaScript 代码块中声明的所有函数在该块的任何地方都有定义，且在 JavaScript 解释器开始执行该块的任何代码前被定义</p>
+<p>在语句块中定义的函数只在该块中有定义，对块的外部不可见</p>
+<h3 id="函数表达式"><a href="#函数表达式" class="headerlink" title="函数表达式"></a>函数表达式</h3><p>函数表达式出现在复杂表达式或语句的上下文中，且函数名是可选的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将该函数表达式赋值给一个变量</span></span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x*x&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数表达式可以包含名字，对递归有用</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="keyword">function</span> <span class="title">fact</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">if</span> (x &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>; <span class="keyword">else</span> <span class="keyword">return</span> x*fact(x-<span class="number">1</span>);&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数表达式也可以用作其他函数的参数</span></span><br><span class="line">[<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>].sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123; <span class="keyword">return</span> a-b;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数表达式也可以定义完立即调用</span></span><br><span class="line"><span class="keyword">let</span> tensquared = (<span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x*x;&#125;(<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>在 ES6 中，箭头函数使用”箭头“分隔函数的参数和函数体</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span> &#123; <span class="keyword">return</span> x + y&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 若函数体只有一个 return 语句，可以省略</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x, y</span>) =&gt;</span>  x + y;</span><br></pre></td></tr></table></figure>
+
+<p>箭头函数从定义自己的环境继承 <code>this</code> 关键字的值，而不像其他函数那样定义自己的调用上下文、</p>
+<p>箭头函数没有 <code>prototype</code> 属性，即箭头函数不能作为新类的构造函数</p>
+<h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><p>构成函数体的 JavaScript 代码在调用函数的时候执行，JavaScript 函数可通过 5 种方式调用</p>
+<ul>
+<li>作为函数</li>
+<li>作为方法</li>
+<li>作为构造函数</li>
+<li>通过 call() 或 apply() 方法间接调用</li>
+<li>通过 JavaScript 语言特性隐式调用（与常规书函数调用不同）</li>
+</ul>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p>对于常规函数调用，函数的返回值会变成调用表达式的值</p>
+<ul>
+<li>若函数由于解释器到末尾返回，返回值为 <code>undefined</code></li>
+<li>若函数由于解释器执行到 <code>return</code> 语句返回，返回语句表达式值，若没有值返回 <code>undefined</code></li>
+</ul>
+<p>作为函数来调用的函数通常不会在定义中使用 <code>this</code> 关键字</p>
+<h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><p>方法即对象的属性为函数时的函数</p>
+<p>方法调用会调用上下文，属性访问表达式由两部分构成：对象和属性名。对象会成为调用上下文，函数体可以通过 <code>this</code> 引用这个对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> calculator = &#123;</span><br><span class="line">    <span class="attr">operand1</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">operand2</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="function"><span class="title">add</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 使用this关键字引用包含对象</span></span><br><span class="line">        <span class="built_in">this</span>.result = <span class="built_in">this</span>.operand1 + <span class="built_in">this</span>.operand2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">calculator.add();</span><br><span class="line">calculator.result;    <span class="comment">// =&gt; 2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>this</code> 关键字不具有变量那样的作用域，除了箭头函数，嵌套函数不会继承包含函数的 <code>this</code> 值</p>
+<ul>
+<li>嵌套方法被当作方法调用，<code>this</code> 值就是调用它的对象</li>
+<li>嵌套方法（不是箭头函数）被当作函数调用，<code>this</code> 值是全局对象（非严格模式）或 <code>undefined</code>（严格模式）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">    <span class="attr">m</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> self = <span class="built_in">this</span>;    <span class="comment">// 将 this 值保存在变量中</span></span><br><span class="line">        <span class="built_in">this</span> === o;         <span class="comment">// =&gt; true</span></span><br><span class="line">        f();                <span class="comment">// 调用嵌套函数</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span> === o;     <span class="comment">// =&gt; false：this 是全局对象或 undefined</span></span><br><span class="line">            self === o;     <span class="comment">// =&gt; true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在嵌套函数内，<code>this</code> 关键字不等于对象，解决技巧：</p>
+<ul>
+<li><p>如上述代码将 <code>this</code> 值 赋给变量，在嵌套函数中，使用变量引用</p>
+</li>
+<li><p>ES6 之后，使用箭头函数继承 <code>this</code> 值，函数表达式不会被提升，需要将定义放在对象方法调用嵌套函数代码前</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> f = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span> ===o;    <span class="comment">// true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>调用嵌套函数的 <code>bind()</code> 函数，定义一个在指定对象上被隐式调用的新函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> f = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span> === o    <span class="comment">// true，因为将这个函数绑定到外部的 this</span></span><br><span class="line">&#125;).bind(<span class="built_in">this</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="构造函数调用"><a href="#构造函数调用" class="headerlink" title="构造函数调用"></a>构造函数调用</h3><p>在函数或方法调用前加关键字 <code>new</code>，即为构造函数调用</p>
+<p>构造函数调用会创建一个新的空对象，这个对象继承构造函数的 <code>prototype</code> 属性指定的对象</p>
+<h3 id="隐式函数调用"><a href="#隐式函数调用" class="headerlink" title="隐式函数调用"></a>隐式函数调用</h3><p>一些 JavaScript 语言特性看起来不像函数调用，但实际上会导致某些函数被调用</p>
+<p>这些被隐式调用的函数，若产生 bug，副效应和性能问题都比常规函数更难排查</p>
+<p>可能导致隐式函数调用的语言特性</p>
+<ul>
+<li>若对象由获取方法或设置方法，查询或设置其属性值可能会调用这些方法</li>
+<li>对象在字符串上下文中使用时，会调用对象的 <code>toString()</code> 方法，用于数值上下文时，会调用 <code>valueOf()</code> 方法</li>
+<li>遍历可迭代对象的元素时，也会涉及一系列方法调用</li>
+<li>标签模板字面量是一种伪装的函数调用</li>
+<li>代理对象的行为完全由函数控制，其上的几乎任何操作都会导致一个函数被调用</li>
+</ul>
+<h2 id="函数实参与形参"><a href="#函数实参与形参" class="headerlink" title="函数实参与形参"></a>函数实参与形参</h2><p>JavaScript 函数定义不会指定函数形参的类型，函数调用也不对传入的实参进行任何类型检查</p>
+<h3 id="可选形参与默认值"><a href="#可选形参与默认值" class="headerlink" title="可选形参与默认值"></a>可选形参与默认值</h3><p>调用函数时传入的实参少于声明的形参时，额外的形参会获得默认值，通常是 <code>undefined</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将对象 o 的可枚举属性名放到数组中，返回数组</span></span><br><span class="line"><span class="comment">// 若不传数组，创建一个新数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPropertyNames</span>(<span class="params">o, a = []</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> property <span class="keyword">in</span> o) a.push(property);</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数的形参默认值表达式在函数调用时求值，因此每次调用上述函数时若只传一个参数，都创建并传入一个新的空数组</p>
+<p>若函数有多个形参，可以使用前面参数的值来定义后面参数的默认值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rectangle = (width, height = width*<span class="number">2</span>)</span><br><span class="line">rectangle(<span class="number">1</span>)        <span class="comment">// =&gt; &#123;width: 1, height: 2&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="剩余实参与可变长度实参列表"><a href="#剩余实参与可变长度实参列表" class="headerlink" title="剩余实参与可变长度实参列表"></a>剩余实参与可变长度实参列表</h3><p>剩余形参能够编写在调用时传入比形参多任意数量的实参的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">max</span>(<span class="params">first=-<span class="literal">Infinity</span>, ...rest</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> maxValue = first;</span><br><span class="line">    <span class="comment">// 遍历其他参数，寻找最大数值</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> n <span class="keyword">of</span> rest)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &gt; maxValue)&#123;</span><br><span class="line">            maxValue = n;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回最大的数值</span></span><br><span class="line">    <span class="keyword">return</span> maxValue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">max(<span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1000</span>, <span class="number">4</span>)    <span class="comment">// =&gt; 1000</span></span><br></pre></td></tr></table></figure>
+
+<p>剩余形参前有三个点，且必须是函数声明中最后一个参数</p>
+<p>在函数体内，剩余形参的值始终是数组，数组可能为空，但剩余形参不可能为 <code>undefined</code></p>
+<h3 id="函数实参解构为形参"><a href="#函数实参解构为形参" class="headerlink" title="函数实参解构为形参"></a>函数实参解构为形参</h3><p>调用函数时若传入一个实参列表，则所有参数值都会被赋给函数定义时声明的形参</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vectorAdd</span>(<span class="params">v1, v2</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [v1[<span class="number">0</span>] + v2[<span class="number">0</span>], v1[<span class="number">1</span>] + v2[<span class="number">1</span>]];</span><br><span class="line">&#125;</span><br><span class="line">vectorAdd([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>])    <span class="comment">// =&gt; [4,6]</span></span><br></pre></td></tr></table></figure>
+
+<p>在解构赋值中可以为形参定义默认值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用标量乘以向量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vetorMultiply</span>(<span class="params">&#123;x, y, z=<span class="number">0</span>&#125;, scalar</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">x</span>: x*scalar, <span class="attr">y</span>: y*scalar, <span class="attr">z</span>: z*scalar&#125;;</span><br><span class="line">&#125;</span><br><span class="line">vectorMultiply(&#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">2</span>&#125;, <span class="number">2</span>)    <span class="comment">// =&gt; &#123;x: 2, y: 4, z: 0&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过把对象参数解构为函数参数模拟调用函数时使用 <code>name=value</code> 的形式指定实参</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arraycopy</span>(<span class="params">&#123;<span class="keyword">from</span>,to=<span class="keyword">from</span>,n=<span class="keyword">from</span>.length,fromIndex=<span class="number">0</span>,toIndex=<span class="number">0</span>&#125;</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> valuesToCopy = <span class="keyword">from</span>.slice(fromIndex, fromIndex + n);</span><br><span class="line">    to.splice(toIndex, <span class="number">0</span>, ...valuesToCopy);</span><br><span class="line">    <span class="keyword">return</span> to;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>], b=[<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>];</span><br><span class="line">arraycopy(&#123;<span class="attr">from</span>: a, <span class="attr">n</span>: <span class="number">3</span>, <span class="attr">to</span>: b, <span class="attr">toIndex</span>: <span class="number">4</span>&#125;)    <span class="comment">// =&gt; [9, 8, 7, 6, 1, 2, 3, 5]</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2018 中，解构对象也可以使用形参</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vetorMultiply</span>(<span class="params">&#123;x, y, z=<span class="number">0</span>, ...props&#125;, scalar</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">x</span>: x*scalar, <span class="attr">y</span>: y*scalar, <span class="attr">z</span>: z*scalar, ...props&#125;;</span><br><span class="line">&#125;</span><br><span class="line">vectorMultiply(&#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">2</span>, <span class="attr">w</span>: -<span class="number">1</span>&#125;, <span class="number">2</span>)    <span class="comment">// =&gt; &#123;x: 2, y: 4, z: 0, w: -1&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="函数作为值"><a href="#函数作为值" class="headerlink" title="函数作为值"></a>函数作为值</h2><p>在 JavaScript 中，函数不仅是语法，也是值，即可以把函数赋值给变量、保存为对象的属性或数组的元素、作为参数传给其他函数等操作</p>
+<p>函数在 JavaScript 中不是原始值，是一种特殊的对象，即函数也可以有属性。当函数需要一个“静态”变量，且这个变量的值需要在函数每次调用时都能访问到，则通常把这个变量定义为函数自身的一个属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算阶乘并把结果缓存到函数本身的属性中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Number</span>.isInteger &amp;&amp; n &gt; <span class="number">0</span>)&#123;              <span class="comment">// 仅限于正整数</span></span><br><span class="line">        <span class="keyword">if</span>(!(n <span class="keyword">in</span> factorial))&#123;                  <span class="comment">// 若没有缓存</span></span><br><span class="line">            factorial[n] = n * factorial(n-<span class="number">1</span>);  <span class="comment">// 计算并缓存结果</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> factorial[n];                    <span class="comment">// 返回缓存结果</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NaN</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">factorial[<span class="number">1</span>] = <span class="number">1</span>;         <span class="comment">// 初始化缓存</span></span><br><span class="line">factorial[<span class="number">6</span>]              <span class="comment">// =&gt; 720</span></span><br><span class="line">factorial[<span class="number">5</span>]              <span class="comment">// =&gt; 120</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="函数作为命名空间"><a href="#函数作为命名空间" class="headerlink" title="函数作为命名空间"></a>函数作为命名空间</h2><p>在函数体内声明的变量在函数外部不可见，可以利用函数作为临时命名空间</p>
+<p>假设有一段 JavaScript 代码，想在多个程序或页面中调用，且这段代码定义了存储中间计算结果的变量，则无法知道多个程序创建的变量是否会跟这段代码冲突，利用函数作为命名空间可以解决</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">chunkNamespace</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 要复用的代码</span></span><br><span class="line">    <span class="comment">// 在这里定义的任何变量都是函数的局部变量</span></span><br><span class="line">    <span class="comment">// 不会污染全局命名空间</span></span><br><span class="line">&#125;</span><br><span class="line">chunkNamespace()    <span class="comment">// 需要调用函数</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以在一个表达式中定义并调用匿名函数（也称立即调用函数表达式）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="comment">// 将 chunkNamespace() 函数重写为一个无名表达式</span></span><br><span class="line">   <span class="comment">// 要复用的代码</span></span><br><span class="line">&#125;);    <span class="comment">// 函数定义结束后立即调用</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>JavaScript 使用司法作用域，即函数执行时使用的是定义函数时生效的变量作用域，而不是调用函数时生效的变量作用域</p>
+<p>闭包：将函数对象与作用域（即一组绑定）组合起来解析函数变量的机制</p>
+<p>闭包在嵌套函数中最为常见，且一个私有变量可以由多个闭包共享</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">conter</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="attr">count</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> n++; &#125;,</span><br><span class="line">        <span class="attr">reset</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; n=<span class="number">0</span>; &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c = counter(), d = counter();    <span class="comment">// 创建两个计数器</span></span><br><span class="line">c.count()</span><br><span class="line">d.count()</span><br><span class="line">c.reset();          <span class="comment">// reset() 和 count() 方法共享状态</span></span><br><span class="line">c.count()           <span class="comment">// =&gt;0：因为重置了 c</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码中 <code>counter()</code> 函数返回一个“计数器”对象，有两个方法。每次调用 <code>counter()</code> 都会创建一个新作用域，即 c 和 d 的变量不一样，在一个计数器上调用 <code>count()</code> 或 <code>reset()</code> 不会影响另一个计数器</p>
+<p>闭包技术也可以与属性获取方法和设置方法组合使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="comment">// 属性获取方法，返回递增后的私有计数器值</span></span><br><span class="line">        <span class="keyword">get</span> <span class="title">count</span>() &#123; <span class="keyword">return</span> n++; &#125;,</span><br><span class="line">        <span class="comment">// 属性设置方法，不允许 n 的值减少</span></span><br><span class="line">        <span class="keyword">set</span> <span class="title">count</span>(<span class="params">m</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (m &gt; n) n = m;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">&quot;count can only be set to a larger value&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>基于闭包技术实现一个通用的共享私有状态的函数，使用闭包的私有属性访问器方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个函数按照指定的名字为对象 o 添加属性访问器方法</span></span><br><span class="line"><span class="comment">// 方法命名为 get&lt;name&gt; 和 set&lt;name&gt;</span></span><br><span class="line"><span class="comment">// 若提供断言函数，则设置方法用它测试自己的函数</span></span><br><span class="line"><span class="comment">// 在存储前先验证，若断言返回 false，则设置方法抛出异常</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 操作的值没有保存在对象 o 上，保存在这个函数的一个局部变量中</span></span><br><span class="line"><span class="comment">// 获取方法和设置方法也在函数局部定义，即可以访问这个局部变量</span></span><br><span class="line"><span class="comment">// 即该变量对两个访问器方法是私有的，除了设置方法，没有</span></span><br><span class="line"><span class="comment">// 其他途径可以设置或修改这个变量的值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addPrivateProperty</span>(<span class="params">o, name, predicate</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> value;    <span class="comment">// 属性值</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取方法简单地返回属性值</span></span><br><span class="line">    o[<span class="string">`get<span class="subst">$&#123;name&#125;</span>`</span>] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> value; &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 设置方法保存值或在断言失败时抛出异常</span></span><br><span class="line">    o[<span class="string">`set<span class="subst">$&#123;name&#125;</span>`</span>] = <span class="function"><span class="keyword">function</span>(<span class="params">v</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(predicate &amp;&amp; !predicate(v))&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">`set<span class="subst">$&#123;name&#125;</span>: invalid value <span class="subst">$&#123;v&#125;</span>`</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            value = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 addPrivateProperty() 方法</span></span><br><span class="line"><span class="keyword">let</span> o = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加属性访问器方法，并确保只能设置字符串值</span></span><br><span class="line">addPrivateProperty(o, <span class="string">&quot;Name&quot;</span>, <span class="function"><span class="params">x</span> =&gt;</span> <span class="keyword">typeof</span> x === <span class="string">&quot;string&quot;</span>);</span><br><span class="line"></span><br><span class="line">o.setName(<span class="string">&quot;Frank&quot;</span>);        <span class="comment">// 设置属性的值</span></span><br><span class="line">o.getName();               <span class="comment">// =&gt; &quot;Frank&quot;</span></span><br><span class="line">o.setName(<span class="number">0</span>);              <span class="comment">// !TypeError：尝试设置一个错误类型的值</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="函数属性和方法"><a href="#函数属性和方法" class="headerlink" title="函数属性和方法"></a>函数属性和方法</h2><p>函数使用 <code>typeof</code> 操作符返回字符串 <code>function</code>，但函数实际上是一种特殊的对象，因此也有属性和方法，甚至构造函数</p>
+<p><strong><code>length</code> 属性</strong></p>
+<ul>
+<li>函数有一个只读的 <code>length</code> 属性，表示函数的元数，即函数在参数列表中声明的形参个数</li>
+<li>剩余形参不包含在 <code>length</code> 属性内</li>
+</ul>
+<p><strong><code>name</code> 属性</strong></p>
+<ul>
+<li>函数有一个只读的 <code>name</code> 属性，表示定义函数时使用的名字</li>
+<li>若函数是未命名的，表示在第一次创建此函数时赋给该函数的变量名或属性名</li>
+<li>主要用于记录调试或排错消息</li>
+</ul>
+<p><strong><code>prototype</code> 属性</strong></p>
+<ul>
+<li>除了箭头函数，所有函数都有一个 <code>prototype</code> 属性，这个属性引用原型对象的对象</li>
+<li>每个函数都有原型对象</li>
+<li>当函数被作为构造函数使用时，新创建的对象从这个原型对象继承属性</li>
+</ul>
+<p><strong><code>call()</code> 和 <code>apply()</code> 方法</strong></p>
+<ul>
+<li><p><code>call()</code> 和 <code>apply()</code> 允许间接调用一个函数</p>
+</li>
+<li><p><code>call()</code> 和 <code>apply()</code> 的第一个参数为要在其上调用这个函数的对象，即函数的调用上下文，在函数体内会成为 <code>this</code> 关键字的值，箭头函数调用这两个方法会忽略第一个参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数 f() 对象 o</span></span><br><span class="line">f.call(o);</span><br><span class="line">f.apply(o);</span><br></pre></td></tr></table></figure></li>
+<li><p><code>call()</code> 的后续参数会传给被调用的函数，<code>apply()</code> 传给函数的参数需要以数组的形式提供</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f.call(o, <span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">f.apply(o, [<span class="number">1</span>,<span class="number">2</span>]);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong><code>bind()</code> 方法</strong></p>
+<ul>
+<li><p><code>bind()</code> 方法的主要目的是将函数绑定到对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">y</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.x + y;&#125;  <span class="comment">// 需要绑定的函数</span></span><br><span class="line"><span class="keyword">let</span> o = &#123; <span class="attr">x</span>: <span class="number">1</span>&#125;;                    <span class="comment">// 要绑定的对象</span></span><br><span class="line"><span class="keyword">let</span> g = f.bind(o);                  <span class="comment">// 调用g(x)会在o上调用f()</span></span><br><span class="line">g(<span class="number">2</span>)                                <span class="comment">// =&gt; 3</span></span><br><span class="line"><span class="keyword">let</span> p = &#123; <span class="attr">x</span>: <span class="number">10</span>, g&#125;;                <span class="comment">// 作为这个对象的方法调用g()</span></span><br><span class="line">p.g(<span class="number">2</span>)                              <span class="comment">// =&gt; 3：g仍然绑定到o，而非p</span></span><br></pre></td></tr></table></figure></li>
+<li><p>调用 <code>bind()</code> 最常见的目的是让非箭头函数变得像箭头函数，箭头函数从定义的环境中继承 <code>this</code> 值，且不能被 <code>bind()</code> 覆盖</p>
+</li>
+<li><p><code>bind()</code> 方法也可以执行“部分应用”（柯里化），即在第一个参数之后传给 <code>bind()</code> 的参数也会随着 <code>this</code> 值一起被绑定</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sum = <span class="function">(<span class="params">x,y</span>) =&gt;</span> x + y;     </span><br><span class="line"><span class="keyword">let</span> succ = sum.bind(<span class="literal">null</span>,<span class="number">1</span>);</span><br><span class="line">succ(<span class="number">2</span>)      <span class="comment">// =&gt; 3：x绑定到1，2会传给参数y</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">y,z</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.x + y + z&#125;</span><br><span class="line"><span class="keyword">let</span> g = f.bind(&#123;<span class="attr">x</span>: <span class="number">1</span>&#125;, <span class="number">2</span>);      <span class="comment">// 绑定this和y</span></span><br><span class="line">g(<span class="number">3</span>)         <span class="comment">// =&gt; 6：this.x绑定到1，y绑定到2，z是3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong><code>Function()</code> 构造函数</strong></p>
+<ul>
+<li><p><code>Function()</code> 构造函数可以接收任意多个字符串参数，其中最后一个参数是函数体的文本</p>
+</li>
+<li><p>与函数字面量一样，<code>Function()</code> 构造函数创建的也是匿名函数</p>
+</li>
+<li><p><code>Function()</code> 构造函数允许在运行时动态创建和编译 JavaScript 函数</p>
+</li>
+<li><p><code>Function()</code> 构造函数创建的函数不使用词法作用域，而是始终编译为如同顶级函数一样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> scope = <span class="string">&quot;global&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">constructFunction</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> scope = <span class="string">&quot;local&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">&quot;return scope&quot;</span>);    <span class="comment">// 不会捕获局部作用域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这行代码返回“global”，因为Function()构造函数返回的函数不使用局部作用域</span></span><br><span class="line">constructFunction()()          <span class="comment">// =&gt; &quot;global&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>JavaScript 可以把函数作为对象来操作意味着可以在 JavaScript 中使用函数实编程技巧</p>
+<h3 id="使用函数处理数组"><a href="#使用函数处理数组" class="headerlink" title="使用函数处理数组"></a>使用函数处理数组</h3><p>假设有一个数值数组，要求计算平均值和标准差，</p>
+<ul>
+<li><p>使用非函数式编程风格</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算平均值</span></span><br><span class="line"><span class="keyword">let</span> total = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; data.length; i++) total += data[i];</span><br><span class="line"><span class="keyword">let</span> mean = total/data.length;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算标准差，计算每个元素相对于平均值偏差的平方</span></span><br><span class="line">total = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; data.length; i++)&#123;</span><br><span class="line">    <span class="keyword">let</span> deviation = data[i] - mean;</span><br><span class="line">    total += deviation * deviation;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> stddev = <span class="built_in">Math</span>.sqrt(total/(data.length-<span class="number">1</span>));</span><br></pre></td></tr></table></figure></li>
+<li><p>使用函数式编程风格</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先定义两个简单的函数</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x,y</span>) =&gt;</span> x+y;</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x*x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用数组方法计算平均值和标准差</span></span><br><span class="line"><span class="keyword">let</span> data = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> mean = data.reduce(sum)/data.length;    <span class="comment">// mean == 3</span></span><br><span class="line"><span class="keyword">let</span> deviations = data.map(<span class="function"><span class="params">x</span> =&gt;</span> x-mean);</span><br><span class="line"><span class="keyword">let</span> stddev = <span class="built_in">Math</span>.sqrt(deviations.map(square).reduce(sum)/(data.length-<span class="number">1</span>));</span><br><span class="line">stddec          <span class="comment">// =&gt; 2</span></span><br></pre></td></tr></table></figure></li>
+<li><p>定义方法的函数版</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义 map() 和 reduce() 函数</span></span><br><span class="line"><span class="keyword">const</span> map = <span class="function"><span class="keyword">function</span>(<span class="params">a,...args</span>) </span>&#123; <span class="keyword">return</span> a.map(...args);&#125;;</span><br><span class="line"><span class="keyword">const</span> reduce = <span class="function"><span class="keyword">function</span>(<span class="params">a,...args</span>) </span>&#123; <span class="keyword">return</span> a.reduce(...args);&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先定义两个简单的函数</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x,y</span>) =&gt;</span> x+y;</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x*x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用数组方法计算平均值和标准差</span></span><br><span class="line"><span class="keyword">let</span> data = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> mean = reduce(data,sum)/data.length;    </span><br><span class="line"><span class="keyword">let</span> deviations = map(data, <span class="function"><span class="params">x</span> =&gt;</span> x-mean);</span><br><span class="line"><span class="keyword">let</span> stddev = <span class="built_in">Math</span>.sqrt(reduce(map(deviation,square),sum)/(data.length-<span class="number">1</span>));</span><br><span class="line">stddec        </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>高阶函数即操作函数的函数，它接收一个或多个函数作为参数并返回一个新函数</p>
+<p>以下的 <code>mapper()</code> 函数接收一个函数参数并返回一个新函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回一个函数，这个函数接收一个数组并对每个元素应用f</span></span><br><span class="line"><span class="comment">// 返回每个返回值的数组</span></span><br><span class="line"><span class="comment">// 比较这个函数与之前的map() 函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mapper</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">a</span> =&gt;</span> map(a, f);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> increment = <span class="function"><span class="params">x</span> =&gt;</span> x+<span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> incrementAll = mapper(increment);</span><br><span class="line">incrementAll([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])    <span class="comment">// =&gt; [2,3,4]</span></span><br></pre></td></tr></table></figure>
+
+<p>以下这个高阶函数接收两个函数，返回一个新函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回一个计算f(g(...))的新函数</span></span><br><span class="line"><span class="comment">// 返回的函数h会把它接收的所有参数传给g，</span></span><br><span class="line"><span class="comment">// 再把g的返回值传给f，然后返回f的返回值</span></span><br><span class="line"><span class="comment">// f和g被调用时都使用与h被调用时相同的this值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">f, g</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 这里对f使用call是因为只给它传一个值</span></span><br><span class="line">        <span class="comment">// 对g使用apply是因为正在传一个值的数组</span></span><br><span class="line">        <span class="keyword">return</span> f.call(<span class="built_in">this</span>, g.apply(<span class="built_in">this</span>, args));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">x,y</span>) =&gt;</span> x+y;</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x*x;</span><br><span class="line">compose(square, sum)(<span class="number">2</span>,<span class="number">3</span>)    <span class="comment">// =&gt; 25,平方和</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="函数柯里化"><a href="#函数柯里化" class="headerlink" title="函数柯里化"></a>函数柯里化</h3><p>函数f的 <code>bind()</code> 方法返回一个新函数，这个新函数在指定的上下文中以指定的参数调用f，此时 <code>bind()</code> 方法在左侧部分应用函数，即传给 <code>bind()</code> 的参数会放在原始函数的参数列表的开头</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传给这个函数的参数会传到左侧</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">partialLeft</span>(<span class="params">f, ...outerArgs</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...innerArgs</span>)</span>&#123;                  <span class="comment">// 返回这个函数</span></span><br><span class="line">        <span class="keyword">let</span> args = [...outerArgs, ...innerArgs];    <span class="comment">// 构建参数列表</span></span><br><span class="line">        <span class="keyword">return</span> f.apply(<span class="built_in">this</span>, args);                 <span class="comment">// 通过它调用f</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传给这个函数的参数会传到右侧</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">partialRight</span>(<span class="params">f, ...outerArgs</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...innerArgs</span>)</span>&#123;                  <span class="comment">// 返回这个函数</span></span><br><span class="line">        <span class="keyword">let</span> args = [...innerArgs, ...outerArgs];    <span class="comment">// 构建参数列表</span></span><br><span class="line">        <span class="keyword">return</span> f.apply(<span class="built_in">this</span>, args);                 <span class="comment">// 通过它调用f</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个函数的参数列表作为一个模板，这个参数列表中的 undefined值</span></span><br><span class="line"><span class="comment">// 会被来自内部参数的值填充</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">partial</span>(<span class="params">f, ...outerArgs</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...innerArgs</span>)</span>&#123;   </span><br><span class="line">        <span class="keyword">let</span> args = [...outerArgs];    	<span class="comment">// 外部参数模板的局部副本</span></span><br><span class="line">        <span class="keyword">let</span> innerIndex = <span class="number">0</span>;             <span class="comment">// 下一个是哪个内部函数</span></span><br><span class="line">        <span class="comment">// 循环遍历 args，用内部参数填充 undefined 值</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; args.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(args[i] === <span class="literal">undefined</span>) args[i] = innerArgs[innerIndex++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 现在把剩余的内部参数加进去</span></span><br><span class="line">        args.push(...innerArgs.slice(innerIndex));</span><br><span class="line">        <span class="keyword">return</span> f.apply(<span class="built_in">this</span>, args);   </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面是有3个参数的函数</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="keyword">function</span>(<span class="params">x,y,z</span>) </span>&#123; <span class="keyword">return</span> x * (y -z);&#125;;</span><br><span class="line"><span class="comment">// 以下3个部分应用的区别</span></span><br><span class="line">partialLeft(f, <span class="number">2</span>)(<span class="number">3</span>, <span class="number">4</span>)            <span class="comment">// =&gt; -2：绑定第一个参数：2 * (3 - 4)</span></span><br><span class="line">partialRight(f, <span class="number">2</span>)(<span class="number">3</span>, <span class="number">4</span>)           <span class="comment">// =&gt;  6：绑定最后一个参数：3 * (4 - 2)</span></span><br><span class="line">partial(f, <span class="literal">undefined</span>, <span class="number">2</span>)(<span class="number">3</span>, <span class="number">4</span>)     <span class="comment">// =&gt; -6：绑定中间的参数：3 * (2 - 4)</span></span><br></pre></td></tr></table></figure>
+
+<p>以上的部分应用函数允许在已经定义的函数基础上轻松定义其他函数，如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> increment = partialLeft(sum, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> cuberoot = partialRight(<span class="built_in">Math</span>.pow, <span class="number">1</span>/<span class="number">3</span>);</span><br><span class="line">cuberoot(increment(<span class="number">26</span>))            <span class="comment">// =&gt; 3</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以将部分应用的函数与其他高阶函数组合，如通过组合与部分应用定义 <code>not()</code> 函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> not = partialLeft(compose, <span class="function"><span class="params">x</span> =&gt;</span> !x);</span><br><span class="line"><span class="keyword">const</span> even = <span class="function"><span class="params">x</span> =&gt;</span> x % <span class="number">2</span> === <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> odd = not(even);</span><br><span class="line"><span class="keyword">const</span> isNumber = not(<span class="built_in">isNaN</span>);</span><br><span class="line">odd(<span class="number">3</span>) &amp;&amp; isNumber(<span class="number">2</span>)    <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="函数记忆"><a href="#函数记忆" class="headerlink" title="函数记忆"></a>函数记忆</h3><p>在函数式编程中，缓存称为函数记忆</p>
+<p>以下代码展示了高阶函数 <code>memoize()</code> 可以接收一个函数参数，然后返回这个函数的记忆版</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回f的记忆版</span></span><br><span class="line"><span class="comment">// 只适用于f的参数都有完全不同的字符串表示的情况</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoize</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> cache =<span class="keyword">new</span> <span class="built_in">Map</span>();    <span class="comment">// cache保存在这个闭包中</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 创建参数的字符串版，以用作缓存键</span></span><br><span class="line">        <span class="keyword">let</span> key = args.length + args.join(<span class="string">&quot;+&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(cache.has(key))&#123;</span><br><span class="line">            <span class="keyword">return</span> cache.get(key);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> result = f.apply(<span class="built_in">this</span>, args);</span><br><span class="line">            cache.set(key, result);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个 <code>memoize()</code> 函数创建一个新对象作为缓存使用，并将这个对象赋值给一个局部变量，从而让其（在闭包中）成为被返回的函数的私有变量。返回的函数将其参数数组转换为字符串，并使用该字符串作为缓存对象的属性。若缓存存在某个值，直接返回该值；否则，调用指定函数计算这些参数值，然后缓存这个值，最后返回这个值，以为为使用上述函数实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用欧几里得算法返回两个整数的最大公约数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gcd</span>(<span class="params">a,b</span>)</span>&#123;        <span class="comment">// 省略了对a和b的类型检查</span></span><br><span class="line">    <span class="keyword">if</span>(a &lt; b)&#123;            <span class="comment">// 开始时保证a ≥ b</span></span><br><span class="line">        [a, b] = [b, a];  </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(b !== <span class="number">0</span>)&#123;       <span class="comment">// 欧几里得算法</span></span><br><span class="line">        [a, b] = [b, a%b];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> gcdmemo = memoize(gcd);</span><br><span class="line">gcdmemo(<span class="number">85</span>, <span class="number">187</span>)          <span class="comment">// =&gt; 17</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在编写记忆的递归函数时，通常希望递归记忆版，而非原始版</span></span><br><span class="line"><span class="keyword">const</span> factorial = memoize(<span class="function"><span class="keyword">function</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (n &lt;= <span class="number">1</span>) ? <span class="number">1</span> : n * factorial(n-<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line">factorial(<span class="number">5</span>)              <span class="comment">// =&gt; 120：也为4、3、2和1缓存了值</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/17/JS/JS%E6%95%B0%E7%BB%84/" rel="prev" title="JS数组">
+                  <i class="fa fa-chevron-left"></i> JS数组
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/23/JS/JS%E7%B1%BB/" rel="next" title="JS类">
+                  JS类 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

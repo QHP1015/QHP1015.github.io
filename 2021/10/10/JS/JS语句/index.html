@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="JavaScript 程序即一系列待执行的语句">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS语句">
+<meta property="og:url" content="http://note.qhp.us/2021/10/10/JS/JS%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="JavaScript 程序即一系列待执行的语句">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-10T05:49:51.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.885Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/10/JS/JS%E8%AF%AD%E5%8F%A5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/10/JS/JS%E8%AF%AD%E5%8F%A5/","path":"2021/10/10/JS/JS语句/","title":"JS语句"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS语句 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E8%AF%AD%E5%8F%A5"><span class="nav-text">跳转语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AF%AD%E5%8F%A5"><span class="nav-text">其他语句</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/10/JS/JS%E8%AF%AD%E5%8F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS语句
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-10 13:49:51" itemprop="dateCreated datePublished" datetime="2021-10-10T13:49:51+08:00">2021-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript 程序即一系列待执行的语句</p>
+<span id="more"></span>
+
+<p>JavaScript语句语法</p>
+<table>
+<thead>
+<tr>
+<th>语句</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>break</td>
+<td>退出最内部循环、switch 或有名字的闭合语句</td>
+</tr>
+<tr>
+<td>case</td>
+<td>在 switch 中标记一条语句</td>
+</tr>
+<tr>
+<td>class</td>
+<td>声明一个类</td>
+</tr>
+<tr>
+<td>const</td>
+<td>声明并初始化一个或多个常量</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>开始最内部循环或命名循环的下一次迭代</td>
+</tr>
+<tr>
+<td>debugger</td>
+<td>调试器断点</td>
+</tr>
+<tr>
+<td>default</td>
+<td>在 switch 中标记默认语句</td>
+</tr>
+<tr>
+<td>do/while</td>
+<td>替代 while 循环的一种结构</td>
+</tr>
+<tr>
+<td>export</td>
+<td>声明可以被导入其他模块的值</td>
+</tr>
+<tr>
+<td>for</td>
+<td>一种方便好用的循环</td>
+</tr>
+<tr>
+<td>for/await</td>
+<td>异步迭代异步迭代器的值</td>
+</tr>
+<tr>
+<td>for/in</td>
+<td>枚举对象的属性名</td>
+</tr>
+<tr>
+<td>for/of</td>
+<td>枚举可迭代对象（如数组）的值</td>
+</tr>
+<tr>
+<td>function</td>
+<td>声明一个函数</td>
+</tr>
+<tr>
+<td>if/else</td>
+<td>根据某个条件执行一个或另一个语句</td>
+</tr>
+<tr>
+<td>import</td>
+<td>为在其他模块中定义的值声明名字</td>
+</tr>
+<tr>
+<td>label</td>
+<td>标签名，为语句起名，以便与 break 和 continue 一起使用</td>
+</tr>
+<tr>
+<td>let</td>
+<td>声明并初始化一个或多个块作用域的变量（新语法）</td>
+</tr>
+<tr>
+<td>return</td>
+<td>从函数中返回一个值</td>
+</tr>
+<tr>
+<td>switch</td>
+<td>包含 case 或 default 标签的多分支结构</td>
+</tr>
+<tr>
+<td>throw</td>
+<td>抛出一个异常</td>
+</tr>
+<tr>
+<td>try/catch/finally</td>
+<td>处理异常和代码清理</td>
+</tr>
+<tr>
+<td>”use strict“</td>
+<td>对脚本或函数应用严格模式</td>
+</tr>
+<tr>
+<td>var</td>
+<td>声明并初始化一个或多个变量（老语法）</td>
+</tr>
+<tr>
+<td>while</td>
+<td>一种基本的循环结构</td>
+</tr>
+<tr>
+<td>with</td>
+<td>扩展作用域链（在严格模式下被废弃并禁止）</td>
+</tr>
+<tr>
+<td>yield</td>
+<td>提供一个被迭代的；只用在生成器函数中</td>
+</tr>
+</tbody></table>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>条件语句根据指定表达式的值执行或跳过执行某些语句</p>
+<p><strong><code>if</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expression)</span><br><span class="line">    statement1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    statement2</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>else if</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expression1)&#123;</span><br><span class="line">    statement1</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(expression2)&#123;</span><br><span class="line">    statement2</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    statement3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>switch</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(expression)&#123;</span><br><span class="line">    <span class="keyword">case</span> value1 :</span><br><span class="line">        statement1</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2 :</span><br><span class="line">        statement2</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span> :</span><br><span class="line">        statement3</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>switch</code> 语句实例：根据值的类型决定怎么转换字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convert</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>(<span class="keyword">typeof</span> x)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;number&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> x.toString(<span class="number">16</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;string&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;&quot;&#x27;</span>+ x + <span class="string">&#x27;&quot;&#x27;</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">String</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><p>循环语句可以重复执行代码中的某些部分</p>
+<p><strong><code>while</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>do/while</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">while</span> (expression)</span><br></pre></td></tr></table></figure>
+
+<p><code>do/while</code> 保证循环体至少执行一次，<code>do/while</code> 语句实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printArray</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = a.length, i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(len === <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;Empty Array&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(a[i]);</span><br><span class="line">        &#125;<span class="keyword">while</span>(++i &lt; len)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>for</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(initialize ; test ; increment)&#123;</span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>initialize</code>：初始化</li>
+<li><code>test</code>：测试</li>
+<li><code>increment</code>：递增循环变量</li>
+</ul>
+<p><code>for</code> 语句实例：遍历链表，返回列表最后一个对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tail</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(; o.next; o = o.next);   <span class="comment">// 空循环体，o.next 为真值时遍历</span></span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>for/of</code> 语句</strong></p>
+<p>ES6 新增循环语句，专门用于可迭代对象</p>
+<ul>
+<li><p><code>for/of</code> 与对象</p>
+<p>对象（默认）不可迭代，运行 <code>for/of</code> 语句会抛出 <code>TypeError</code>，若想迭代对象属性，可以使用 <code>for/in</code> 循环，或者基于 <code>Object.keys()</code> 方法</p>
+<blockquote>
+<p><code>Object.keys()</code> 返回一个对象属性名的数组</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">2</span>, <span class="attr">z</span>: <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> keys = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="function"><span class="title">fot</span>(<span class="params"><span class="keyword">let</span> k <span class="keyword">of</span> <span class="built_in">Object</span>.keys(o)</span>)</span>&#123;</span><br><span class="line">    keys += k;</span><br><span class="line">&#125;</span><br><span class="line">keys    <span class="comment">// =&gt; &quot;xyz&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>若不考虑对象的键，可以调用<code>Object.values()</code> 方法迭代每个键对应的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> v <span class="keyword">of</span> <span class="built_in">Object</span>.values(o))&#123;</span><br><span class="line">    sum += v;</span><br><span class="line">&#125;</span><br><span class="line">sum     <span class="comment">// =&gt; 6</span></span><br></pre></td></tr></table></figure>
+
+<p>若及想要对象属性的键，也想要属性的值，可以基于<code>Object.entries()</code> 方法和解构赋值得</p>
+<blockquote>
+<p><code>Object.entries()</code> 返回一个数组的数组，每个内部数组表示对象的一个属性键值对</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pairs = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> [k,v] <span class="keyword">of</span> <span class="built_in">Object</span>.entries(o))&#123;</span><br><span class="line">    pairs += k + v;</span><br><span class="line">&#125;</span><br><span class="line">pairs    <span class="comment">// =&gt; &quot;x1y2z3&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>for/of</code> 与字符串</p>
+<p>字符串在 ES6 中是可以逐个字符迭代的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> frequency = &#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> letter <span class="keyword">of</span> <span class="string">&quot;mississippi&quot;</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(frequency[letter])&#123;</span><br><span class="line">        frequency[letter]++;</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">        frequency[letter] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">frequency    <span class="comment">// =&gt; &#123;m: 1, i: 4, s: 4, p: 2&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串迭代是按照 <code>Unicode</code> 码点而不是 <code>UTF-16</code> 字符迭代</p>
+</li>
+<li><p><code>for/of</code> 与 <code>Set</code> 和 <code>Map</code></p>
+<p>ES6 内置的  <code>Set</code>（集合） 和 <code>Map</code>（映射）类是可迭代的</p>
+<p>迭代 <code>Set</code> 时，循环体对集合中的每个元素都运行一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;Na na na na na na na na Batman!&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> wordSet = <span class="keyword">new</span> <span class="built_in">Set</span>(text.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line"><span class="keyword">let</span> unique = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> word <span class="keyword">of</span> wordSet)&#123;</span><br><span class="line">    unique.push(word);</span><br><span class="line">&#125;</span><br><span class="line">unique    <span class="comment">// =&gt; [&quot;Na&quot;, &quot;na&quot;, &quot;Batman!&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p> <code>Map</code> 对象迭代器迭代的是键值对，每次迭代，迭代器返回一个数组，其第一个元素是键，第一个元素是对应的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">1</span>, <span class="string">&quot;one&quot;</span>]]);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> [key, value] <span class="keyword">of</span> m)&#123;</span><br><span class="line">    key        <span class="comment">// =&gt; 1</span></span><br><span class="line">    value      <span class="comment">// =&gt; &quot;one&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>for/await</code> 与异步迭代</p>
+<p>ES2018 新增异步迭代器和使用异步迭代器的 <code>for/await</code> 循环</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从异步可迭代流中读取数据块并将其打印出来</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">printStream</span>(<span class="params">stream</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">await</span> (<span class="keyword">let</span> chunk <span class="keyword">of</span> stream)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(chunk);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong><code>for/in</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(variable <span class="keyword">in</span> object)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>variable</code>：通常是一个变量名，也可以是左值</li>
+<li><code>object</code>：求值为对象的表达式，若求值为 <code>null</code> 或 <code>undefined</code> 解释器跳过循环</li>
+<li><code>statement</code>：语句块</li>
+</ul>
+<p><code>for/in</code> 循环的 <code>in</code> 后面可以是任意对象，<code>for/in</code> 语句实例：把一个对象的所有属性复制到数组中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">2</span>, <span class="attr">z</span>: <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> a = [], i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(a[i++] <span class="keyword">in</span> o)</span><br><span class="line">a       <span class="comment">// [ &#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>for/in</code> 循环不会枚举对象的所有属性，如名字为符号的属性</p>
+<h2 id="跳转语句"><a href="#跳转语句" class="headerlink" title="跳转语句"></a>跳转语句</h2><p>跳转语句会导致 JavaScript 解释器跳转到源代码的新位置</p>
+<p><strong>语义标签格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">identifier: statement</span><br></pre></td></tr></table></figure>
+
+<p>通常前置一个标识符和一个冒号，为语句添加标签，语义标签实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mainloop: <span class="keyword">while</span>(token !== <span class="literal">null</span>)&#123;</span><br><span class="line">    <span class="comment">// 省略的代码</span></span><br><span class="line">    <span class="keyword">continue</span> mainloop;    <span class="comment">// 跳到命名循环的下一次迭代</span></span><br><span class="line">    <span class="comment">// 省略的其他代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>identifier</code> 可以是任何合法的 JavaScript 标识符（非保留字）</p>
+<p>这些标签与变量和函数不在同一命名空间，则同一标识符既可以作为标签，也可以作为变量名或函数名</p>
+<p>若两条语句有嵌套关系，不能使用相同的标签</p>
+<p>任何语句都可以有多个标签</p>
+<p><strong><code>break</code> 语句</strong></p>
+<p><code>break</code> 语句用于退出某个语句块，如包含它的循环或 <code>switch</code> 语句立即退出</p>
+<p>JavaScript 允许<code>break</code> 关键字后面跟一个语句标签 <code>break labelname;</code>，当后面跟标签后，跳转到指定标签的包含语句的末尾或终止该语句</p>
+<p><code>break</code> 语句示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> matrix = getData();    <span class="comment">// 从某个地方取得一个数值的二维数组</span></span><br><span class="line"><span class="comment">// 计算矩阵中所有数值之和</span></span><br><span class="line"><span class="keyword">let</span> sum = <span class="number">0</span>, success = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">// 从一个加标签的语句开始，出错就中断</span></span><br><span class="line">computeSum: <span class="keyword">if</span>(matrix)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> x = <span class="number">0</span>; x &lt; matrix.length; x++)&#123;</span><br><span class="line">        <span class="keyword">let</span> row = matrix[x];</span><br><span class="line">        <span class="keyword">if</span>(!row) <span class="keyword">break</span> computeSum;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> y = <span class="number">0</span>; y &lt; row.length; y++)&#123;</span><br><span class="line">            <span class="keyword">let</span> cell = row[y];</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">isNaN</span>(cell)) <span class="keyword">break</span> computeSum;</span><br><span class="line">            sum += cell;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    success = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// break 语句跳转到这，若此时 success == false</span></span><br><span class="line"><span class="comment">// 表明得到的 matrix 有问题</span></span><br><span class="line"><span class="comment">// 否则，sum 包含矩阵所有元素之和</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>continue</code> 语句</strong></p>
+<p><code>continue</code> 语句不会退出循环，而是从头开始执行循环的下一次迭代</p>
+<p>JavaScript 允许<code>continue</code> 关键字后面跟一个语句标签 <code>continue labelname;</code>，无论带不带标签，<code>continue</code> 语句只能在循环体内使用</p>
+<p><strong><code>return</code> 语句</strong></p>
+<p><code>return</code> 语句指定函数调用的返回值</p>
+<p><strong><code>yield</code> 语句</strong></p>
+<p><code>yield</code> 语句类似于 <code>return</code> 语句，但只用在 ES6 新增的生成器函数中，以回送生成的值序列中的下一个值，同时又不会真正返回</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 回送一系列整数的生成器函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">range</span>(<span class="params"><span class="keyword">from</span>, to</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="keyword">from</span>; i &lt;= to; i++)&#123;</span><br><span class="line">        <span class="keyword">yield</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>throw</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> expression;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>expression</code>：可以为任何类型的值，可以抛出一个表示错误码的数值或者包含可读的错误消息的字符串</li>
+</ul>
+<p>异常是一种信号，表示发生了某种意外情形或错误</p>
+<p>抛出（throw）异常是为了表明发生了这种错误或意外情形</p>
+<p>捕获（catch）异常则是要处理它，采取必要或对应的措施以从异常中恢复</p>
+<p>JavaScript 解释器在抛出错误时会使用 <code>Error</code> 类及其子类，<code>Error</code> 对象有一个 <code>name</code> 属性和 <code>message</code> 属性，分别用于指定错误类型和保存传入构造函数的字符串</p>
+<p><code>throw</code> 语句示例：收到无效参数时抛出一个 <code>Error</code> 对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 如果收到的参数无效，则抛出异常</span></span><br><span class="line">    <span class="keyword">if</span>(x &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;x must not be negatice&quot;</span>);</span><br><span class="line">    <span class="comment">// 否则，计算一个值并正常返回</span></span><br><span class="line">    <span class="keyword">let</span> f;</span><br><span class="line">    <span class="keyword">for</span>(f = <span class="number">1</span>; x &gt; <span class="number">1</span>; f *= x, x--)  <span class="comment">/* 空语句 */</span>;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">factorial(<span class="number">4</span>);    <span class="comment">// =&gt; 24</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>try/catch/finally</code> 语句格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 正常情况下，这里的代码顺序执行</span></span><br><span class="line">    <span class="comment">// 遇到异常，通过 throw 抛出异常</span></span><br><span class="line">    <span class="comment">// 或由于调用一个抛出异常的方法而抛出</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="comment">// 当且仅当 try 块抛出异常时，才会执行catch语句</span></span><br><span class="line">    <span class="comment">// 可以使用局部变量 e 引用被抛出的 Error 对象</span></span><br><span class="line">    <span class="comment">// 也可以忽略异常</span></span><br><span class="line">    <span class="comment">// 还可以通过 throw 重新抛出异常</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">// 无论 try 块中发生什么，这里的代码都会执行</span></span><br><span class="line">    <span class="comment">// 无论 try 块是否终止，这些语句都会执行</span></span><br><span class="line">    <span class="comment">//    1）正常情况下，在到达 try 块底部时执行</span></span><br><span class="line">    <span class="comment">//    2）由于 break、continue 或 return 语句而执行</span></span><br><span class="line">    <span class="comment">//    3）由于上面的 catch 子句处理了异常而执行</span></span><br><span class="line">    <span class="comment">//    4）由于异常未被处理而继续传播而执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>try/catch/finally</code> 语句是 JavaScript 的异常处理机制</p>
+<p><code>catch</code> 关键字跟着个标识符 e。这个标识符类似函数的参数。捕获异常时，与异常关联的值（如 <code>Error</code> 对象）会被赋给这个参数</p>
+<h2 id="其他语句"><a href="#其他语句" class="headerlink" title="其他语句"></a>其他语句</h2><p><strong><code>debugger</code> 语句</strong></p>
+<p>使用浏览器并且打开开发者控制台，可以使用<code>debugger</code> 语句设置断点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(o === <span class="literal">undefined</span>) <span class="keyword">debugger</span>;    <span class="comment">// 仅为调试添加</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上述例子，调用 <code>f()</code> 而不传参数，执行会停止，使用调试器检查调用栈，可以找到这个错误的调用来源</p>
+<p><strong><code>use strict</code> 语句</strong></p>
+<p><code>use strict</code> 语句开启严格模式</p>
+<p>严格模式与非严格模式的区别</p>
+<ul>
+<li>严格模式下不允许使用 <code>with</code> 语句</li>
+<li>在严格模式下，所有变量必须声明，若不声明会抛出 <code>ReferenceError</code> （非严格模式下，给全局对象的属性赋值会隐式声明一个全局变量，即给全局对象添加一个新属性）</li>
+<li>在严格模式下，函数若作为函数（非方法）被调用，其 <code>this</code> 值为 <code>undefined</code>（非严格模式下，作为函数调用的函数始终以全局对象作为 <code>this</code> 的值），并且，若函数通过 <code>cell()</code> 或 <code>apply()</code> 调用，则 <code>this</code> 值就是作为第一个参数传给 <code>cell()</code> 或 <code>apply()</code> 的值（非严格模式下，<code>null</code> 或 <code>undefined</code> 值会被替换为全局对象，而非对象值会被转换为对象）</li>
+<li>在严格模式下，给不可写的属性赋值或尝试在不可扩展的对象上创建新属性会抛出 <code>TypeError</code>（非严格模式下，静默失败）</li>
+<li>在严格模式下，传给 <code>eval()</code> 的代码不能再调用者的作用域声明变量或定义函数，会存在于一个为 <code>eval()</code> 创建的新作用域，这个作用域在 <code>eval()</code> 返回时销毁</li>
+<li>在严格模式下，函数中的 <code>Arguments()</code> 对象保存着以跟传给函数的值的静态副本</li>
+<li>在严格模式下，若 <code>delete</code> 后跟变量、函数或函数参数，会导致抛出 <code>SyntaxError</code>（非严格模式下，返回 <code>false</code>）</li>
+<li>在严格模式下，尝试删除一个不可配置的属性会导致抛出 <code>TypeError</code></li>
+<li>在严格模式下，对象字面量定义两个或多个同名属性是语法错误</li>
+<li>在严格模式下，函数声明中有两个或多个同名参数是语法错误</li>
+<li>在严格模式下，不允许使用八进制整数字面量</li>
+<li>在严格模式下，标识符 <code>eval</code> 和 <code>arguments</code> 被当作关键字，不允许修改</li>
+<li>在严格模式下，检查调用栈的能力受限</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" rel="tag"># 前端学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/10/JS/JS%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%AC%A6/" rel="prev" title="JS表达式与操作符">
+                  <i class="fa fa-chevron-left"></i> JS表达式与操作符
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/11/JS/JS%E5%AF%B9%E8%B1%A1/" rel="next" title="JS对象">
+                  JS对象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

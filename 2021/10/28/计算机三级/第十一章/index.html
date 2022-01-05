@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="网络管理的基本知识网络管理系统一般由管理进程、被管对象、代理进程、管理信息库和网络管理协议五部分组成。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络管理技术">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="网络管理的基本知识网络管理系统一般由管理进程、被管对象、代理进程、管理信息库和网络管理协议五部分组成。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-28T12:20:21.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.889Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/","path":"2021/10/28/计算机三级/第十一章/","title":"网络管理技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>网络管理技术 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-text">网络管理的基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="nav-text">网络管理模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP"><span class="nav-text">互联网控制报文协议ICMP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-text">常用网络管理软件的安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%B7%A5%E5%85%B7%E7%9B%91%E6%8E%A7%E5%92%8C%E7%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C"><span class="nav-text">利用工具监控和管理网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%92%8C%E6%8E%92%E9%99%A4%E6%95%85%E9%9A%9C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-text">查找和排除故障的基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E6%BC%8F%E6%B4%9E%E6%9F%A5%E6%89%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-text">网络攻击与漏洞查找的基本方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络管理技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:20:21" itemprop="dateCreated datePublished" datetime="2021-10-28T20:20:21+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="网络管理的基本知识"><a href="#网络管理的基本知识" class="headerlink" title="网络管理的基本知识"></a>网络管理的基本知识</h2><p>网络管理系统一般由管理进程、被管对象、代理进程、管理信息库和网络管理协议五部分组成。</p>
+<span id="more"></span>
+
+<ol>
+<li>管理进程：也称管理站，是网络管理的主动实体。</li>
+<li>被管对象：网络上的软硬件设施。</li>
+<li>代理进程：网络管理中的被动实体。</li>
+<li>网络管理协议：较流行的有SNMP和CMIP</li>
+<li>管理信息库：被管对象概念上的集合。</li>
+</ol>
+<p>网络管理的功能</p>
+<ul>
+<li>配置管理</li>
+<li>性能管理</li>
+<li>记账管理</li>
+<li>故障管理</li>
+<li>安全管理</li>
+</ul>
+<h2 id="网络管理模型"><a href="#网络管理模型" class="headerlink" title="网络管理模型"></a>网络管理模型</h2><p>OSI管理模型：OSI管理模型由ISO公布</p>
+<p>SNMP管理模型</p>
+<p>SNMP由一系列协议组和规范组成，它们提供了一种从网络上的设备中收集网络管理信息的方法</p>
+<p>SNMP的体系结构分为<strong>SNMP管理者</strong>、<strong>SNMP代理</strong>和<strong>MIB</strong>，其管理模型是一个管理/代理模型</p>
+<p>每一个支持SNMP的网络设备中都包含一个网管代理，网管代理随时记录网络设备的各种信息，网络管理程序再通过SNMP通信协议收集网管代理所记录的信息</p>
+<ul>
+<li><p>SNMP的管理站和代理</p>
+<p>SNMP采用一种分布式结构。一个管理站可以管理控制着多个代理；反之，一个代理也可以被过个管理站所管理、控制。为此，SNMP采用了“团体”这个概念来实现一些简单的安全控制</p>
+</li>
+<li><p>管理信息库 MIB-2</p>
+<p>管理信息库MIB也称为MIB-2，它指明了网络元素所维持的变量。MIB给出了一个网络中所有可能的被管理对象的集合的数据结构。</p>
+<p><strong>Cisco的管理对象标识符（OID）</strong>都是由<strong>1.3.6.1.4.1.9</strong>开头的</p>
+<p>MIB的应用类型中的<strong>计量器</strong>类型与计数器很类似，不同之处在于它的值<strong>可以增加也可以减少</strong></p>
+</li>
+<li><p>SNMP支持的操作</p>
+<ul>
+<li><strong>get</strong>：用于管理站向代理查询被管理设备上的MIB库数据</li>
+<li><strong>set</strong>：用于管理站命令代理对被管设备上MIB库中的对象值进行设置</li>
+<li><strong>notifications</strong>：用于代理主动向管理站报告被管对象的某些变化。通知又乐意进一步分为自陷（Trap）和通知（Inform）两类</li>
+<li>每个操作都有相应的<strong>PDU</strong>格式</li>
+</ul>
+</li>
+<li><p>SNMP的实现</p>
+</li>
+</ul>
+<p>CMIP与SNMP的比较</p>
+<ul>
+<li><p>SNMP的特点</p>
+<ul>
+<li>简单，易于在各种网络中实现</li>
+<li>广泛支持，机会所有的网络产品都支持SNMP</li>
+<li>操作原语简捷</li>
+<li>性能高</li>
+</ul>
+</li>
+<li><p>CMIP的特点</p>
+<ul>
+<li>每个变量不仅传递信息，而且还完成一定的网络管理任务，这样可减少管理者的负担减少网络负载</li>
+<li>安全性高，拥有验证、访问控制盒安全日志</li>
+</ul>
+</li>
+<li><p>SNMP和CMIP的不同点</p>
+<ul>
+<li><strong>SNMP</strong>有广泛的适用性，且在<strong>用于小规模设备时成本低、效率高</strong>，而CMIP更适用于大型网络</li>
+<li>SNMP主要基于轮询方式获得信息，CMIP主要采用报告方式</li>
+<li>SNMP基于<strong>UDP</strong>,CMIP使用面向连接的传输</li>
+<li>CMIP采用面向对象的信息建模方式，SNMP用简单的变量表示管理对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="互联网控制报文协议ICMP"><a href="#互联网控制报文协议ICMP" class="headerlink" title="互联网控制报文协议ICMP"></a>互联网控制报文协议ICMP</h2><p>ICMP工作在<strong>网络层</strong>，是一种管理协议，用于在IP主机、路由器之间<strong>传递控制消息和差错报告</strong></p>
+<p><strong>ICMP消息被封装在IP数据包内</strong>，通过IP包传送的ICMP信息主要是设计错误操作的报告和会送给源节点的关于IP数据包处理的消息</p>
+<p><strong>ICMP消息类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型号</th>
+<th>类型描述</th>
+<th>类型号</th>
+<th>类型描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td><strong>回送应答</strong></td>
+<td>12</td>
+<td>参数错误</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>目标不可到达</strong></td>
+<td>13</td>
+<td>时间戳请求</td>
+</tr>
+<tr>
+<td>4</td>
+<td>源抑制</td>
+<td>14</td>
+<td>时间戳应答</td>
+</tr>
+<tr>
+<td>5</td>
+<td>重定向</td>
+<td>15</td>
+<td>信息请求（已作废）</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>回送请求</strong></td>
+<td>16</td>
+<td>信息应答（已作废）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>路由器请求</td>
+<td>17</td>
+<td>地址掩码请求</td>
+</tr>
+<tr>
+<td>10</td>
+<td>路由器恳求</td>
+<td>18</td>
+<td>地址掩码应答</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>超时</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>ICMP的主要功能：</p>
+<ul>
+<li>通告网络错误：目标不可到达报文</li>
+<li>通告网络拥塞：源抑制报文</li>
+<li>帮助查找网络故障：回送请求与回送应答报文</li>
+<li>通告超时：超时报文</li>
+<li>路由重定向：重定向报文</li>
+<li>检查IP协议的错误：参数错误报文</li>
+<li>测量指定路径上的通信延迟：时间戳</li>
+<li>获取子网掩码：掩码请求与掩码应答</li>
+</ul>
+<h2 id="常用网络管理软件的安装与配置"><a href="#常用网络管理软件的安装与配置" class="headerlink" title="常用网络管理软件的安装与配置"></a>常用网络管理软件的安装与配置</h2><ul>
+<li><p>网络管理软件的常见功能</p>
+<ul>
+<li>网络性能监控：提供带宽测量、路由CPU负荷性能　指标的实时监控，以及历时数据统计</li>
+<li>网络发现和拓扑管理：提供子网列表、ping sweep　和IP网络浏览器</li>
+<li>IP地址管理</li>
+<li>探测功能：提供ping和trace route等</li>
+<li>其他：如TFTP服务器等</li>
+</ul>
+</li>
+<li><p>常见网络管理软件安装与配置（12下）</p>
+<ul>
+<li><p>大型管理平台</p>
+<p><strong>HP Open View、Sun Net Manager、IBM Net View</strong>等</p>
+<p>可以对多种网络、协议进行管理，有很好的开放性，支持第三方管理软件的潜入</p>
+</li>
+<li><p>网络设备厂家自身产品的网管软件：如CISCO、Juniper、华为</p>
+</li>
+<li><p>中小型网络通用网管软件：Solarwinds、MRTG、SNMPc等。</p>
+</li>
+<li><p>这些网络系统都是采用SNMP协议来对网络进行管理的,如果一个网络管理控制多个代理，那么它和这些代理中的每一个都各构成一个团体。</p>
+</li>
+</ul>
+</li>
+<li><p>网络设备SNMP设置（以cisco路由器为例）</p>
+<ul>
+<li><p>创建或修改对SNMP团体的访问控制(08上、10上)</p>
+<p>(config)# snmp-server community &lt;团体名&gt;</p>
+<p> [view &lt;视阈名&gt; ] [ro | rw] [&lt;访问控制列表号&gt; ] 其中：</p>
+<p>①团体名：用于同一团体内的管理站和代理之间进行通信认证。</p>
+<p>②视阈名：规定了本团体内访问管理信息库的范围。</p>
+<p>③Ro或rw：代表访问权限为<strong>只读</strong>或<strong>可读写</strong>。</p>
+<p>④访问控制表号：<strong>1~99</strong>，标准的ACL，IP范围内的主机为属于这个“团体”的管理站。</p>
+<p><strong>(config)# snmp-server community public 4</strong></p>
+<p>(config)# snmp-server community admin view part rw</p>
+</li>
+<li><p>创建或修改一个SNMP视阈</p>
+<p>(config)# snmp-server view &lt;视阈名&gt;</p>
+<p>&lt;对象标识符或子树&gt;|included|excluded ]</p>
+</li>
+<li><p>设置路由器上的SNMP代理具有发出通知的功能：<br> (config)# snmp-server enable traps</p>
+<p> [&lt;通知类型 &gt;] [&lt;通知选项&gt;]</p>
+<p><strong>管理站对这种报文不必有所应答</strong></p>
+</li>
+<li><p>在某个接口的配置模式下，指定当该接口断开或连接时要向管理站发出通知</p>
+<p>(config-if)# snmp trap link-status（链路状态）</p>
+</li>
+<li><p>配置接收通知的管理站</p>
+<p>(config)# snmp-server host &lt;主机名或IP地址&gt; </p>
+<p>[traps|informs] [version  1|2c] </p>
+<p>&lt;团体名&gt;[ udp-port&lt;端口号&gt;（默认值为162）] [&lt;通知类型&gt;]</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="利用工具监控和管理网络"><a href="#利用工具监控和管理网络" class="headerlink" title="利用工具监控和管理网络"></a>利用工具监控和管理网络</h2><ol>
+<li><p>需求</p>
+</li>
+<li><p>网络监听原理</p>
+<p>网卡有4 种接收模式：<strong>广播</strong>，<strong>组播</strong>，<strong>单播</strong>，<strong>混杂模式</strong>。嗅探器通过将本地网卡设置为混杂模式，来监听并捕捉其所连接网段的所有网络数据</p>
+</li>
+<li><p>网络数据监听部署</p>
+<ul>
+<li><p>对于<strong>共享型网络</strong></p>
+<p>在共享型网络中，只要将嗅探器部署到网络中的任意一个接口上或者插入到任何一个节点的链路中，即可以捕捉到所有数据包</p>
+</li>
+<li><p>对于交换型网络</p>
+<p>在交换式网络中，需要采用通过对交换机进行端口镜像的方式，来获得网络中流量</p>
+<ul>
+<li><p>配置被镜像端口：<code>SW(config)#monitor session 1 source interface Gi2/16</code></p>
+</li>
+<li><p>配置镜像端口：<code>SW(config)#monitor session 1 destination interface Gi2/12</code></p>
+</li>
+<li><p>检查配置：<code>SW#show monitor session 1</code> </p>
+<p>Session 1<br> -——–<br> Type : Local Session<br> Source Ports :<br> Both:Gi2/16<br> Destination Ports : Gi2/12（目的端口，嗅探器放在这监测源端口）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>网络数据监听工具（09下）</p>
+<p>常见的网络数据监听工具有 <strong>Sniffer Pro、Ethereal、TCPdump</strong>，Wireshark 等，其中 Sniffer Pro 是一个功能强大的可视化  网络流量监控软件,主要功能包括：</p>
+<ul>
+<li>捕捉网络流量，进行数据包解码分析</li>
+<li>实时监测网络活动</li>
+<li>内置分析器诊断网络故障</li>
+<li>存储各种历时信息，并可进行基线分析</li>
+<li>当探测到网络故障时可以发出警报</li>
+<li>可以模拟生成数据包对网络进行探测。</li>
+</ul>
+</li>
+</ol>
+<h2 id="查找和排除故障的基本方法"><a href="#查找和排除故障的基本方法" class="headerlink" title="查找和排除故障的基本方法"></a>查找和排除故障的基本方法</h2><ol>
+<li><p>收集故障有关信息</p>
+<ul>
+<li>该计算机使用真实IP地址</li>
+<li>该计算机能够使用域名访问自己校园网的WWW服务器</li>
+<li>该计算机与校园网WWW服务器不在同一个网段（VLAN）</li>
+<li>在同一网段的其他计算机能正常访问<a target="_blank" rel="noopener" href="http://www.mircosoft.com/">www.mircosoft.com</a> </li>
+</ul>
+</li>
+<li><p>可能造成一台计算机无法浏览某个WWW服务器的原因主要有</p>
+<ul>
+<li>该计算机的TCP/IP协议工作不正常</li>
+<li>该计算机的IP地址与掩码设置有误</li>
+<li>该计算机的网关设置有误</li>
+<li>该计算机的DNS设置有误</li>
+<li>该计算机系统的浏览器有问题</li>
+<li>提供<a target="_blank" rel="noopener" href="http://www.micrisoft.com名字解析的服务器有故障/">www.micrisoft.com名字解析的服务器有故障</a></li>
+<li>服务器<a target="_blank" rel="noopener" href="http://www.micrisoft.com工作不正常/">www.micrisoft.com工作不正常</a></li>
+<li>校园网路由设置中存在问题</li>
+<li><strong>该计算机请求无法到达服务器<a target="_blank" rel="noopener" href="http://www.micrisoft.com/">www.micrisoft.com</a></strong></li>
+</ul>
+</li>
+<li><p>故障测试与分析：</p>
+<ul>
+<li><p>运行命令ping <a target="_blank" rel="noopener" href="http://www.microsoft.com测试/">www.microsoft.com测试</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;ping www.microsoft.com</span><br><span class="line">Pinging lb1.www.ms.akadns.net [207.46.19.60(www.microsoft.com 的IP地址)] with 32 bytes of data:</span><br><span class="line">Reply from 202.113.79.1: destination net unreachable (表明该计算机发出的ping包在202.113.79.1处被阻拦了)</span><br><span class="line">Reply from 202.113.79.1: destination net unreachable</span><br><span class="line">Reply from 202.113.79.1: destination net unreachable</span><br><span class="line">Reply from 202.113.79.1: destination net unreachable</span><br><span class="line">Ping statistics <span class="keyword">for</span> 207.46.19.60 :</span><br><span class="line">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),</span><br><span class="line">Approximate round trip <span class="built_in">times</span> <span class="keyword">in</span> milli-seconds:</span><br><span class="line">Minimum = 0ms, Maximum = 0ms, Average = 0ms</span><br></pre></td></tr></table></figure></li>
+<li><p>运行命令 tracert <a target="_blank" rel="noopener" href="http://www.microsoft.com测试/">www.microsoft.com测试</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;tracert www.microsoft.com</span><br><span class="line">Tracing route to lb1.www.ms.akadns.net [65.55.57.27]</span><br><span class="line">over a maximum of 30 hops:</span><br><span class="line">1&lt;1 ms &lt;1 ms&lt;1 ms 202.113.79.53</span><br><span class="line">2&lt;1 ms &lt;1 ms&lt;1 ms 202.113.79.9</span><br><span class="line">3 202.113.79.1 reports: destination net unreachable.(第三跳202.113.79.1存在访问控制)</span><br><span class="line">Trace complete.</span><br></pre></td></tr></table></figure></li>
+<li><p>另外，如果出现 <code>request timed out</code> 可能是目标方工作不正常</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="网络攻击与漏洞查找的基本方法"><a href="#网络攻击与漏洞查找的基本方法" class="headerlink" title="网络攻击与漏洞查找的基本方法"></a>网络攻击与漏洞查找的基本方法</h2><p>常见的网络入侵与攻击的基本方法</p>
+<ul>
+<li><p>木马入侵：C/S结构，不自身复制</p>
+</li>
+<li><p>漏洞入侵：<strong>Unicode漏洞入侵</strong>、<strong>跨站脚本注入</strong>、<strong>sql注入入侵</strong></p>
+</li>
+<li><p><em>协议欺骗攻击</em>*</p>
+<p>主要的协议欺骗攻击方式有以下几种：<strong>IP 欺骗攻击、ARP 欺骗攻击、DNS 欺骗攻击、源路由欺骗攻击</strong></p>
+</li>
+<li><p>口令入侵</p>
+</li>
+<li><p>缓冲区溢出漏洞攻击</p>
+</li>
+<li><p><strong>拒绝服务攻击</strong>（Dos）：基本方式是通过发送大量合法的请求来消耗和占用过多的服务资源，使得网络服务不能相应正常的请求</p>
+<p>常用的DoS 攻击包括：</p>
+<ul>
+<li>Smurf 攻击：攻击者冒充受害者主机的IP地址，向一个大的网络发送echo request的定向广播包，此网络的许多主机都作出回应，受害主机会收到大量的echo reply消息</li>
+<li>SYN Flooding：利用TCP三次握手过程进行攻击，使用无效的IP地址</li>
+<li>分布式拒绝服务攻击（DDos）：攻击者攻破了多个系统，并利用这些系统去集中攻击其他目标，成百上千的主机发送大量的请求，受害设备因为无法处理而拒绝服务</li>
+<li>Ping of Death：通过构造出重组缓冲区大小的异常的ICMP包进行攻击</li>
+<li>Teardrop：利用OS处理分片重叠报文的漏洞进行攻击</li>
+<li>Land 攻击：向某个设备发送数据包，并将数据包的源地址和目的地址都设置成攻击目标地址。</li>
+</ul>
+</li>
+</ul>
+<p>漏洞查找办法</p>
+<p>漏洞扫描分为被动和主动两种</p>
+<ul>
+<li><p><strong>被动</strong>扫描对网络上的流量进行分析，不产生额外流量，类似于<strong>IDS</strong></p>
+</li>
+<li><p>主动扫描可能会影响网络系统的正常运行</p>
+</li>
+<li><p>常用的漏洞扫描攻击有：<strong>ISS，Microsoft Baseline Security Analyzer，X-Scanner</strong></p>
+<ul>
+<li><p>ISS扫描器是<strong>主动扫描</strong>的一种</p>
+<p>Internet Scanner对<strong>网络设备</strong>进行自动的安全漏洞分析</p>
+<p>System Scanner是在系统层上通过<strong>依附于主机</strong>上的扫描器代理侦测主机内部的漏洞</p>
+</li>
+<li><p>X-Scanner采用<strong>多线程方式</strong>对指定IP地址段进行安全漏洞是扫描，支持插件功能，提供了<strong>图形界面</strong>和<strong>命令行</strong>两种操作方式</p>
+</li>
+<li><p>MBSA是微软的安全评估工具</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>漏洞修补方法（09上）</p>
+<ul>
+<li><p><strong>Microsoft Windows Server Update Services (WSUS)</strong> 是用来实时发布微软公共操作系统软件更新程序的服务器，WSUS通过Internet和微软公司Microsoft Windows Server Update Services实时连接，及时获得微软公司最新更新程序，大大缩短了网内计算机执行重大更新时的时间过程</p>
+</li>
+<li><p>可更新部署Windows Server 2003、Windows 2000 Server 和 Windows XP 、Office XP、Exchange server2003以及SQL server2000和更高版本的更新。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E7%AB%A0/" rel="prev" title="网络安全技术">
+                  <i class="fa fa-chevron-left"></i> 网络安全技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0/" rel="next" title="综合题">
+                  综合题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

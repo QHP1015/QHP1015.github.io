@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="蓝牙技术与标准蓝牙技术的基本概念  蓝牙技术是一种支持设备短距离通信的无线电技术，它的通信距离一般为10m以内 蓝牙技术能在包括移动电话、PDA、无线耳机、笔记本电脑、相关外设等众多设备之间进行无线信息交换 蓝牙技术的标准是IEEE802.15，工作在2.4GHz 频带，带宽为1Mb&#x2F;s 蓝牙技术是由东芝、爱立信、IBM、Intel和诺基亚于1998年5月共同提出的近距离无线数字通信的技术标准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无线局域网设备安装与调试">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AB%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="蓝牙技术与标准蓝牙技术的基本概念  蓝牙技术是一种支持设备短距离通信的无线电技术，它的通信距离一般为10m以内 蓝牙技术能在包括移动电话、PDA、无线耳机、笔记本电脑、相关外设等众多设备之间进行无线信息交换 蓝牙技术的标准是IEEE802.15，工作在2.4GHz 频带，带宽为1Mb&#x2F;s 蓝牙技术是由东芝、爱立信、IBM、Intel和诺基亚于1998年5月共同提出的近距离无线数字通信的技术标准">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-28T12:18:06.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.889Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AB%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AB%E7%AB%A0/","path":"2021/10/28/计算机三级/第八章/","title":"无线局域网设备安装与调试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>无线局域网设备安装与调试 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%A0%87%E5%87%86"><span class="nav-text">蓝牙技术与标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HiperLan%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%A0%87%E5%87%86"><span class="nav-text">HiperLan技术与标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE802-11%E6%A0%87%E5%87%86"><span class="nav-text">IEEE802.11标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%97%A0%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91%E8%AE%BE%E5%A4%87"><span class="nav-text">常用的无线局域网设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E6%8E%A5%E5%85%A5%E7%82%B9%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E8%B0%83%E8%AF%95"><span class="nav-text">无线接入点的安装与调试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aironet-1100%E7%B3%BB%E5%88%97%E6%8E%A5%E5%85%A5%E7%82%B9%E6%A6%82%E8%BF%B0"><span class="nav-text">Aironet 1100系列接入点概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%8E%A5%E5%85%A5%E7%82%B9%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">将接入点接入网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%8E%A5%E5%85%A5%E7%82%B9"><span class="nav-text">配置接入点</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AB%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          无线局域网设备安装与调试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:18:06" itemprop="dateCreated datePublished" datetime="2021-10-28T20:18:06+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="蓝牙技术与标准"><a href="#蓝牙技术与标准" class="headerlink" title="蓝牙技术与标准"></a>蓝牙技术与标准</h2><p><strong>蓝牙技术的基本概念</strong></p>
+<ul>
+<li>蓝牙技术是一种支持设备短距离通信的无线电技术，它的通信距离一般为<strong>10m</strong>以内</li>
+<li>蓝牙技术能在包括移动电话、PDA、无线耳机、笔记本电脑、相关外设等众多设备之间进行无线信息交换</li>
+<li>蓝牙技术的标准是<strong>IEEE802.15</strong>，工作在<strong>2.4GHz</strong> 频带，带宽为<strong>1Mb/s</strong></li>
+<li>蓝牙技术是由东芝、爱立信、IBM、Intel和诺基亚于1998年5月共同提出的近距离无线数字通信的技术标准</li>
+</ul>
+<span id="more"></span>
+
+<p><strong>蓝牙系统的主要参数和技术指标</strong></p>
+<ol>
+<li><p>工作频段：<strong>ISM频段2.402GHz-2.480GHz</strong></p>
+</li>
+<li><p>双工方式：<strong>TDD</strong> </p>
+</li>
+<li><p>业务类别：<strong>同时支持电路交换及分组交换业务。</strong></p>
+</li>
+<li><p>标称数据速率：<strong>1 Mbps</strong> </p>
+</li>
+<li><p>异步信道速率：<strong>非对称连接 723.2kbps/57.6kbps。对称连接433.9kbps（全双工模式）</strong></p>
+</li>
+<li><p>同步信道速率：<strong>64kbps</strong> </p>
+</li>
+<li><p>信道间隔：1 MHz </p>
+</li>
+<li><p>信道数：79 </p>
+</li>
+<li><p>发射功率级范围：<strong>0dBm（1 mW），覆盖1-10m，20dBm（100mW），覆盖扩展至100m</strong>。</p>
+</li>
+<li><p>跳频频点数：79个频点/MHz （2402+k（MHz），k=0,1,2…78）。</p>
+</li>
+<li><p>跳频速率：1600次/s </p>
+</li>
+<li><p>工作模式：Active/Sniff/Hold/Pack </p>
+</li>
+<li><p>数据连接方式：面向连接业务SCO、无连接业务ACL。</p>
+</li>
+<li><p>纠错方式：1/3FEC，2/3FEC,CRC16,ARQ。</p>
+</li>
+<li><p>鉴权：反映逻辑算术方式。</p>
+</li>
+<li><p>密钥：以8bit为单位增减，<strong>最长128bit</strong></p>
+</li>
+<li><p>安全机制：链路级，认真基于共享链路密钥询问/相应机制，认证和加密密钥生成基于 SAFER+算法</p>
+</li>
+<li><p>话音编码方式：CVSD或对数PCM</p>
+</li>
+<li><p>网络拓扑结构：AD hoc、Piconet及Scatternet结构</p>
+</li>
+</ol>
+<h2 id="HiperLan技术与标准"><a href="#HiperLan技术与标准" class="headerlink" title="HiperLan技术与标准"></a>HiperLan技术与标准</h2><p><strong>HiperLan技术的基本概念</strong></p>
+<ul>
+<li>HiperLan是一种在欧洲应用的无线局域网通信标准的一个子集，有HiperLan/1和HiperLan/2两种标准</li>
+<li>HiperLan/1采用<strong>5GHz</strong>射频频率，上行速率可达<strong>20Mb/s</strong>。HiperLan/2同样采用<strong>5GHz</strong>射频频率，上行速率可达<strong>54Mb/s</strong>。 HiperLan/2系统同3G标准兼容</li>
+<li>在HiperLan/2的典型网络拓扑结构中，移动终端通过接入点接入固定网。一个AP所覆盖的区域范围在<strong>室内一般为30米</strong>，在<strong>室外一般是150米</strong></li>
+</ul>
+<p><strong>HiperLan/2的主要技术特点</strong></p>
+<ol>
+<li><p><strong>高速数据传输 ：采用OFDM调制技术</strong></p>
+</li>
+<li><p><strong>面向连接</strong> </p>
+</li>
+</ol>
+<h2 id="IEEE802-11标准"><a href="#IEEE802-11标准" class="headerlink" title="IEEE802.11标准"></a>IEEE802.11标准</h2><p><strong>IEEE802.11标准的基本概念</strong></p>
+<ul>
+<li>IEEE802.11标准定义了两种类型的设备：<strong>无线节点</strong>和<strong>无线接入点</strong><ul>
+<li>无线节点通常是在一台接入设备上加上一块无线网络接口卡构成</li>
+<li>无线接入点的作用是提供无线和有线网络之间的桥接</li>
+</ul>
+</li>
+<li>802.11定义了使用红外、调频扩频、直接序列扩频技术，传输速率为1或2Mbps的无线局域网标准。<strong>两个扩频技术</strong>，<strong>一个红外规范</strong>。 <strong>FHSS（调频扩频）和DSSS（直序扩频）</strong></li>
+<li>无线传输频道定义在<strong>24.G.Hz</strong>的ISM波段内</li>
+</ul>
+<p><strong>目前使用的标准主要有： IEEE802.11b、IEEE802.11a和IEEE802.11g</strong></p>
+<ol>
+<li><p><strong>802.11b协议</strong></p>
+<p>802.11b协议的无线网络工作在<strong>2.4GHz</strong>频率下，最大传输速率可以达到<strong>11Mb/s</strong>，它可以实现速率在<strong>1Mb/s、2Mb/s、5.5Mb/s以及11Mb/s</strong>之间的自动切换 。</p>
+</li>
+<li><p><strong>802.11a协议</strong></p>
+<p>工作在<strong>5GHz</strong>的频率下，数据传输速率可以达到<strong>54Mb/s</strong>，传输距离在<strong>10 ~100m</strong> 。</p>
+</li>
+<li><p><strong>802.11g协议</strong></p>
+<p>它是在802.11b协议的基础上改进的协议，支持<strong>2.4GHz</strong>工作频率以及DSSS技术 ，它可以实现11Mb/s传输速率，同时<strong>保持着对802.11b的兼容</strong>，又可以实现<strong>54Mb/s</strong>高传输速率 。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><strong>属性</strong></th>
+<th><strong>802.11b</strong></th>
+<th><strong>802.11a</strong></th>
+<th><strong>802.11g</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>批准的IEEE标准</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>Wi-Fi联盟认证</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>最大传输速率</td>
+<td>11 Mb/s</td>
+<td>54Mb/s</td>
+<td>54Mb/s</td>
+</tr>
+<tr>
+<td>实际吞吐量</td>
+<td>5~7Mb/s</td>
+<td>28~31Mb/s</td>
+<td>28<del>31Mb/s（全部在802.11g环境）  10</del>12Mb/s（与802.11b客户端混合环境）</td>
+</tr>
+<tr>
+<td>最大容量</td>
+<td>33 Mb/s   3信道*11</td>
+<td>432 Mb/s   8信道*54</td>
+<td>162 Mb/s   3信道*54</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>属性</strong></th>
+<th><strong>802.11b</strong></th>
+<th><strong>802.11a</strong></th>
+<th><strong>802.11g</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>与802.11b的后向兼容性</td>
+<td>是  在2.4GHz ISM频段上运行，客户端以8.2.11b的速度在802.11b和802.11g Aps上运行</td>
+<td>否  在5GHz UNI频段上运行</td>
+<td>是  在2.4GHz ISM频段上运行，客户端以8.2.11b的速度在802.11bAps上运行，以8.2.11g的速度在802.11g Aps上运行</td>
+</tr>
+<tr>
+<td>与其他设备之间的干扰</td>
+<td>是  如无线电话、蓝牙、微波炉</td>
+<td>否</td>
+<td>是  如无线电话、蓝牙、微波炉</td>
+</tr>
+<tr>
+<td>室内距离</td>
+<td>30m</td>
+<td>与802.11b和802.11g  相比，在30m内有更快的速度</td>
+<td>与802.11b相比，在30m内有更快的速度</td>
+</tr>
+</tbody></table>
+<p><strong>IEEE802.11b的基本运作模式</strong></p>
+<p>802.11b运作模式基本分为两种：<strong>点对点模式</strong>和<strong>基本模式</strong>。</p>
+<ul>
+<li><strong>点对点模式</strong>是指<strong>无线网卡和无线网卡</strong>之间的通信方式。只要PC插上无线网卡即可与另一具有无线网卡的PC连接，对于小型的无线网络来说，是一种方便的连接方式，<strong>最多可连接256台PC</strong></li>
+<li><strong>基本模式</strong>是指无线网络规模扩充或无线和有线网络并存时的通信方式，这是802.11b最常用的方式。此时，插上无线网卡的PC需要由接入点与另一台PC连接。接入点负责频段管理及漫游等指挥工作，<strong>一个接入点最多可连接1024台PC</strong>（无线网卡）。当无线网络节点扩增时，网络存取速度会随着范围扩大和节点的增加而变慢，此时添加接入点可以有效控制和管理频宽与频段。无线网络需要与有线网络互连，或无线网络节点需要连接和存取有线网的资源和服务器时，<strong>接入点可以作为无线网和有线网之间的桥梁</strong></li>
+</ul>
+<p><strong>802.11b的典型解决方案</strong></p>
+<ol>
+<li><p>对等解决方案：每台电脑安装一片无线网卡。 </p>
+</li>
+<li><p>单接入点解决方案：接入点相当于集线器。 </p>
+</li>
+<li><p>多接入点解决方案：所有无线终端可通过就近接入点接入网络。 </p>
+</li>
+<li><p>无线中继方案：无线接入器充当有线网络的延伸。 </p>
+</li>
+<li><p>无线冗余解决方案：多接入点放在同一位置防止设备失效。 </p>
+</li>
+<li><p>多蜂窝漫游工作模式：与移动电话类似。 （<strong>部署多个接入点，自动切换们服务不中断</strong>）</p>
+</li>
+</ol>
+<h2 id="常用的无线局域网设备"><a href="#常用的无线局域网设备" class="headerlink" title="常用的无线局域网设备"></a>常用的无线局域网设备</h2><ol>
+<li><p>无线网卡</p>
+<p>无线网卡在无线局域网中的作用相当于有线网卡在有线局域网中的作用。两台计算机只要各自插上无线网卡，就可以实现通信。 </p>
+</li>
+<li><p>无线接入点</p>
+<p>无线接入点也称为<strong>无线AP</strong>，它是在无线局域网环境中，进行数据发送和接收的集中设备，它的作用相当于有线网络中的集线器。通常，一个AP能够连接<strong>30台</strong>左右的无线网络终端或者其他的无线AP</p>
+</li>
+<li><p>天线天线的功能是使无线信号有较大的信噪比，以提高数据传输的稳定性和可靠性，一般都要将AP连接上天线上。一般分为室内天线和室外天线。 </p>
+</li>
+<li><p><strong>无线网桥、路由器及网关</strong></p>
+<p><strong>无线网桥主要用于连接几个不同的网段</strong>，实现较远距离的无线数据通信。<strong>无线路由器和无线网关</strong>是具有路由功能的AP，一般情况下它<strong>具有NAT功能</strong>，因此可以用它建立一个更小的无线局域网。</p>
+</li>
+</ol>
+<h3 id="无线接入点的安装与调试"><a href="#无线接入点的安装与调试" class="headerlink" title="无线接入点的安装与调试"></a>无线接入点的安装与调试</h3><h4 id="Aironet-1100系列接入点概述"><a href="#Aironet-1100系列接入点概述" class="headerlink" title="Aironet 1100系列接入点概述"></a>Aironet 1100系列接入点概述</h4><p>Cisco公司的Aironet 1100系列接入点是一款<strong>无线局域网收发器</strong>，主要用于独立无线网络的中心点或无线网络和有线网络之间的连接点。它<strong>兼容IEEE 802.11b和IEEE 802.11g</strong>，工作在<strong>2.4GHz</strong>频率段。使用<strong>IOS</strong>操作系统。</p>
+<h4 id="将接入点接入网络"><a href="#将接入点接入网络" class="headerlink" title="将接入点接入网络"></a>将接入点接入网络</h4><ol>
+<li>安装和配置AP之前，先向网络管理员询问以下信息：</li>
+</ol>
+<ul>
+<li><strong>系统名</strong></li>
+<li>无线网络中对<strong>大小写敏感的服务集标识符（SSID）</strong></li>
+<li><strong>如果没有连接到DHCP服务器，则需要为接入点指定一个唯一的IP地址。</strong></li>
+<li><strong>如果接入点与PC不在同一个子网内，则需要子网掩码和默认网关</strong></li>
+<li>简单网络管理协议（SNMP）集合名称以及SNMP文件属性（如果使用SNMP）</li>
+</ul>
+<ol start="2">
+<li>可以用线内供电连接以太网和使用本地电源。</li>
+</ol>
+<h4 id="配置接入点"><a href="#配置接入点" class="headerlink" title="配置接入点"></a>配置接入点</h4><p>第一次配置无线接入点，一般采用<strong>本地配置方式</strong>，即无需将无线接入点连接到一个有线的网络中。它的<strong>默认IP地址是10.0.0.1</strong>，并成为小型的DHCP服务器。可以为下列设备分配20个<strong>10.0.0.x</strong>范围的IP地址：</p>
+<ul>
+<li>连接在接入点以太网端口上的PC机。</li>
+<li>没有配置SSID或SSID配置为<strong>tsunami</strong>（默认SSID），并且关闭所有安全配置的无线设备。</li>
+</ul>
+<p>本地连接无线接入点的步骤：</p>
+<p>①使用五类以太网电缆连接PC机和无线接入点</p>
+<p>②给无线接入点加电</p>
+<p>③确认PC获得了10.0.0.x网段的地址</p>
+<p>④打开浏览器，在浏览器的地址栏输入<strong>10.0.0.1</strong>，按回车键</p>
+<p>⑤按Tab键越过用户名字段，输入<strong>大小写敏感的密码Cisco</strong>，然后确认。 点击“<strong>Express Setup</strong>”<strong>进入快速配置页面</strong>，在各输入框中填入相关的配置信息。</p>
+<p>各个配置参数的含义：</p>
+<ul>
+<li>System name</li>
+<li>Configuration server protocol</li>
+<li>Ip address</li>
+<li>Ip subnet mask</li>
+<li>Default gateway</li>
+<li>Radio service set ID（SSID）:<strong>大小写区分，SSID是客户端设备用来访问接入点的唯一标识</strong>。</li>
+<li>Broadcast SSID in beacon ：<strong>设定允许设备不指定SSID而访问接入点。YES选项是默认设置</strong>，允许设备不指定SSID而访问接入点，NO选项表示设备必须指定SSID访问接入点</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/" rel="prev" title="路由器及其配置">
+                  <i class="fa fa-chevron-left"></i> 路由器及其配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B9%9D%E7%AB%A0/" rel="next" title="计算机网络信息服务系统的安装与配置">
+                  计算机网络信息服务系统的安装与配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

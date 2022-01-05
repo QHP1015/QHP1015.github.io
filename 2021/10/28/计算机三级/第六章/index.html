@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/notes32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/notes16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"note.qhp.us","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="交换机的基本概念基本概念  局域网交换机是一种 基于 MAC 地址 识别，完成转发数据帧功能的一种网络连接设备 工作在数据链路层，根据端口数据帧中的 MAC 地址进行数据帧的过滤、转发（也是交换机的工作原理） 交换机作为汇聚中心，能将多台数据终端设备连接在一起，构成星状的网络 交换式局域网具有独占传输通道、独享信道带宽，同时允许多对站点进行通信、系统带宽等于所有端口带宽之和等特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交换机及其配置">
+<meta property="og:url" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/index.html">
+<meta property="og:site_name" content="从此在回忆里">
+<meta property="og:description" content="交换机的基本概念基本概念  局域网交换机是一种 基于 MAC 地址 识别，完成转发数据帧功能的一种网络连接设备 工作在数据链路层，根据端口数据帧中的 MAC 地址进行数据帧的过滤、转发（也是交换机的工作原理） 交换机作为汇聚中心，能将多台数据终端设备连接在一起，构成星状的网络 交换式局域网具有独占传输通道、独享信道带宽，同时允许多对站点进行通信、系统带宽等于所有端口带宽之和等特性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bluexiaowei.github.io/NCRE3/static/images/06-01.png">
+<meta property="og:image" content="https://bluexiaowei.github.io/NCRE3/static/images/06-02.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141519773.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141619667.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141728741.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141810557.png">
+<meta property="og:image" content="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320142738401.png">
+<meta property="article:published_time" content="2021-10-28T12:15:50.000Z">
+<meta property="article:modified_time" content="2022-01-05T01:17:02.889Z">
+<meta property="article:author" content="从此在回忆里">
+<meta property="article:tag" content="网络技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bluexiaowei.github.io/NCRE3/static/images/06-01.png">
+
+
+<link rel="canonical" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/","path":"2021/10/28/计算机三级/第六章/","title":"交换机及其配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>交换机及其配置 | 从此在回忆里</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">从此在回忆里</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fab fa-themeisle fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fas fa-pallet fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">交换机的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E8%A1%A8%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-text">交换表的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E4%BA%A4%E6%8D%A2%E7%BB%93%E6%9E%84"><span class="nav-text">交换机的交换结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E4%BA%A4%E6%8D%A2%E6%A8%A1%E5%BC%8F"><span class="nav-text">交换机的交换模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91%E6%8A%80%E6%9C%AF"><span class="nav-text">虚拟局域网技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AESTP"><span class="nav-text">生成树协议STP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">交换机的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="nav-text">交换机的配置方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="nav-text">配置交换机的系统信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%AB%AF%E5%8F%A3%E9%85%8D%E7%BD%AE"><span class="nav-text">交换机端口配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA-VLAN-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">交换机 VLAN 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VLAN-%E9%85%8D%E7%BD%AE"><span class="nav-text">VLAN 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VLAN-Trunk-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">VLAN Trunk 的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA-VTP-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">交换机 VTP 的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%88%86%E9%85%8D%E7%AB%AF%E5%8F%A3"><span class="nav-text">为交换机分配端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA-STP-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">交换机 STP 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%88%96%E5%85%B3%E9%97%ADSTP"><span class="nav-text">打开或关闭STP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%A0%B9%E7%BD%91%E6%A1%A5%E5%92%8C%E5%A4%87%E4%BB%BD%E6%A0%B9%E7%BD%91%E6%A1%A5"><span class="nav-text">配置根网桥和备份根网桥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E6%A0%91%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">配置生成树优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E6%A0%91%E5%8F%AF%E9%80%89%E5%8A%9F%E8%83%BD"><span class="nav-text">配置生成树可选功能</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a target="_blank" rel="noopener" href="https://qhp.us">
+    <img class="site-author-image" itemprop="image" alt="从此在回忆里"
+      src="/images/avatar.gif">
+  </a>
+  <p class="site-author-name" itemprop="name">从此在回忆里</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QHP1015" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QHP1015" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2439462872@qq.com" title="E-Mail → 2439462872@qq.com"><i class="fas fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://note.qhp.us/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="从此在回忆里">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从此在回忆里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          交换机及其配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-28 20:15:50" itemprop="dateCreated datePublished" datetime="2021-10-28T20:15:50+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-01-05 09:17:02" itemprop="dateModified" datetime="2022-01-05T09:17:02+08:00">2022-01-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NCRE/" itemprop="url" rel="index"><span itemprop="name">NCRE</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="交换机的基本概念"><a href="#交换机的基本概念" class="headerlink" title="交换机的基本概念"></a>交换机的基本概念</h2><p>基本概念</p>
+<ul>
+<li>局域网交换机是一种 <strong>基于 MAC 地址</strong> 识别，完成转发数据帧功能的一种网络连接设备</li>
+<li>工作在数据链路层，<strong>根据端口数据帧中的 MAC 地址进行数据帧的过滤、转发（也是交换机的工作原理）</strong></li>
+<li>交换机作为汇聚中心，能将多台数据终端设备连接在一起，构成<strong>星状的网络</strong></li>
+<li>交换式局域网具有<strong>独占</strong>传输通道、<strong>独享</strong>信道带宽，<strong>同时允许多对站点</strong>进行通信、<strong>系统带宽等于所有端口带宽之和</strong>等特性</li>
+</ul>
+<span id="more"></span>
+
+
+
+<p>基本功能</p>
+<ul>
+<li>建立和维护一个表示 <strong>MAC 地址与交换机端口对应关系的交换表</strong></li>
+<li><strong>在发送节点和接受节点之间建立一条虚拟连接</strong> [即发送方所连的交换机端口（源端口）到接收方所连的交换机端口（目的端口）之间建立虚连接]</li>
+<li><strong>完成数据帧的转发或过滤</strong></li>
+</ul>
+<h2 id="交换表的内容"><a href="#交换表的内容" class="headerlink" title="交换表的内容"></a>交换表的内容</h2><p>交换表主要包括<strong>目的 MAC 地址</strong>、与目的 MAC 地址<strong>对应的交换机端口号</strong>以及它<strong>所属的虚拟子网</strong>。其中，虚拟子网用 VLAN ID 标识。</p>
+<p>小型交换机的交换表（cisco-3XXX及以下型号）</p>
+<ul>
+<li><p>交换机通过在超级用户模式下，<strong>使用 show mac-address-talbe 命令查看</strong></p>
+</li>
+<li><p>该交换表的第一列为目的MAC地址，第二列为地址类型，第三列为VLAN的ID号，第四号为该目的MAC地址所对应的交换机的端口号</p>
+<p><img src="https://bluexiaowei.github.io/NCRE3/static/images/06-01.png" alt="小型交换机的交换报表"></p>
+</li>
+</ul>
+<p>大型交换机的交换表（cisco-4000及以上型号）</p>
+<ul>
+<li><p>交换机通过在超级用户模式下，<strong>使用 show cam dynamic 命令查看</strong></p>
+</li>
+<li><p>第一列是VLAN的ID号，第二列是目的MAC地址，第三列是该地址相对应的交换机的端口号。</p>
+<p><img src="https://bluexiaowei.github.io/NCRE3/static/images/06-02.png" alt="大型交换机的交换表"></p>
+</li>
+</ul>
+<h2 id="交换机的交换结构"><a href="#交换机的交换结构" class="headerlink" title="交换机的交换结构"></a>交换机的交换结构</h2><ul>
+<li><p>软件执行交换结构</p>
+<ul>
+<li>交换机接收到数据帧后，先将其由<strong>串行代码转化为并行代码</strong>，暂时存储在交换机的快速缓存RAM中</li>
+<li>交换机的CPU开始根据数据帧中的目的MAC地址进行查询交换表</li>
+<li>确定了目的端口后，交换机在源端口与目的端口之间建立起虚连接，然后将以并行代码形式存储在<strong>RAM</strong>中的数据帧<strong>转化为串行代码</strong>，发送到目的端口</li>
+<li>上述的步骤都是<strong>由软件控制完成</strong>的。<img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141519773.png" alt="image-20210320141519773"> </li>
+</ul>
+</li>
+<li><p>矩阵交换结构</p>
+<ul>
+<li>在矩阵交换结构中，交换机确定了目的端口后，根据源端口与目的端口打开<strong>交换矩阵</strong>中相应的开关，在两个端口之间建立连接</li>
+<li>通过建立的这个传输通道来完成数据帧的传输</li>
+<li>优点：交换速率快、时延小、易于实现</li>
+<li>缺点：扩展与可管理性较差<img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141619667.png" alt="image-20210320141619667"></li>
+</ul>
+</li>
+<li><p>总线交换结构</p>
+<ul>
+<li>总线交换结构的交换机拥有一条很高带宽的背部总线</li>
+<li>交换机的所有的端口都挂接在这条背部总线上，总线按时隙分为多条逻辑通道，各个端口都可以往该总线上发送数据帧，这些<strong>数据帧都按时隙在总线上传输</strong>，并从各自的目的端口中输出数据帧</li>
+<li>总线交换结构对总线的带宽有较高的要求，<strong>设交换机的端口数为M，每个端口的带宽为N，则总线的带宽应为M×N</strong>。<img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141728741.png" alt="image-20210320141728741"></li>
+</ul>
+</li>
+<li><p>共享存储器交换结构</p>
+<ul>
+<li>共享存储交换结构将<strong>共享存储RAM</strong>代替了总线交换结构中的总线，数据帧通过共享存储器实现从源端口直接传送到目的端口，它是总线交换结构的改进。</li>
+<li>优点：<strong>结构简单、易于实现</strong></li>
+<li>缺点：当交换机的端口数量不断增加，存储容量不断扩大的同时，数据交换的时延也会越来越大。而且共享存储交换结构的成本比较高。<strong>适合小型交换机</strong>采用。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320141810557.png" alt="image-20210320141810557"></p>
+<h2 id="交换机的交换模式"><a href="#交换机的交换模式" class="headerlink" title="交换机的交换模式"></a>交换机的交换模式</h2><p>交换机的交换方式有 <strong>静态交换和动态交换</strong> 两种</p>
+<ul>
+<li>静态交换时由人工完成端口之间传输通道的建立</li>
+<li><strong>动态交换方式中依据目的 MAC 地址查询交换表，根据表中给出的输出端口来临时建立传输通道，这个传输通道在一个数据帧传送完成后自动断开</strong>。</li>
+</ul>
+<p><strong>交换机最常采用的交换方式是动态交换方式</strong>。动态交换模式组要由存储转发和直通两种模式。而直通模式又有快速转发交换和碎片丢弃交换两种，归纳起来，交换机主要有<strong>快速转发</strong>、<strong>碎片丢弃</strong>和<strong>存储转发</strong>三种交换模式。</p>
+<ul>
+<li>快速转发交换模式<ul>
+<li><strong>快速转发交换模式，也称作直通交换模式</strong>，它是在交换机接收了帧的前 14 个字节，即 <strong>接收到帧中 6 个 字节的目的地址后便理机转发数据帧</strong>。该交换模式会在整个数据帧到之前就开始转发</li>
+<li>优点：端口交换时间短、延时小和交换速度快</li>
+<li>缺点：不能进行检查纠错、速度匹配和流量控制，可靠性较差</li>
+<li><strong>适合小型交换机</strong></li>
+</ul>
+</li>
+<li>碎片丢弃交换模式<ul>
+<li>碎片丢弃交换模式也被称为无分段交换模式</li>
+<li><strong>这种交换模式实在开始转发数据帧前，先过滤掉造成大部分数据报错误的冲突片</strong></li>
+<li><strong>采用这种交换模式的交换机在转发数据时，先检查数据包的长度是否够 64 字节</strong>。如果帧的长度小于 64， 则被视为碎片，交换机直接丢弃；而任何大于 64 字节的数据帧都被交换机视为有效帧，进行转发</li>
+<li>优点：过滤掉了冲突碎片，提高了网络传输的效率和宽带的利用率</li>
+</ul>
+</li>
+<li>存储转发交换模式<ul>
+<li>存储转发交换模式 <strong>将接收到的整个数据帧保存在缓冲区</strong>中，然后进行<strong>循环冗余码校验检查，在对错误数据帧进行处理后，才取出数据帧的目的地址，进行转发操作</strong></li>
+<li>缺点：进行数据处理的<strong>延时大</strong>、交换速度相对较慢</li>
+<li>优点：对数据帧进行链路差错校验，可靠性较高，能有效的改善网络性能；同时它可以<strong>支持不同速率的端口</strong>，保持高速端口与低速端口之间协同工作。</li>
+</ul>
+</li>
+</ul>
+<h2 id="虚拟局域网技术"><a href="#虚拟局域网技术" class="headerlink" title="虚拟局域网技术"></a>虚拟局域网技术</h2><ul>
+<li>虚拟网 VLAN 是以交换式网络为基础，把用户的终端设备划分为若干个逻辑工作组，每个逻辑工作组就是一个 VLAN</li>
+<li>该逻辑组<strong>都是一个独立的逻辑网段和广播域</strong></li>
+<li>这个逻辑组的设定不受实际交换机区段的限制，也<strong>不受用户所在的物理位置和物理网段的限制</strong></li>
+<li>逻辑组的设定在交换机中是<strong>通过软件完成</strong>的</li>
+</ul>
+<p>VLAN 的特征</p>
+<ul>
+<li>VLAN 工作在数据链路层<strong>，即OSI 参考模型的第二层</strong></li>
+<li>VLAN 可隔离广播信息，每个 VLAN 为一个广播域，<strong>VLAN 中的广播信息只能发送给这一个 VLAN 内部的成员，并不发送给其他 VLAN 成员</strong></li>
+<li>一个 VLAN 就是一个独立的逻辑网络，每个 VLAN 都具有唯一的子网号。<strong>不同 VLAN 中的主机之间必须通过路由器或者三层交换机，才能实现相互通信</strong></li>
+</ul>
+<p>VLAN 的标识</p>
+<ul>
+<li>VLAN 通常用 <strong>VLAN ID （Vlan 号）和 VLAN name（Vlan 名）</strong> 标识</li>
+<li>IEEE 802.1Q 协议规定，<strong>VLAN ID 用 12 位（bit）表示</strong>，可以支持 4096 个 VLAN。其中 <strong>1 ~ 1005 是标准范围，1006 ~ 1024 为保留范围，1025 ~ 4096 是扩展范围</strong>。但并不是所有交换机都能支持 4096 个 VLAN</li>
+<li>一部分交换机只支持标准范围 1 ~ 1005，其中能 <strong>用与以太网的 VLAN ID 为 1 ~ 1000</strong>, 而 <strong>1002 ~ 1005 为 FDDI 和令牌环网使用的 VLAN ID</strong></li>
+<li>VLAN name 用 <strong>32 个字符表示</strong>，可以是<strong>字母和数字</strong>。若创建一个 VLAN 时，没有给定名字，则系统按默认方式，自动给出命名，<strong>默认为 VLAN00xxx(xxx 即为该 VLAN 的 VLAN ID)</strong></li>
+</ul>
+<p>VLAN Trunk</p>
+<ul>
+<li><p>VLAN Trunk（虚拟网中继）技术即是实现在多个交换机之间或是在交换机与路由器之间进行多个VLAN信息传输的技术</p>
+</li>
+<li><p>Trunk是一种<strong>封装技术</strong>，它是一条点到点的链路，主要功能就是仅通过一条链路就可以连接多个交换机从而扩展已配置的多个VLAN</p>
+</li>
+<li><p>VLAN Trunk的标准机制是<strong>帧标签</strong></p>
+<blockquote>
+<p>帧标签卫每一个数据帧指定一个唯一的VLAN ID，这样即可表示该数据帧是属于哪一个VLAN的</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E5%85%AD%E7%AB%A0/image-20210320142738401.png" alt="image-20210320142738401"></p>
+<p>​    在主干线路上要传输多个VLAN（VLAN1、VLAN2、VLAN3）的信息，则连接主干线路的两台交换机端口应具有Trunk功能。</p>
+<p>划分VLAN的方法</p>
+<ul>
+<li>基于端口划分VLAN<ul>
+<li>由网络管理员根据交换机端口进行静态的VALN 分配，每个端口属于一个VLAN</li>
+<li>当在交换机上将其某一个端口分配给一个VLAN 时，将一直保持不变直到网络管理员改变这种配置</li>
+</ul>
+</li>
+<li>基于MAC地址</li>
+<li>基于第三层协议类型或地址<ul>
+<li>按照网络层协议类型（TCP/IP、IPX、DECNET等）或按网络地址定义VLAN成员。</li>
+</ul>
+</li>
+</ul>
+<h2 id="生成树协议STP"><a href="#生成树协议STP" class="headerlink" title="生成树协议STP"></a>生成树协议STP</h2><p>STP 的基本概念</p>
+<ul>
+<li>生成树协议（STP）时一个 <strong>二层链路管理协议</strong>。它主要功能时在保证网络中没有回路的基础上，<strong>允许在第二层链路中提供冗余路径</strong>，以保证网络可靠、稳定的运行</li>
+<li><strong>IEEE 802.1D 是最早的 STP 的标准</strong>，它提供了动态冗余切换机制，是目前最为流行、应用最广泛的 STP 标准</li>
+<li><strong>STP 运行在交换机和网桥设备上</strong>，通过计算机建立一个稳定的树状结构网络，来避免网络中回路的产生</li>
+</ul>
+<p>STP 的工作原理：<strong>通过在交换机之间传递网桥协议数据单元（BPDU），并运用生成树算法（STA）</strong>对其进行比较计算</p>
+<ul>
+<li>首先进行根网桥选择（根网桥为整个生成树拓扑结构的核心，所有数据传输均通过根网桥）</li>
+<li>然后确定交换机冗余链路端口的工作状态，让一些端口进入<strong>阻塞工作模式</strong>，另一些端口进入转发工作模式</li>
+<li>其中设置为阻塞模式的端口不能进行数据流的转发和接收，但仍作为一个激活的端口，可进行 BPDU 的接收和读取</li>
+<li>如果<strong>网络拓扑发生变化</strong>或是生成树中的一个路径因故障而失效时，<strong>生成树就会重新计算</strong>，激活其他的备份链路，生成新的树拓扑，并强制将原来的故障链路变为备份链路，这时端口状态也会随之改变，以保证数据的传输路径是唯一的</li>
+<li><strong>交换机与网桥在STP的工作过程中是有区别的</strong>。交换机要对VLAN进行处理，它指定一个根交换机，并为每一个VLAN选择一个根网络，然后再确定各个冗余端口的阻塞或转发状态，保证唯一的传输路径，并将其他的冗余链路作为备份链路，生成无回路的拓扑结构</li>
+</ul>
+<p>BPDU 中携带了实现生成树算法的有关信息，包括：<strong>Root Id、Root Path Cost、Bridge ID、Port ID、Hello time、Max Age</strong></p>
+<ul>
+<li>BPDU 数据包有两种类型，一种是包含 <strong>配置信息的配置 BPDU（不超过 35 个字节）</strong>，另一种包含 <strong>拓扑变化信息的拓扑变化通知 BPDU （不超过 4 个字节）</strong>。</li>
+<li>在配置 BPDU 包的 Bride ID 信息，是选取根网桥或根交换机的主要依据；</li>
+<li>一般情况下，Bridge ID 值最小的成为根网桥或根交换机；</li>
+<li>Bridge ID 用 8 个字节表示，后 6 个字节为交换机的 MAC 地址，前 2 个字节为优先级值；</li>
+<li>优先级值越小，优先级越高（根网桥或根交换机）；</li>
+<li><strong>优先级取值范围 0 ~ 61440， 增质量为 4096， 交换机的优先级一般默认为 32768</strong>，可以使用命令人工设置；</li>
+<li>一台交换机的优先级设置 8189，优先级高级其他交换机，会成为根交换机；</li>
+<li>选择根网桥时，优先级相同，会根据 MAC 地址的值决定根网桥，<strong>MAC 的值最小的为根网桥</strong>；</li>
+<li>默认情况下，交换机 <strong>每 2 秒定时发送一次 BPDU</strong>，当检测到网络拓扑变化或故障发生时，也会发送新的 BPDU，以及时进行生成树的更新。</li>
+</ul>
+<h2 id="交换机的配置"><a href="#交换机的配置" class="headerlink" title="交换机的配置"></a>交换机的配置</h2><h3 id="交换机的配置方式"><a href="#交换机的配置方式" class="headerlink" title="交换机的配置方式"></a>交换机的配置方式</h3><ul>
+<li><p>使用Console端口配置</p>
+<ul>
+<li>使用控制（<strong>Console</strong>）端口配置交换机，常用于交换机刚出厂并进行第一次配置时所采用的模式</li>
+<li>Console是一个用来连接配置终端的异步串行口，接口标准为<strong>RJ-45</strong></li>
+<li>是交换机刚出厂时，第一次对其进行配置所用的方法</li>
+<li>使用Console端口配置交换机时，需要准备一台已经安装了超级终端软件的计算机作为配置终端，同时还需要一条由厂家提供的RJ-45到9针或25针异步串行接口的信号电缆</li>
+<li>使用超级终端软件对异步串行口进行参数配置：<strong>传输速率9600</strong>，<strong>数据位8位</strong>，<strong>停止位1位</strong>。</li>
+</ul>
+</li>
+<li><p>使用telnet命令配置</p>
+<ul>
+<li>使用 <strong>Telnet</strong> 配置交换机，常用于远程配置模式，该模式要求交换机已经连接到网上，而且已配置了交换机的设备管理地址</li>
+</ul>
+</li>
+<li><p>使用浏览器配置交换机</p>
+<ul>
+<li>使用浏览器（<strong>IE</strong>）配置交换机，主要用于交换机被设置成 WEB 服务器，然后通过网络上的任意一个终端站点使用浏览器对交换机进行配置</li>
+</ul>
+</li>
+<li><p>具体步骤</p>
+<ol>
+<li><p>交换机的配置</p>
+</li>
+<li><p>启用交换机的HTTP Server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CatOS:    Catalyst6500&gt; (enable)  set ip http server enable</span><br><span class="line">Cisco IOS:  switch-3548(config)#ip http server</span><br></pre></td></tr></table></figure></li>
+<li><p>配置HTTP用户认证方式:   enable、 local、tacacs</p>
+</li>
+<li><p>下载并安装Jave-plugin插件</p>
+</li>
+<li><p>使用Web浏览器监控和配置交换机</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="配置交换机的系统信息"><a href="#配置交换机的系统信息" class="headerlink" title="配置交换机的系统信息"></a>配置交换机的系统信息</h3><ul>
+<li><p>配置交换机的主机名</p>
+<ul>
+<li><p>Cisco IOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">switch-3548(config)#</span><span class="bash">hostname switch-PHY-3548</span></span><br><span class="line">switch-PHY-3548(config) #</span><br></pre></td></tr></table></figure></li>
+<li><p>CatOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CatOS6500 &gt; (enable) set system name switch-PHY-6500</span><br><span class="line"> System name set.  </span><br><span class="line">switch-PHY-6500 &gt; (enable) </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>配置超级用户口令</p>
+<ul>
+<li><p>Cisco IOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">switch-3548(config)#</span><span class="bash"> <span class="built_in">enable</span> password zzz(明文)</span></span><br><span class="line"><span class="meta">switch-3548(config)#</span><span class="bash"> <span class="built_in">enable</span> password 7 zzz(加密)</span></span><br><span class="line"><span class="meta">switch-3548(config)#</span><span class="bash"> <span class="built_in">enable</span> secret 5 zzz(加密)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>CatOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">CatOS6500&gt;</span><span class="bash"> (<span class="built_in">enable</span>) <span class="built_in">set</span> enablepass</span></span><br><span class="line">Enter old password:  </span><br><span class="line">Enter new password:</span><br><span class="line">Retype new password:</span><br><span class="line">Password changed.</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>设置远程登录口令</p>
+<ul>
+<li><p>Cisco IOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">switch-3548 (config)#line vty 0 4</span><br><span class="line">switch-3548 (config-line)# password 0 zzz (明文) </span><br><span class="line">switch-3548 (config-line)# password 7 zzz (加密) </span><br><span class="line">switch-3548 (config-line)#</span><br></pre></td></tr></table></figure></li>
+<li><p>CatOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">CatOS6500&gt;</span><span class="bash"> (<span class="built_in">enable</span>) <span class="built_in">set</span> password</span> </span><br><span class="line">Enter old password:  </span><br><span class="line">Enter new password:</span><br><span class="line">Retype new password:</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>交换机的基本配置一般都是用过 <strong>使用 Console 端口配置方式</strong> 完成，配置的主要内容哟配置交换机的主机名、超级用户口令、设备管理地址和远程登录口令</p>
+</li>
+<li><p>关于交换机配置命令语句，主要时以 Cisco IOS（35 系类）和 Catalyst OS（65 系列）两种交换机操作系统来讲解</p>
+</li>
+<li><p>那么常考的配置命令语句有 <strong>设置系统时间、配置设备管理 IP 地址</strong></p>
+</li>
+</ul>
+<h3 id="交换机端口配置"><a href="#交换机端口配置" class="headerlink" title="交换机端口配置"></a>交换机端口配置</h3><ul>
+<li>35 系列<ul>
+<li>设置时间：<code>clock set HH:mm:ss DD MM YYYY</code></li>
+<li>配置 IP：<code>ip address &lt;IP 地址&gt; &lt;子网掩码&gt;</code></li>
+<li>缺省路由：<code>ip default-gateway &lt;缺省路由 IP 地址&gt;</code></li>
+<li>VLAN1 时用于设备管理的缺省 VLAN</li>
+<li>配置端口描述信息：<ol>
+<li><code>(config)# interface f0/1</code> (进入端口配置模式)</li>
+<li><code>(config-if)# description To-Webserver</code>（配置端口描述信息）</li>
+<li><code>(config-if)# shutdown</code>（关闭端口）</li>
+<li><code>(config-if)# no shutdown</code>（开启端口）</li>
+<li><code>(config-if)# duplex auto</code>（设置为自动协商，默认）</li>
+<li><code>(config-if)# duplex full</code> （设置为全双工）</li>
+<li><code>(config-if)# duplex half</code> （设置为半双工）</li>
+<li><code>(config-if)# speed auto</code> （自动速率）</li>
+<li><code>(config-if)# speed 10</code> （设置速率 10Mbit/s）</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>65 系类<ul>
+<li>设置时间：<code>set time ww MM/DD/YYYY HH:mm:ss</code></li>
+<li>配置 IP：<code>set interface sc0 &lt;IP 地址&gt; &lt;子网掩码&gt; &lt;直接广播地址&gt;</code></li>
+<li>缺省路由：<code>set ip route 0.0.0.0 &lt;缺省路由 IP 地址&gt;</code></li>
+<li>配置端口描述信息：<ol>
+<li><code>(enable) set port name &lt;mod/port&gt; &lt;name&gt;</code> （name 为端口描述，一般不超过 240 个）</li>
+<li><code>(enable) set port disable &lt;mod/port&gt;</code> （开启端口）</li>
+<li><code>(enable) set port enable &lt;mod/port&gt;</code> （关闭端口）</li>
+<li><code>(enable) set port duplex &lt;mod/port&gt; full</code> （全双工）</li>
+<li><code>(enable) set port duplex &lt;mod/port&gt; half</code> （半双工）</li>
+<li><code>(enable) set prot speed &lt;mod/port&gt; auto</code> （自动速率）</li>
+<li><code>(enable) set prot speed 10</code> （设置速率 10Mbit/s）</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="交换机-VLAN-的配置"><a href="#交换机-VLAN-的配置" class="headerlink" title="交换机 VLAN 的配置"></a>交换机 VLAN 的配置</h2><p>交换机 VLAN 的配置主要任务是：配置 VTP、建立或删除 VLAN、为交换机端口分配 VLAN 和在交换机端口上配置 VLAN Trunk。</p>
+<h3 id="VLAN-配置"><a href="#VLAN-配置" class="headerlink" title="VLAN 配置"></a>VLAN 配置</h3><ul>
+<li>35 系列<ul>
+<li>进入 链接：<code>Switch-3528-TEST&gt; # vlan data</code></li>
+<li>建立 VLAN： <code>(vlan) vlan &lt;vlan_ID&gt; name &lt;vlan_name&gt;</code></li>
+<li>删除 VLAN: <code>(vlan) no vlan &lt;vlan_ID&gt;</code></li>
+<li>修改 VLAN： <code>(vlan) vlan &lt;vlan_ID&gt; name &lt;vlan_name&gt;</code></li>
+</ul>
+</li>
+<li>65 系列<ul>
+<li>进入：<code>Switch-6509-TEST&gt; # enable</code></li>
+<li>建立 VLAN: <code>(enable) set vlan &lt;vlan_ID&gt; name &lt;vlan_name&gt;</code></li>
+<li>删除 VLAN: <code>(enable) clear vlan &lt;vlan_ID&gt;</code></li>
+<li>修改 VLAN: <code>(enable) set vlan &lt;vlan_ID&gt; name &lt;vlan_name&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="VLAN-Trunk-的配置"><a href="#VLAN-Trunk-的配置" class="headerlink" title="VLAN Trunk 的配置"></a>VLAN Trunk 的配置</h3><ul>
+<li><p>35 系类</p>
+<ul>
+<li><p>进入交换机端口配置模式：</p>
+<ol>
+<li><code>Switch-3528-TEST&gt; # configure terminal</code></li>
+<li><code>(config) # int fo/24</code></li>
+<li><code>(config-if) #</code></li>
+</ol>
+</li>
+<li><p>配置 VLAN Trunk 模式：<code>(config-if)# switchport mode trunk</code></p>
+</li>
+<li><p>封装 VLAN 协议</p>
+<p><strong>Cisco ISL：思科私有协议。</strong></p>
+<p><strong>IEEE 802.1Q：俗称“Dot One Q”(dot1q),国际标准。</strong></p>
+<p><strong>IEEE 802.1Q可用于不同厂家的交换设备互连，且双方交换机端口上都要封装dot1q协议</strong>，保证协议的一致性，否则不能正确的传输多个VLAN信息。</p>
+<ol>
+<li><code>(conifg-if)# switchport trunk encapsulation dotl q</code> (202.1q 模式)</li>
+<li><code>(conifg-if)# switchport trunk encapsulation isl</code> (ISL 协议)</li>
+<li><code>(config-if)# switchport trunk encapsulation negotiate P</code> (自动协商)</li>
+</ol>
+</li>
+<li><p>设置允许中继的 VLAN: <code>(config-if)# switchport trunk allowed vlan</code> 1,10 | 11-20</p>
+</li>
+<li><p>设置不允许中继的 VLAN: <code>(config-if)# switchport trunk allowed vlan except</code> 1,10 | 11-20</p>
+</li>
+</ul>
+</li>
+<li><p>65 系列</p>
+<ul>
+<li>配置 VLAN Trunk 模式，分装 VLAN 协议：<code>(enable) set trunk &lt;mod/port&gt; &lt;mode&gt; &lt;type&gt;</code></li>
+<li>设置允许中继的 VLAN：<code>(enable) set trunk &lt;mod/port&gt; vlan &lt;vlan_ID&gt;</code></li>
+<li>设置不允许中继的 VLAN：<code>(enable) clear trunk &lt;mod/port&gt; &lt;vlan_ID&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="交换机-VTP-的配置"><a href="#交换机-VTP-的配置" class="headerlink" title="交换机 VTP 的配置"></a>交换机 VTP 的配置</h3><p>VTP 是 VLAN 中继协议，也被称为 VALN 干道协议。他是一个 OSI 参考模型第二层的通信协议，主要用于管理在同一个域的网络范围内 VLANs 的建立 删除和命名</p>
+<p>配置 VTP 的任务主要有两个：一是 <strong>建立 VTP 域</strong>，二是 <strong>设置 VTP 的工作模式</strong>；</p>
+<p><strong>注意：</strong> 同一个域的所有交换机，必须运行同版本的 VTP，并具有相同的域名；</p>
+<ul>
+<li>VTP Server：一般，一个 VTP 域内的整个网络只设置一个 VTP Server, 它 <strong>维护该 VTP 域中所有 VLAN 信息列表，可以建立、删除或修改 VLAN</strong></li>
+<li>VTP Client：也维护所有 VLAN 信息列表，但是它的VLAN 信息是从 VTP Server 学习到的，并且<strong>不具有建立、删除或修改 VLAN 的功能</strong>。</li>
+<li>VTP Transparent：相当于一个独立的交换机，它不参与 VTP 工作，不从 VTP Server 学习 VLAN 的配置信息，二只拥有本设备上自己的 VLAN 信息，因此它也 <strong>只能建立、删除和修改本机上的 VLAN 信息</strong>。</li>
+<li>35 系列<ul>
+<li>进入工作模式：<code>Switch-3528-TEST&gt; # configure terminal</code></li>
+<li>域名配置：<code>(config)# vtp domain TEST</code></li>
+<li>工作模式：<code>(config)# vtp mode &lt;type&gt;</code> type=”server|client|transparent”</li>
+</ul>
+</li>
+<li>65 系列<ul>
+<li>域名配置：<code>(enable)# set vtp domain TEST</code></li>
+<li>工作模式：<code>(enable)# set vtp mode &lt;type&gt;</code> type=”server|client|transparent”</li>
+</ul>
+</li>
+</ul>
+<h2 id="为交换机分配端口"><a href="#为交换机分配端口" class="headerlink" title="为交换机分配端口"></a>为交换机分配端口</h2><ul>
+<li>35 系列<ul>
+<li>进入端口配置模式：同上 <code>交换机 VLAN 的配置 &gt; 3 &gt; 35 系列</code></li>
+<li>端口 VLAN 分配：<code>(config-if) switchport access vlan &lt;vlan_ID&gt;</code></li>
+</ul>
+</li>
+<li>65 系列<ul>
+<li>端口 VLAN 分配：<code>(enable) set vlan &lt;vlan_ID&gt; &lt;mod/port&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="交换机-STP-的配置"><a href="#交换机-STP-的配置" class="headerlink" title="交换机 STP 的配置"></a>交换机 STP 的配置</h2><h4 id="打开或关闭STP"><a href="#打开或关闭STP" class="headerlink" title="打开或关闭STP"></a>打开或关闭STP</h4><ul>
+<li><p>35系列</p>
+<p>switch-3548# configure terminal </p>
+<p>switch-3548 (config)# spanning-tree vlan 3   </p>
+<p>switch-3548 (config)# no spanning-tree vlan 3 </p>
+</li>
+<li><p>65系列</p>
+<p>CatOS6500&gt; (enable) set spanning-tree enable 3 </p>
+<p>CatOS6500&gt; (enable) set spanning-tree disable 3</p>
+</li>
+</ul>
+<h4 id="配置根网桥和备份根网桥"><a href="#配置根网桥和备份根网桥" class="headerlink" title="配置根网桥和备份根网桥"></a>配置根网桥和备份根网桥</h4><ul>
+<li><p>35系列</p>
+<p>switch-3548 (config)# spanning-tree vlan 3 root primary</p>
+<p>switch-3548 (config)# spanning-tree vlan 3 root secondary </p>
+</li>
+<li><p>65系列</p>
+<p>CatOS6500&gt; (enable) set spanning-tree root 1,200-204</p>
+<p>CatOS6500&gt; (enable) set spanning-tree secondary 1,200-204</p>
+</li>
+</ul>
+<h4 id="配置生成树优先级"><a href="#配置生成树优先级" class="headerlink" title="配置生成树优先级"></a>配置生成树优先级</h4><p>配置生成树优先级：生成树优先级的取值范围是0~61440，增量是<strong>4096</strong>。优先级的值越小优先级越高，如果优先级为0是最高优先级，61440优先级最低。</p>
+<ul>
+<li>35 系列<ul>
+<li>优先级配置：<code>(config)# spanning-tree vlan &lt;vlans&gt; prioriy &lt;0-61440&gt;</code></li>
+</ul>
+</li>
+<li>65 系列<ul>
+<li>优先级配置：<code>(enable)# set spanning prioriy &lt;0-61440&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="配置生成树可选功能"><a href="#配置生成树可选功能" class="headerlink" title="配置生成树可选功能"></a>配置生成树可选功能</h4><ul>
+<li>BackboneFast：是 <strong>阻塞端口不在等待这段时间</strong>，而是 <strong>直接将端口有侦听和学习状态换为转发状态</strong>；</li>
+<li>UplinkGast：当生成树拓扑结构发生变化和在使用上链路组的冗余链路之间完成负载平衡，<strong>提供快速收敛</strong>；</li>
+<li>PortFast：用于在接入层交换机端口上跳过正常的生成树操作，<strong>加快终端工作站接入网络中的速度</strong>。它的功能是使交换机的端口侦听和学习转台，<strong>直接从阻塞状态进入到转发状态</strong>；</li>
+<li>BPDU Filtering：会是交换机在指定的端口上停止发送 BPDUs，对于进入这个端口的 BPDUs 也不做任何处理，同时 <strong>立刻就昂端口转台转换为转发状态</strong>；</li>
+<li>35 系列：<ul>
+<li>BackboneFast:<code>(config)# spanning-tree BackboneFast</code></li>
+<li>UplinkFast：<code>(config)# spanning-tree uplinkfast</code></li>
+<li>PortFast：<code>(config)# spanning-tree portfast defalut</code></li>
+<li>BPDU Filtering：<code>(config)# spanning-tree portfast bpdufilter default</code></li>
+</ul>
+</li>
+<li>65 系列：<ul>
+<li>BackboneFast:<ol>
+<li><code>(enable)# set spantree backbonefast enable</code></li>
+<li><code>(enable)# set spantree backbonefast disable</code></li>
+</ol>
+</li>
+<li>UplinkFast：<ol>
+<li><code>(enable)# set spantree uplinkfast enable</code></li>
+<li><code>(enable)# set spantree uplinkfast disable</code></li>
+</ol>
+</li>
+<li>PortFast：<ol>
+<li><code>(enable)# set spantree portfast &lt;mod/port&gt; enable</code></li>
+<li><code>(enable)# set spantree portfast &lt;mod/port&gt; disable</code></li>
+<li><code>(enable)# set spantree portfast &lt;mod/port&gt; default</code></li>
+</ol>
+</li>
+<li>BPDU Filtering：<ol>
+<li><code>(enable)# set spantree portfast bpdu-filter enable</code></li>
+<li><code>(enable)# set spantree portfast bpdu-filter disable</code></li>
+<li><code>(enable)# set spantree portfast bpdu-filter &lt;mod/port&gt; enable</code></li>
+<li><code>(enable)# set spantree portfast bpdu-filter &lt;mod/port&gt; disable</code></li>
+<li><code>(enable)# set spantree portfast bpdu-filter &lt;mod/port&gt; default</code></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%BA%94%E7%AB%A0/" rel="prev" title="局域网技术基础及应用">
+                  <i class="fa fa-chevron-left"></i> 局域网技术基础及应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7/%E7%AC%AC%E4%B8%83%E7%AB%A0/" rel="next" title="路由器及其配置">
+                  路由器及其配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-optin-monster"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">从此在回忆里</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
